@@ -31,12 +31,12 @@ The RDF resources in this repository within the `resources/` folder that constit
 | Resource                                                    | Role                                                                                                                | Description                                                                     |
 |-------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
 | Catalogue Definition:<br />[`catalogue.ttl`](catalogue.ttl) | [Catalogue Data](https://prez.dev/ManifestResourceRoles/CatalogueData)                                              | The definition of, and metadata for, the code sets container object - catalogue |
-| Resource Data:<br />[`codesets/*.ttl`](codesets/*.ttl)      | [Resource Data](https://prez.dev/ManifestResourceRoles/ResourceData)                                                | Code sets as catalogued resources                                               |
+| Resource Data:<br />[`ontologies/*.ttl`](ontologies/*.ttl)  | [Resource Data](https://prez.dev/ManifestResourceRoles/ResourceData)                                                | Code sets as catalogued resources                                               |
 | Labels Files:<br />[`background/*.ttl`](background/*.ttl)   | [Complete Catalogue and Resource Labels](https://prez.dev/ManifestResourceRoles/CompleteCatalogueAndResourceLabels) | Labels for resource data elements and reference data such as Agents             |
 
 
 > [!NOTE]  
-> As of March 2026, the resources here are empty placeholding shells only with catalogues, labels and ontologies expected to be added in MArch and April 2026.
+> As of March 2026, the resources here have just been started with the test ontology for ISO 19157 haveing been just added.
 
 ## License & Use
 

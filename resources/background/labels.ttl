@@ -1,0 +1,101 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sdo: <https://schema.org/>
+
+rdf:first
+    sdo:name "first" ;
+.
+
+()
+    sdo:name "nil" ;
+.
+
+rdf:rest
+    sdo:name "rest" ;
+.
+
+rdf:type
+    sdo:name "type" ;
+.
+
+owl:Class
+    sdo:name "Class" ;
+.
+
+owl:DatatypeProperty
+    sdo:name "Datatype Property" ;
+.
+
+owl:ObjectProperty
+    sdo:name "Object Property" ;
+.
+
+owl:Ontology
+    sdo:name "Ontology" ;
+.
+
+owl:topObjectProperty
+    sdo:name "top object property" ;
+.
+
+owl:unionOf
+    sdo:name "union of" ;
+.
+
+sdo:citation
+    sdo:name "citation" ;
+.
+
+sdo:codeRepository
+    sdo:name "code repository" ;
+.
+
+sdo:creator
+    sdo:name "creator" ;
+.
+
+sdo:dateCreated
+    sdo:name "date created" ;
+.
+
+sdo:dateIssued
+    sdo:name "date issued" ;
+.
+
+sdo:dateModified
+    sdo:name "date modified" ;
+.
+
+sdo:description
+    sdo:name "description" ;
+.
+
+sdo:isBasedOn
+    sdo:name "is based on" ;
+.
+
+sdo:isPartOf
+    sdo:name "is part of" ;
+.
+
+sdo:license
+    sdo:name "license" ;
+.
+
+sdo:name
+    sdo:name "name" ;
+.
+
+sdo:publisher
+    sdo:name "publisher" ;
+.
+
+sdo:version
+    sdo:name "version" ;
+.
+
+<https://rdflicense.linkeddata.es/rdflicense/cc-by4.0> schema:name "Creative Commons BY 4.0 License" .
+
+<http://www.w3.org/2002/07/owl#> schema:name "Web Ontology Language" .
+
+<https://def.isotc211.org/common/standards/iso-19157-1-2023> schema:name "ISO 19160-1:2015" .

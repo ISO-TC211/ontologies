@@ -1,11 +1,11 @@
-PREFIX : <https://def.isotc211.org/model/19157/>
-PREFIX iso19103: <https://def.isotc211.org/model/19103/>
-PREFIX iso19103-ont: <https://def.isotc211.org/model/19103>
-PREFIX iso19115: <https://def.isotc211.org/model/19115/>
-PREFIX iso19115-ont: <https://def.isotc211.org/model/19115>
-PREFIX iso19137: <https://def.isotc211.org/model/19137/>
-PREFIX iso19137-ont: <https://def.isotc211.org/model/19137>
-PREFIX ont: <https://def.isotc211.org/model/19157>
+PREFIX : <https://def.isotc211.org/ont/19157/>
+PREFIX iso19103: <https://def.isotc211.org/ont/19103/>
+PREFIX iso19103-ont: <https://def.isotc211.org/ont/19103>
+PREFIX iso19115: <https://def.isotc211.org/ont/19115/>
+PREFIX iso19115-ont: <https://def.isotc211.org/ont/19115>
+PREFIX iso19137: <https://def.isotc211.org/ont/19137/>
+PREFIX iso19137-ont: <https://def.isotc211.org/ont/19137>
+PREFIX ont: <https://def.isotc211.org/ont/19157>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -1198,6 +1198,7 @@ ont:
     schema:dateIssued "2000-01-01"^^xsd:date ;
     schema:dateModified "2026-03-09"^^xsd:date ;
     schema:description "ISO 19157 - Geographic information - Data quality - ontology" ;
+    schema:isBasedOn <https://def.isotc211.org/common/standards/iso-19157-1-2023> ;
     schema:isPartOf <https://def.isotc211.org/ontologies> ;
     schema:license <https://rdflicense.linkeddata.es/rdflicense/cc-by4.0> ;
     schema:name "ISO 19157 - Geographic information - Data quality - ontology" ;
