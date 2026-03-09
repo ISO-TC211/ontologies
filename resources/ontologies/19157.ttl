@@ -3,8 +3,6 @@ PREFIX iso19103: <https://def.isotc211.org/ont/19103/>
 PREFIX iso19103-ont: <https://def.isotc211.org/ont/19103>
 PREFIX iso19115: <https://def.isotc211.org/ont/19115/>
 PREFIX iso19115-ont: <https://def.isotc211.org/ont/19115>
-PREFIX iso19137: <https://def.isotc211.org/ont/19137/>
-PREFIX iso19137-ont: <https://def.isotc211.org/ont/19137>
 PREFIX ont: <https://def.isotc211.org/ont/19157>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -71,344 +69,6 @@ iso19115:version
     rdfs:range xsd:string ;
     schema:description "version" ;
     schema:name "version" ;
-.
-
-iso19137:Record
-    a owl:Class ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    schema:description "Record" ;
-    schema:name "Record" ;
-.
-
-iso19137:abstract
-    a owl:DatatypeProperty ;
-    rdfs:domain :QualityEvaluationReportInformation ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "abstract" ;
-    schema:name "abstract" ;
-.
-
-iso19137:citation
-    a owl:ObjectProperty ;
-    rdfs:domain :SourceReference ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:Citation ;
-    schema:description "citation" ;
-    schema:name "citation" ;
-.
-
-iso19137:dataQualityInfo
-    a owl:ObjectProperty ;
-    rdfs:domain iso19115:Metadata ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range :DataQuality ;
-    rdfs:subPropertyOf owl:topObjectProperty ;
-    schema:description "data quality info" ;
-    schema:name "data quality info" ;
-.
-
-iso19137:dateTime
-    a owl:DatatypeProperty ;
-    rdfs:domain
-        [
-            owl:unionOf (
-                :EvaluationMethod
-                :QualityResult
-            ) ;
-        ] ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:dateTime ;
-    rdfs:subPropertyOf owl:topDataProperty ;
-    schema:description "date time" ;
-    schema:name "date time" ;
-.
-
-iso19137:deductiveSource
-    a owl:DatatypeProperty ;
-    rdfs:domain :EvaluationMethod ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "deductive source" ;
-    schema:name "deductive source" ;
-.
-
-iso19137:evaluationMethodDescription
-    a owl:DatatypeProperty ;
-    rdfs:domain :EvaluationMethod ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "evaluation method description" ;
-    schema:name "evaluation method description" ;
-.
-
-iso19137:evaluationMethodType
-    a owl:ObjectProperty ;
-    rdfs:domain :EvaluationMethod ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19137:EvaluationMethodTypeCode ;
-    schema:description "evaluation method type" ;
-    schema:name "evaluation method type" ;
-.
-
-iso19137:evaluationProcedure
-    a owl:ObjectProperty ;
-    rdfs:domain :EvaluationMethod ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:Citation ;
-    schema:description "evaluation procedure" ;
-    schema:name "evaluation procedure" ;
-.
-
-iso19137:extendedDescription
-    a owl:ObjectProperty ;
-    rdfs:domain :MeasureDescription ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:BrowseGraphic ;
-    schema:description "extended description" ;
-    schema:name "extended description" ;
-.
-
-iso19137:has
-    a owl:ObjectProperty ;
-    rdfs:domain iso19115:Resource ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:Metadata ;
-    schema:description "has" ;
-    schema:name "has" ;
-.
-
-iso19137:key
-    a owl:DatatypeProperty ;
-    rdfs:domain :FormulaType ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "key" ;
-    schema:name "key" ;
-.
-
-iso19137:language
-    a owl:ObjectProperty ;
-    rdfs:domain :FormulaType ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range :FormulaLanguage ;
-    schema:description "language" ;
-    schema:name "language" ;
-.
-
-iso19137:languageVersion
-    a owl:DatatypeProperty ;
-    rdfs:domain :FormulaType ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "language version" ;
-    schema:name "language version" ;
-.
-
-iso19137:lotDescription
-    a owl:DatatypeProperty ;
-    rdfs:domain :SampleBasedInspection ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "lot description" ;
-    schema:name "lot description" ;
-.
-
-iso19137:mathematicalFormula
-    a owl:DatatypeProperty ;
-    rdfs:domain :FormulaType ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf owl:topDataProperty ;
-    schema:description "mathematical formula" ;
-    schema:name "mathematical formula" ;
-.
-
-iso19137:measureDescription
-    a owl:DatatypeProperty ;
-    rdfs:domain :MeasureReference ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf owl:topDataProperty ;
-    schema:description "measure description" ;
-    schema:name "measure description" ;
-.
-
-iso19137:measureIdentification
-    a owl:ObjectProperty ;
-    rdfs:domain :MeasureReference ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:Identifier ;
-    schema:description "measure identification" ;
-    schema:name "measure identification" ;
-.
-
-iso19137:name
-    a owl:DatatypeProperty ;
-    rdfs:domain
-        [
-            owl:unionOf (
-                :BasicMeasure
-                :EvaluationMethod
-                :MeasureParameter
-                :QualityMeasure
-            ) ;
-        ] ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf owl:topDataProperty ;
-    schema:description "name" ;
-    schema:name "name" ;
-.
-
-iso19137:nameOfMeasure
-    a owl:DatatypeProperty ;
-    rdfs:domain :MeasureReference ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf owl:topDataProperty ;
-    schema:description "name of measure" ;
-    schema:name "name of measure" ;
-.
-
-iso19137:onlineResource
-    a owl:ObjectProperty ;
-    rdfs:domain :QualityEvaluationReportInformation ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member iso19137-ont: ;
-    rdfs:range iso19115:Resource ;
-    schema:description "online resource" ;
-    schema:name "online resource" ;
-.
-
-iso19137:qualityElement
-    a owl:ObjectProperty ;
-    rdfs:domain :DataQuality ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range :QualityElement ;
-    schema:description "quality element" ;
-    schema:name "quality element" ;
-.
-
-iso19137:qualityEvaluationReportDetails
-    a owl:DatatypeProperty ;
-    rdfs:domain :QualityEvaluationReportInformation ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "quality evaluation report details" ;
-    schema:name "quality evaluation report details" ;
-.
-
-iso19137:referenceDoc
-    a owl:ObjectProperty ;
-    rdfs:domain :EvaluationMethod ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:Citation ;
-    schema:description "reference doc" ;
-    schema:name "reference doc" ;
-.
-
-iso19137:report2
-    a owl:ObjectProperty ;
-    rdfs:domain iso19115:Resource ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range :QualityEvaluationReportInformation ;
-    schema:description "report 2" ;
-    schema:name "report 2" ;
-.
-
-iso19137:reportReference
-    a owl:ObjectProperty ;
-    rdfs:domain :QualityEvaluationReportInformation ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:Citation ;
-    schema:description "report reference" ;
-    schema:name "report reference" ;
-.
-
-iso19137:resultScope
-    a owl:ObjectProperty ;
-    rdfs:domain :QualityResult ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:Scope ;
-    schema:description "result scope" ;
-    schema:name "result scope" ;
-.
-
-iso19137:samplingRatio
-    a owl:DatatypeProperty ;
-    rdfs:domain :SampleBasedInspection ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "sampling ratio" ;
-    schema:name "sampling ratio" ;
-.
-
-iso19137:samplingScheme
-    a owl:DatatypeProperty ;
-    rdfs:domain :SampleBasedInspection ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "sampling scheme" ;
-    schema:name "sampling scheme" ;
-.
-
-iso19137:value
-    a owl:ObjectProperty ;
-    rdfs:domain :QuantatitiveResult ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:Record ;
-    schema:description "value" ;
-    schema:name "value" ;
-.
-
-iso19137:valueRecordType
-    a owl:ObjectProperty ;
-    rdfs:domain :QuantatitiveResult ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19103:RecordType ;
-    schema:description "value record type" ;
-    schema:name "value record type" ;
-.
-
-iso19137:valueUnit
-    a owl:ObjectProperty ;
-    rdfs:domain :QuantatitiveResult ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19137:UnitOfMeasure ;
-    schema:description "value unit" ;
-    schema:name "value unit" ;
 .
 
 :AbsolutePositionalAccuracy
@@ -600,6 +260,16 @@ iso19137:valueUnit
     schema:name "Topological Consistency" ;
 .
 
+:abstract
+    a owl:DatatypeProperty ;
+    rdfs:domain :QualityEvaluationReportInformation ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range xsd:string ;
+    schema:description "abstract" ;
+    schema:name "abstract" ;
+.
+
 :alias
     a owl:DatatypeProperty ;
     rdfs:domain :QualityMeasure ;
@@ -608,6 +278,54 @@ iso19137:valueUnit
     rdfs:range xsd:string ;
     schema:description "alias" ;
     schema:name "alias" ;
+.
+
+:citation
+    a owl:ObjectProperty ;
+    rdfs:domain :SourceReference ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range iso19115:Citation ;
+    schema:description "citation" ;
+    schema:name "citation" ;
+.
+
+:dataQualityInfo
+    a owl:ObjectProperty ;
+    rdfs:domain iso19115:Metadata ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range :DataQuality ;
+    rdfs:subPropertyOf owl:topObjectProperty ;
+    schema:description "data quality info" ;
+    schema:name "data quality info" ;
+.
+
+:dateTime
+    a owl:DatatypeProperty ;
+    rdfs:domain
+        [
+            owl:unionOf (
+                :EvaluationMethod
+                :QualityResult
+            ) ;
+        ] ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range xsd:dateTime ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    schema:description "date time" ;
+    schema:name "date time" ;
+.
+
+:deductiveSource
+    a owl:DatatypeProperty ;
+    rdfs:domain :EvaluationMethod ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range xsd:string ;
+    schema:description "deductive source" ;
+    schema:name "deductive source" ;
 .
 
 :definition
@@ -679,6 +397,36 @@ iso19137:valueUnit
     schema:name "evaluation method" ;
 .
 
+:evaluationMethodDescription
+    a owl:DatatypeProperty ;
+    rdfs:domain :EvaluationMethod ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range xsd:string ;
+    schema:description "evaluation method description" ;
+    schema:name "evaluation method description" ;
+.
+
+:evaluationMethodType
+    a owl:ObjectProperty ;
+    rdfs:domain :EvaluationMethod ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range :EvaluationMethodTypeCode ;
+    schema:description "evaluation method type" ;
+    schema:name "evaluation method type" ;
+.
+
+:evaluationProcedure
+    a owl:ObjectProperty ;
+    rdfs:domain :EvaluationMethod ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range iso19115:Citation ;
+    schema:description "evaluation procedure" ;
+    schema:name "evaluation procedure" ;
+.
+
 :example
     a owl:ObjectProperty ;
     rdfs:domain :QualityMeasure ;
@@ -700,6 +448,16 @@ iso19137:valueUnit
     schema:name "explanation" ;
 .
 
+:extendedDescription
+    a owl:ObjectProperty ;
+    rdfs:domain :MeasureDescription ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range iso19115:BrowseGraphic ;
+    schema:description "extended description" ;
+    schema:name "extended description" ;
+.
+
 :formula
     a owl:ObjectProperty ;
     rdfs:domain :MeasureDescription ;
@@ -708,6 +466,67 @@ iso19137:valueUnit
     rdfs:range :FormulaType ;
     schema:description "formula" ;
     schema:name "formula" ;
+.
+
+:has
+    a owl:ObjectProperty ;
+    rdfs:domain iso19115:Resource ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range iso19115:Metadata ;
+    schema:description "has" ;
+    schema:name "has" ;
+.
+
+:key
+    a owl:DatatypeProperty ;
+    rdfs:domain :FormulaType ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range xsd:string ;
+    schema:description "key" ;
+    schema:name "key" ;
+.
+
+:language
+    a owl:ObjectProperty ;
+    rdfs:domain :FormulaType ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range :FormulaLanguage ;
+    schema:description "language" ;
+    schema:name "language" ;
+.
+
+:languageVersion
+    a owl:DatatypeProperty ;
+    rdfs:domain :FormulaType ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range xsd:string ;
+    schema:description "language version" ;
+    schema:name "language version" ;
+.
+
+:lotDescription
+    a owl:DatatypeProperty ;
+    rdfs:domain :SampleBasedInspection ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range xsd:string ;
+    schema:description "lot description" ;
+    schema:name "lot description" ;
+.
+
+:mathematicalFormula
+    a owl:DatatypeProperty ;
+    rdfs:domain :FormulaType ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    schema:description "mathematical formula" ;
+    schema:name "mathematical formula" ;
 .
 
 :measure
@@ -720,6 +539,27 @@ iso19137:valueUnit
     schema:name "measure" ;
 .
 
+:measureDescription
+    a owl:DatatypeProperty ;
+    rdfs:domain :MeasureReference ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    schema:description "measure description" ;
+    schema:name "measure description" ;
+.
+
+:measureIdentification
+    a owl:ObjectProperty ;
+    rdfs:domain :MeasureReference ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range iso19115:Identifier ;
+    schema:description "measure identification" ;
+    schema:name "measure identification" ;
+.
+
 :measureIdentifier
     a owl:ObjectProperty ;
     rdfs:domain :QualityMeasure ;
@@ -728,6 +568,46 @@ iso19137:valueUnit
     rdfs:range iso19115:Identifier ;
     schema:description "measure identifier" ;
     schema:name "measure identifier" ;
+.
+
+:name
+    a owl:DatatypeProperty ;
+    rdfs:domain
+        [
+            owl:unionOf (
+                :BasicMeasure
+                :EvaluationMethod
+                :MeasureParameter
+                :QualityMeasure
+            ) ;
+        ] ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    schema:description "name" ;
+    schema:name "name" ;
+.
+
+:nameOfMeasure
+    a owl:DatatypeProperty ;
+    rdfs:domain :MeasureReference ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+    schema:description "name of measure" ;
+    schema:name "name of measure" ;
+.
+
+:onlineResource
+    a owl:ObjectProperty ;
+    rdfs:domain :QualityEvaluationReportInformation ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range iso19115:Resource ;
+    schema:description "online resource" ;
+    schema:name "online resource" ;
 .
 
 :pass
@@ -740,6 +620,16 @@ iso19137:valueUnit
     schema:name "pass" ;
 .
 
+:qualityElement
+    a owl:ObjectProperty ;
+    rdfs:domain :DataQuality ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range :QualityElement ;
+    schema:description "quality element" ;
+    schema:name "quality element" ;
+.
+
 :qualityEvaluationReport
     a owl:ObjectProperty ;
     rdfs:domain :DataQuality ;
@@ -748,6 +638,26 @@ iso19137:valueUnit
     rdfs:range :QualityEvaluationReportInformation ;
     schema:description "quality evaluation report" ;
     schema:name "quality evaluation report" ;
+.
+
+:qualityEvaluationReportDetails
+    a owl:DatatypeProperty ;
+    rdfs:domain :QualityEvaluationReportInformation ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range xsd:string ;
+    schema:description "quality evaluation report details" ;
+    schema:name "quality evaluation report details" ;
+.
+
+:referenceDoc
+    a owl:ObjectProperty ;
+    rdfs:domain :EvaluationMethod ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range iso19115:Citation ;
+    schema:description "reference doc" ;
+    schema:name "reference doc" ;
 .
 
 :relatedQualityElement
@@ -770,6 +680,26 @@ iso19137:valueUnit
     schema:name "report" ;
 .
 
+:report2
+    a owl:ObjectProperty ;
+    rdfs:domain iso19115:Resource ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range :QualityEvaluationReportInformation ;
+    schema:description "report 2" ;
+    schema:name "report 2" ;
+.
+
+:reportReference
+    a owl:ObjectProperty ;
+    rdfs:domain :QualityEvaluationReportInformation ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range iso19115:Citation ;
+    schema:description "report reference" ;
+    schema:name "report reference" ;
+.
+
 :result
     a owl:ObjectProperty ;
     rdfs:domain :QualityElement ;
@@ -778,6 +708,36 @@ iso19137:valueUnit
     rdfs:range :QualityResult ;
     schema:description "result" ;
     schema:name "result" ;
+.
+
+:resultScope
+    a owl:ObjectProperty ;
+    rdfs:domain :QualityResult ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range iso19115:Scope ;
+    schema:description "result scope" ;
+    schema:name "result scope" ;
+.
+
+:samplingRatio
+    a owl:DatatypeProperty ;
+    rdfs:domain :SampleBasedInspection ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range xsd:string ;
+    schema:description "sampling ratio" ;
+    schema:name "sampling ratio" ;
+.
+
+:samplingScheme
+    a owl:DatatypeProperty ;
+    rdfs:domain :SampleBasedInspection ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range xsd:string ;
+    schema:description "sampling scheme" ;
+    schema:name "sampling scheme" ;
 .
 
 :scope
@@ -829,6 +789,26 @@ iso19137:valueUnit
     schema:name "text description" ;
 .
 
+:value
+    a owl:ObjectProperty ;
+    rdfs:domain :QuantatitiveResult ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range iso19103:Record ;
+    schema:description "value" ;
+    schema:name "value" ;
+.
+
+:valueRecordType
+    a owl:ObjectProperty ;
+    rdfs:domain :QuantatitiveResult ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range iso19103:RecordType ;
+    schema:description "value record type" ;
+    schema:name "value record type" ;
+.
+
 :valueStructure
     a owl:ObjectProperty ;
     rdfs:domain
@@ -862,6 +842,24 @@ iso19137:valueUnit
     schema:name "value type" ;
 .
 
+:valueUnit
+    a owl:ObjectProperty ;
+    rdfs:domain :QuantatitiveResult ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:range :UnitOfMeasure ;
+    schema:description "value unit" ;
+    schema:name "value unit" ;
+.
+
+iso19103:Record
+    a owl:Class ;
+    rdfs:isDefinedBy iso19103-ont: ;
+    rdfs:member ont: ;
+    schema:description "Record" ;
+    schema:name "Record" ;
+.
+
 iso19103:RecordType
     a owl:Class ;
     rdfs:isDefinedBy iso19103-ont: ;
@@ -876,23 +874,6 @@ iso19115:BrowseGraphic
     rdfs:member ont: ;
     schema:description "Browse Graphic" ;
     schema:name "Browse Graphic" ;
-.
-
-iso19137:EvaluationMethodTypeCode
-    a owl:Class ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf skos:Concept ;
-    schema:description "Evaluation Method Type Code" ;
-    schema:name "Evaluation Method Type Code" ;
-.
-
-iso19137:UnitOfMeasure
-    a owl:Class ;
-    rdfs:isDefinedBy iso19137-ont: ;
-    rdfs:member ont: ;
-    schema:description "Unit Of Measure" ;
-    schema:name "Unit Of Measure" ;
 .
 
 :CoverageResult
@@ -911,6 +892,15 @@ iso19137:UnitOfMeasure
     rdfs:subClassOf :QualityResult ;
     schema:description "Descriptive Result" ;
     schema:name "Descriptive Result" ;
+.
+
+:EvaluationMethodTypeCode
+    a owl:Class ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    rdfs:subClassOf skos:Concept ;
+    schema:description "Evaluation Method Type Code" ;
+    schema:name "Evaluation Method Type Code" ;
 .
 
 :FormulaLanguage
@@ -937,6 +927,14 @@ iso19137:UnitOfMeasure
     rdfs:subClassOf skos:Concept ;
     schema:description "Spatial Representation Type Code" ;
     schema:name "Spatial Representation Type Code" ;
+.
+
+:UnitOfMeasure
+    a owl:Class ;
+    rdfs:isDefinedBy ont: ;
+    rdfs:member ont: ;
+    schema:description "Unit Of Measure" ;
+    schema:name "Unit Of Measure" ;
 .
 
 :ValueStructure
