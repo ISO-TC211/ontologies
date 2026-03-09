@@ -1,0 +1,29 @@
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX mrr: <https://prez.dev/ManifestResourceRoles/>
+PREFIX prez: <https://prez.dev/>
+PREFIX prof: <http://www.w3.org/ns/dx/prof/>
+PREFIX schema: <https://schema.org/>
+
+<https://kurrawong.ai/semantic-bankground/annotations-manifest>
+    a <https://prez.dev/Manifest> ;
+    prof:hasResource
+        [
+            prof:hasArtifact "catalogue.ttl" ;
+            prof:hasRole mrr:CatalogueData ;
+            schema:description "The definition of, and metadata for, the code sets container object - catalogue" ;
+            schema:name "ISO/TC211 Ontologies Catalogue" ;
+        ] ,
+        [
+            dcterms:conformsTo <https://linked.data.gov.au/def/ontpub/validator> ;
+            prof:hasArtifact "ontologies/*.ttl" ;
+            schema:description "Ontologies as catalogued resources" ;
+            prof:hasRole mrr:ResourceData ;
+            schema:name "Resources Data" ;
+        ] ,
+        [
+            prof:hasArtifact "background/*.ttl" ;
+            prof:hasRole mrr:IncompleteCatalogueAndResourceLabels ;
+            schema:description "Labels for resource data elements and reference data such as Agents" ;
+            schema:name "Label files" ;
+        ] ;
+.
