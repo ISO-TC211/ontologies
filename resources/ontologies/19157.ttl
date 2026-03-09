@@ -1,4 +1,5 @@
 PREFIX : <https://def.isotc211.org/ont/19157/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX iso19103: <https://def.isotc211.org/ont/19103/>
 PREFIX iso19103-ont: <https://def.isotc211.org/ont/19103>
 PREFIX iso19115: <https://def.isotc211.org/ont/19115/>
@@ -1189,6 +1190,10 @@ iso19115:Identifier
 
 ont:
     a owl:Ontology ;
+    dcterms:requires
+        <https://def.isotc211.org/common/EvaluationMethodTypeCode> ,
+        <https://def.isotc211.org/common/FormulaLanguage> ,
+        <https://def.isotc211.org/common/ValueStructure> ;
     schema:citation "https://www.iso.org/standard/78900.html"^^xsd:anyURI ;
     schema:codeRepository "https://github.com/ISO-TC211/ontologies"^^xsd:anyURI ;
     schema:creator <https://def.isotc211.org/org/tc211> ;

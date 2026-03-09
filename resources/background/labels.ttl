@@ -1,101 +1,308 @@
+PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX sdo: <https://schema.org/>
+PREFIX schema: <https://schema.org/>
+
+dcterms:requires
+    schema:name "Requires" ;
+.
 
 rdf:first
-    sdo:name "first" ;
+    schema:name "first" ;
 .
 
 ()
-    sdo:name "nil" ;
+    schema:name "nil" ;
 .
 
 rdf:rest
-    sdo:name "rest" ;
+    schema:name "rest" ;
 .
 
 rdf:type
-    sdo:name "type" ;
+    schema:name "type" ;
+.
+
+owl:
+    schema:name "Web Ontology Language" ;
 .
 
 owl:Class
-    sdo:name "Class" ;
+    schema:name "Class" ;
 .
 
 owl:DatatypeProperty
-    sdo:name "Datatype Property" ;
+    schema:name "Datatype Property" ;
 .
 
 owl:ObjectProperty
-    sdo:name "Object Property" ;
+    schema:name "Object Property" ;
 .
 
 owl:Ontology
-    sdo:name "Ontology" ;
+    schema:name "Ontology" ;
 .
 
 owl:topObjectProperty
-    sdo:name "top object property" ;
+    schema:name "top object property" ;
 .
 
 owl:unionOf
-    sdo:name "union of" ;
+    schema:name "union of" ;
 .
 
-sdo:citation
-    sdo:name "citation" ;
+<https://def.isotc211.org/common/AddressAliasType>
+    schema:name "Address Alias Type" ;
 .
 
-sdo:codeRepository
-    sdo:name "code repository" ;
+<https://def.isotc211.org/common/AddressClass>
+    schema:name "Address Class" ;
 .
 
-sdo:creator
-    sdo:name "creator" ;
+<https://def.isotc211.org/common/AddressComponentType>
+    schema:name "Address Component Type" ;
 .
 
-sdo:dateCreated
-    sdo:name "date created" ;
+<https://def.isotc211.org/common/AddressComponentValueType>
+    schema:name "Address Component Value Type" ;
 .
 
-sdo:dateIssued
-    sdo:name "date issued" ;
+<https://def.isotc211.org/common/AddressLifecycleStage>
+    schema:name "Address Lifecycle Stage" ;
 .
 
-sdo:dateModified
-    sdo:name "date modified" ;
+<https://def.isotc211.org/common/AddressPositionType>
+    schema:name "Address Position Type" ;
 .
 
-sdo:description
-    sdo:name "description" ;
+<https://def.isotc211.org/common/AddressStatus>
+    schema:name "Address Status" ;
 .
 
-sdo:isBasedOn
-    sdo:name "is based on" ;
+<https://def.isotc211.org/common/AddressTypology>
+    schema:name "Address Typology" ;
 .
 
-sdo:isPartOf
-    sdo:name "is part of" ;
+<https://def.isotc211.org/common/AddressableObjectLifecycleStage>
+    schema:name "Addressable Object Lifecycle Stage" ;
 .
 
-sdo:license
-    sdo:name "license" ;
+<https://def.isotc211.org/common/AddressableObjectType>
+    schema:name "Addressable Object Type" ;
 .
 
-sdo:name
-    sdo:name "name" ;
+<https://def.isotc211.org/common/AmendmentType>
+    schema:name "RE Amendment Type Codes" ;
 .
 
-sdo:publisher
-    sdo:name "publisher" ;
+<https://def.isotc211.org/common/AssociationTypeCode>
+    schema:name "Association Type Code" ;
 .
 
-sdo:version
-    sdo:name "version" ;
+<https://def.isotc211.org/common/CellGeometryCode>
+    schema:name "Cell Geometry Code" ;
 .
 
-<https://rdflicense.linkeddata.es/rdflicense/cc-by4.0> schema:name "Creative Commons BY 4.0 License" .
+<https://def.isotc211.org/common/CharacterSetCode>
+    schema:name "Character Set Code" ;
+.
 
-<http://www.w3.org/2002/07/owl#> schema:name "Web Ontology Language" .
+<https://def.isotc211.org/common/ClassificationCode>
+    schema:name "Classification Code" ;
+.
 
-<https://def.isotc211.org/common/standards/iso-19157-1-2023> schema:name "ISO 19160-1:2015" .
+<https://def.isotc211.org/common/CountryCode>
+    schema:name "Country Code" ;
+.
+
+<https://def.isotc211.org/common/CouplingType>
+    schema:name "Coupling Type" ;
+.
+
+<https://def.isotc211.org/common/CoverageContentTypeCode>
+    schema:name "Coverage Content Type Code" ;
+.
+
+<https://def.isotc211.org/common/DCPList>
+    schema:name "DCPList" ;
+.
+
+<https://def.isotc211.org/common/DatatypeCode>
+    schema:name "Datatype Code" ;
+.
+
+<https://def.isotc211.org/common/DateTypeCode>
+    schema:name "Date Type Code" ;
+.
+
+<https://def.isotc211.org/common/DecisionStatus>
+    schema:name "RE Decision Status Codes" ;
+.
+
+<https://def.isotc211.org/common/DimensionNameTypeCode>
+    schema:name "Dimension Name Type Code" ;
+.
+
+<https://def.isotc211.org/common/Disposition>
+    schema:name "RE Decision Status Codes" ;
+.
+
+<https://def.isotc211.org/common/EvaluationMethodTypeCode>
+    schema:name "Evaluation Method Type Code" ;
+.
+
+<https://def.isotc211.org/common/FormulaLanguage>
+    schema:name "Formula Language" ;
+.
+
+<https://def.isotc211.org/common/GeometricObjectTypeCode>
+    schema:name "Geometric Object Type Code" ;
+.
+
+<https://def.isotc211.org/common/ImagingConditionCode>
+    schema:name "Imaging Condition Code" ;
+.
+
+<https://def.isotc211.org/common/InitiativeTypeCode>
+    schema:name "Initiative Type Code" ;
+.
+
+<https://def.isotc211.org/common/ItemStatus>
+    schema:name "RE Register Item Status Codes" ;
+.
+
+<https://def.isotc211.org/common/KeywordTypeCode>
+    schema:name "Keyword Type Code" ;
+.
+
+<https://def.isotc211.org/common/KeywordTypeCode-Bio>
+    schema:name "Keyword Type Code -Bio" ;
+.
+
+<https://def.isotc211.org/common/LanguageCode>
+    schema:name "Language Code" ;
+.
+
+<https://def.isotc211.org/common/MaintenanceFrequencyCode>
+    schema:name "Maintenance Frequency Code" ;
+.
+
+<https://def.isotc211.org/common/MediumFormatCode>
+    schema:name "Medium Format Code" ;
+.
+
+<https://def.isotc211.org/common/OnLineFunctionCode>
+    schema:name "On Line Function Code" ;
+.
+
+<https://def.isotc211.org/common/PresentationFormCode>
+    schema:name "Presentation Form Code" ;
+.
+
+<https://def.isotc211.org/common/ProgressCode>
+    schema:name "Progress Code" ;
+.
+
+<https://def.isotc211.org/common/ReferenceObjectType>
+    schema:name "Reference Object Type" ;
+.
+
+<https://def.isotc211.org/common/ReferenceSystemTypeCode>
+    schema:name "Reference System Type Code" ;
+.
+
+<https://def.isotc211.org/common/RestrictionCode>
+    schema:name "Restriction Code" ;
+.
+
+<https://def.isotc211.org/common/RoleCode>
+    schema:name "Role Code" ;
+.
+
+<https://def.isotc211.org/common/ScopeCode>
+    schema:name "Scope Code" ;
+.
+
+<https://def.isotc211.org/common/SimilarityToSource>
+    schema:name "RE Similarity To Source Codes" ;
+.
+
+<https://def.isotc211.org/common/SpatialRepresentationTypeCode>
+    schema:name "Spatial Representation Type Code" ;
+.
+
+<https://def.isotc211.org/common/TelephoneTypeCode>
+    schema:name "Telephone Type Code" ;
+.
+
+<https://def.isotc211.org/common/TopologyLevelCode>
+    schema:name "Topology Level Code" ;
+.
+
+<https://def.isotc211.org/common/ValueStructure>
+    schema:name "Value Structure Code" ;
+.
+
+<https://def.isotc211.org/common/standards>
+    schema:name "ISO/TC211 Standards" ;
+.
+
+<https://def.isotc211.org/common/standards/iso-19157-1-2023>
+    schema:name "ISO 19160-1:2015" ;
+.
+
+<https://rdflicense.linkeddata.es/rdflicense/cc-by4.0>
+    schema:name "Creative Commons BY 4.0 License" ;
+.
+
+schema:citation
+    schema:name "citation" ;
+.
+
+schema:codeRepository
+    schema:name "code repository" ;
+.
+
+schema:creator
+    schema:name "creator" ;
+.
+
+schema:dateCreated
+    schema:name "date created" ;
+.
+
+schema:dateIssued
+    schema:name "date issued" ;
+.
+
+schema:dateModified
+    schema:name "date modified" ;
+.
+
+schema:description
+    schema:name "description" ;
+.
+
+schema:isBasedOn
+    schema:name "is based on" ;
+.
+
+schema:isPartOf
+    schema:name "is part of" ;
+.
+
+schema:license
+    schema:name "license" ;
+.
+
+schema:name
+    schema:name "name" ;
+.
+
+schema:publisher
+    schema:name "publisher" ;
+.
+
+schema:version
+    schema:name "version" ;
+.
