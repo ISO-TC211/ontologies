@@ -1,1210 +1,1204 @@
-PREFIX : <https://def.isotc211.org/ont/19157/>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX iso19103: <https://def.isotc211.org/ont/19103/>
-PREFIX iso19103-ont: <https://def.isotc211.org/ont/19103>
-PREFIX iso19115: <https://def.isotc211.org/ont/19115/>
-PREFIX iso19115-ont: <https://def.isotc211.org/ont/19115>
-PREFIX ont: <https://def.isotc211.org/ont/19157>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX schema: <https://schema.org/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-
-iso19115:authority
-    a owl:ObjectProperty ;
-    rdfs:domain iso19115:Identifier ;
-    rdfs:isDefinedBy iso19115-ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:Citation ;
-    schema:description "authority" ;
-    schema:name "authority" ;
-.
-
-iso19115:code
-    a owl:DatatypeProperty ;
-    rdfs:domain iso19115:Identifier ;
-    rdfs:isDefinedBy iso19115-ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "code" ;
-    schema:name "code" ;
-.
-
-iso19115:codeSpace
-    a owl:DatatypeProperty ;
-    rdfs:domain iso19115:Identifier ;
-    rdfs:isDefinedBy iso19115-ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "code space" ;
-    schema:name "code space" ;
-.
-
-iso19115:describes
-    a owl:ObjectProperty ;
-    rdfs:domain iso19115:Metadata ;
-    rdfs:isDefinedBy iso19115-ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:Resource ;
-    schema:description "describes" ;
-    schema:name "describes" ;
-.
-
-iso19115:description
-    a owl:DatatypeProperty ;
-    rdfs:domain iso19115:Identifier ;
-    rdfs:isDefinedBy iso19115-ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "description" ;
-    schema:name "description" ;
-.
-
-iso19115:version
-    a owl:DatatypeProperty ;
-    rdfs:domain iso19115:Identifier ;
-    rdfs:isDefinedBy iso19115-ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "version" ;
-    schema:name "version" ;
-.
-
-:AbsolutePositionalAccuracy
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :PositionalAccuracy ;
-    schema:description "Absolute Positional Accuracy" ;
-    schema:name "Absolute Positional Accuracy" ;
-.
-
-:AccuracyOfATimeMeasurement
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :TemporalQuality ;
-    schema:description "Accuracy Of A Time Measurement" ;
-    schema:name "Accuracy Of A Time Measurement" ;
-.
-
-:AggregationDeviation
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :EvaluationMethod ;
-    schema:description "Aggregation Deviation" ;
-    schema:name "Aggregation Deviation" ;
-.
-
-:Commission
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :Completeness ;
-    schema:description "Commission" ;
-    schema:name "Commission" ;
-.
-
-:ConceptualConsistency
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :LogicalConsistency ;
-    schema:description "Conceptual Consistency" ;
-    schema:name "Conceptual Consistency" ;
-.
-
-:Confidence
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :Metaquality ;
-    schema:description "Confidence" ;
-    schema:name "Confidence" ;
-.
-
-:DomainConsistency
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :LogicalConsistency ;
-    schema:description "Domain Consistency" ;
-    schema:name "Domain Consistency" ;
-.
-
-:FormatConsistency
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :LogicalConsistency ;
-    schema:description "Format Consistency" ;
-    schema:name "Format Consistency" ;
-.
-
-:FullInspection
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :DataEvaluation ;
-    schema:description "Full Inspection" ;
-    schema:name "Full Inspection" ;
-.
-
-:GriddedDataPositionalAccuracy
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :PositionalAccuracy ;
-    schema:description "Gridded Data Positional Accuracy" ;
-    schema:name "Gridded Data Positional Accuracy" ;
-.
-
-:Homogeneity
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :Metaquality ;
-    schema:description "Homogeneity" ;
-    schema:name "Homogeneity" ;
-.
-
-:IndirectEvaluation
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :DataEvaluation ;
-    schema:description "Indirect Evaluation" ;
-    schema:name "Indirect Evaluation" ;
-.
-
-:NonQuantatitiveAttributeCorrectness
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :ThematicQuality ;
-    schema:description "Non Quantatitive Attribute Correctness" ;
-    schema:name "Non Quantatitive Attribute Correctness" ;
-.
-
-:Omission
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :Completeness ;
-    schema:description "Omission" ;
-    schema:name "Omission" ;
-.
-
-:QuantatitiveAttributeAccuracy
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :ThematicQuality ;
-    schema:description "Quantatitive Attribute Accuracy" ;
-    schema:name "Quantatitive Attribute Accuracy" ;
-.
-
-:RelativePositionalAccuracy
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :PositionalAccuracy ;
-    schema:description "Relative Positional Accuracy" ;
-    schema:name "Relative Positional Accuracy" ;
-.
-
-:Representativity
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :Metaquality ;
-    schema:description "Representativity" ;
-    schema:name "Representativity" ;
-.
-
-:TemporalConsistency
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :TemporalQuality ;
-    schema:description "Temporal Consistency" ;
-    schema:name "Temporal Consistency" ;
-.
-
-:TemporalValidity
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :TemporalQuality ;
-    schema:description "Temporal Validity" ;
-    schema:name "Temporal Validity" ;
-.
-
-:ThematicClassificationCorrectness
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :ThematicQuality ;
-    schema:description "Thematic Classification Correctness" ;
-    schema:name "Thematic Classification Correctness" ;
-.
-
-:TopologicalConsistency
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :LogicalConsistency ;
-    schema:description "Topological Consistency" ;
-    schema:name "Topological Consistency" ;
-.
-
-:abstract
-    a owl:DatatypeProperty ;
-    rdfs:domain :QualityEvaluationReportInformation ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "abstract" ;
-    schema:name "abstract" ;
-.
-
-:alias
-    a owl:DatatypeProperty ;
-    rdfs:domain :QualityMeasure ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "alias" ;
-    schema:name "alias" ;
-.
-
-:citation
-    a owl:ObjectProperty ;
-    rdfs:domain :SourceReference ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:Citation ;
-    schema:description "citation" ;
-    schema:name "citation" ;
-.
-
-:dataQualityInfo
-    a owl:ObjectProperty ;
-    rdfs:domain iso19115:Metadata ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range :DataQuality ;
-    rdfs:subPropertyOf owl:topObjectProperty ;
-    schema:description "data quality info" ;
-    schema:name "data quality info" ;
-.
-
-:dateTime
-    a owl:DatatypeProperty ;
-    rdfs:domain
-        [
-            owl:unionOf (
-                :EvaluationMethod
-                :QualityResult
-            ) ;
-        ] ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:dateTime ;
-    rdfs:subPropertyOf owl:topDataProperty ;
-    schema:description "date time" ;
-    schema:name "date time" ;
-.
-
-:deductiveSource
-    a owl:DatatypeProperty ;
-    rdfs:domain :EvaluationMethod ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "deductive source" ;
-    schema:name "deductive source" ;
-.
-
-:definition
-    a owl:DatatypeProperty ;
-    rdfs:domain
-        [
-            owl:unionOf (
-                :BasicMeasure
-                :MeasureParameter
-                :QualityMeasure
-            ) ;
-        ] ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf owl:topDataProperty ;
-    schema:description "definition" ;
-    schema:name "definition" ;
-.
-
-:derivedElement
-    a owl:ObjectProperty ;
-    rdfs:domain :QualityElement ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range :QualityElement ;
-    schema:description "derived element" ;
-    schema:name "derived element" ;
-.
-
-:description
-    a owl:ObjectProperty ;
-    rdfs:domain :QualityMeasure ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range :MeasureDescription ;
-    rdfs:subPropertyOf owl:topObjectProperty ;
-    schema:description "description" ;
-    schema:name "description" ;
-.
-
-:elementName
-    a owl:ObjectProperty ;
-    rdfs:domain :QualityMeasure ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range :TypeName ;
-    schema:description "element name" ;
-    schema:name "element name" ;
-.
-
-:elementReport
-    a owl:ObjectProperty ;
-    rdfs:domain :QualityEvaluationReportInformation ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range :QualityElement ;
-    schema:description "element report" ;
-    schema:name "element report" ;
-.
-
-:evaluationMethod
-    a owl:ObjectProperty ;
-    rdfs:domain :QualityElement ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range :EvaluationMethod ;
-    schema:description "evaluation method" ;
-    schema:name "evaluation method" ;
-.
-
-:evaluationMethodDescription
-    a owl:DatatypeProperty ;
-    rdfs:domain :EvaluationMethod ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "evaluation method description" ;
-    schema:name "evaluation method description" ;
-.
-
-:evaluationMethodType
-    a owl:ObjectProperty ;
-    rdfs:domain :EvaluationMethod ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range :EvaluationMethodTypeCode ;
-    schema:description "evaluation method type" ;
-    schema:name "evaluation method type" ;
-.
-
-:evaluationProcedure
-    a owl:ObjectProperty ;
-    rdfs:domain :EvaluationMethod ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:Citation ;
-    schema:description "evaluation procedure" ;
-    schema:name "evaluation procedure" ;
-.
-
-:example
-    a owl:ObjectProperty ;
-    rdfs:domain :QualityMeasure ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range :MeasureDescription ;
-    rdfs:subPropertyOf owl:topObjectProperty ;
-    schema:description "example" ;
-    schema:name "example" ;
-.
-
-:explanation
-    a owl:DatatypeProperty ;
-    rdfs:domain :ConformanceResult ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "explanation" ;
-    schema:name "explanation" ;
-.
-
-:extendedDescription
-    a owl:ObjectProperty ;
-    rdfs:domain :MeasureDescription ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:BrowseGraphic ;
-    schema:description "extended description" ;
-    schema:name "extended description" ;
-.
-
-:formula
-    a owl:ObjectProperty ;
-    rdfs:domain :MeasureDescription ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range :FormulaType ;
-    schema:description "formula" ;
-    schema:name "formula" ;
-.
-
-:has
-    a owl:ObjectProperty ;
-    rdfs:domain iso19115:Resource ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:Metadata ;
-    schema:description "has" ;
-    schema:name "has" ;
-.
-
-:key
-    a owl:DatatypeProperty ;
-    rdfs:domain :FormulaType ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "key" ;
-    schema:name "key" ;
-.
-
-:language
-    a owl:ObjectProperty ;
-    rdfs:domain :FormulaType ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range :FormulaLanguage ;
-    schema:description "language" ;
-    schema:name "language" ;
-.
-
-:languageVersion
-    a owl:DatatypeProperty ;
-    rdfs:domain :FormulaType ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "language version" ;
-    schema:name "language version" ;
-.
-
-:lotDescription
-    a owl:DatatypeProperty ;
-    rdfs:domain :SampleBasedInspection ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "lot description" ;
-    schema:name "lot description" ;
-.
-
-:mathematicalFormula
-    a owl:DatatypeProperty ;
-    rdfs:domain :FormulaType ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf owl:topDataProperty ;
-    schema:description "mathematical formula" ;
-    schema:name "mathematical formula" ;
-.
-
-:measure
-    a owl:ObjectProperty ;
-    rdfs:domain :QualityElement ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range :MeasureReference ;
-    schema:description "measure" ;
-    schema:name "measure" ;
-.
-
-:measureDescription
-    a owl:DatatypeProperty ;
-    rdfs:domain :MeasureReference ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf owl:topDataProperty ;
-    schema:description "measure description" ;
-    schema:name "measure description" ;
-.
-
-:measureIdentification
-    a owl:ObjectProperty ;
-    rdfs:domain :MeasureReference ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:Identifier ;
-    schema:description "measure identification" ;
-    schema:name "measure identification" ;
-.
-
-:measureIdentifier
-    a owl:ObjectProperty ;
-    rdfs:domain :QualityMeasure ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:Identifier ;
-    schema:description "measure identifier" ;
-    schema:name "measure identifier" ;
-.
-
-:name
-    a owl:DatatypeProperty ;
-    rdfs:domain
-        [
-            owl:unionOf (
-                :BasicMeasure
-                :EvaluationMethod
-                :MeasureParameter
-                :QualityMeasure
-            ) ;
-        ] ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf owl:topDataProperty ;
-    schema:description "name" ;
-    schema:name "name" ;
-.
-
-:nameOfMeasure
-    a owl:DatatypeProperty ;
-    rdfs:domain :MeasureReference ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf owl:topDataProperty ;
-    schema:description "name of measure" ;
-    schema:name "name of measure" ;
-.
-
-:onlineResource
-    a owl:ObjectProperty ;
-    rdfs:domain :QualityEvaluationReportInformation ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:Resource ;
-    schema:description "online resource" ;
-    schema:name "online resource" ;
-.
-
-:pass
-    a owl:DatatypeProperty ;
-    rdfs:domain :ConformanceResult ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "pass" ;
-    schema:name "pass" ;
-.
-
-:qualityElement
-    a owl:ObjectProperty ;
-    rdfs:domain :DataQuality ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range :QualityElement ;
-    schema:description "quality element" ;
-    schema:name "quality element" ;
-.
-
-:qualityEvaluationReport
-    a owl:ObjectProperty ;
-    rdfs:domain :DataQuality ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range :QualityEvaluationReportInformation ;
-    schema:description "quality evaluation report" ;
-    schema:name "quality evaluation report" ;
-.
-
-:qualityEvaluationReportDetails
-    a owl:DatatypeProperty ;
-    rdfs:domain :QualityEvaluationReportInformation ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "quality evaluation report details" ;
-    schema:name "quality evaluation report details" ;
-.
-
-:referenceDoc
-    a owl:ObjectProperty ;
-    rdfs:domain :EvaluationMethod ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:Citation ;
-    schema:description "reference doc" ;
-    schema:name "reference doc" ;
-.
-
-:relatedQualityElement
-    a owl:ObjectProperty ;
-    rdfs:domain :Metaquality ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range :QualityElement ;
-    schema:description "related quality element" ;
-    schema:name "related quality element" ;
-.
-
-:report
-    a owl:ObjectProperty ;
-    rdfs:domain :DataQuality ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range :QualityElement ;
-    schema:description "report" ;
-    schema:name "report" ;
-.
-
-:report2
-    a owl:ObjectProperty ;
-    rdfs:domain iso19115:Resource ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range :QualityEvaluationReportInformation ;
-    schema:description "report 2" ;
-    schema:name "report 2" ;
-.
-
-:reportReference
-    a owl:ObjectProperty ;
-    rdfs:domain :QualityEvaluationReportInformation ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:Citation ;
-    schema:description "report reference" ;
-    schema:name "report reference" ;
-.
-
-:result
-    a owl:ObjectProperty ;
-    rdfs:domain :QualityElement ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range :QualityResult ;
-    schema:description "result" ;
-    schema:name "result" ;
-.
-
-:resultScope
-    a owl:ObjectProperty ;
-    rdfs:domain :QualityResult ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:Scope ;
-    schema:description "result scope" ;
-    schema:name "result scope" ;
-.
-
-:samplingRatio
-    a owl:DatatypeProperty ;
-    rdfs:domain :SampleBasedInspection ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "sampling ratio" ;
-    schema:name "sampling ratio" ;
-.
-
-:samplingScheme
-    a owl:DatatypeProperty ;
-    rdfs:domain :SampleBasedInspection ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "sampling scheme" ;
-    schema:name "sampling scheme" ;
-.
-
-:scope
-    a owl:ObjectProperty ;
-    rdfs:domain :DataQuality ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:Scope ;
-    rdfs:subPropertyOf owl:topObjectProperty ;
-    schema:description "scope" ;
-    schema:name "scope" ;
-.
-
-:spatialRepresentationType
-    a owl:ObjectProperty ;
-    rdfs:domain :CoverageResult ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range :SpatialRepresentationTypeCode ;
-    schema:description "spatial representation type" ;
-    schema:name "spatial representation type" ;
-.
-
-:specification
-    a owl:ObjectProperty ;
-    rdfs:domain :QuantatitiveResult ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19115:Citation ;
-    schema:description "specification" ;
-    schema:name "specification" ;
-.
-
-:statement
-    a owl:DatatypeProperty ;
-    rdfs:domain :DescriptiveResult ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range xsd:string ;
-    schema:description "statement" ;
-    schema:name "statement" ;
-.
-
-:textDescription
-    a owl:DatatypeProperty ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    schema:description "text description" ;
-    schema:name "text description" ;
-.
-
-:value
-    a owl:ObjectProperty ;
-    rdfs:domain :QuantatitiveResult ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19103:Record ;
-    schema:description "value" ;
-    schema:name "value" ;
-.
-
-:valueRecordType
-    a owl:ObjectProperty ;
-    rdfs:domain :QuantatitiveResult ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range iso19103:RecordType ;
-    schema:description "value record type" ;
-    schema:name "value record type" ;
-.
-
-:valueStructure
-    a owl:ObjectProperty ;
-    rdfs:domain
-        [
-            owl:unionOf (
-                :MeasureParameter
-                :QualityMeasure
-            ) ;
-        ] ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range :ValueStructure ;
-    schema:description "value structure" ;
-    schema:name "value structure" ;
-.
-
-:valueType
-    a owl:ObjectProperty ;
-    rdfs:domain
-        [
-            owl:unionOf (
-                :BasicMeasure
-                :MeasureParameter
-                :QualityMeasure
-            ) ;
-        ] ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range :TypeName ;
-    schema:description "value type" ;
-    schema:name "value type" ;
-.
-
-:valueUnit
-    a owl:ObjectProperty ;
-    rdfs:domain :QuantatitiveResult ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:range :UnitOfMeasure ;
-    schema:description "value unit" ;
-    schema:name "value unit" ;
-.
-
-iso19103:Record
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    schema:description "Record" ;
-    schema:name "Record" ;
-.
-
-iso19103:RecordType
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    schema:description "Record Type" ;
-    schema:name "Record Type" ;
-.
-
-iso19115:BrowseGraphic
-    a owl:Class ;
-    rdfs:isDefinedBy iso19115-ont: ;
-    rdfs:member ont: ;
-    schema:description "Browse Graphic" ;
-    schema:name "Browse Graphic" ;
-.
-
-:CoverageResult
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :QualityResult ;
-    schema:description "Coverage Result" ;
-    schema:name "Coverage Result" ;
-.
-
-:DescriptiveResult
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :QualityResult ;
-    schema:description "Descriptive Result" ;
-    schema:name "Descriptive Result" ;
-.
-
-:EvaluationMethodTypeCode
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf skos:Concept ;
-    schema:description "Evaluation Method Type Code" ;
-    schema:name "Evaluation Method Type Code" ;
-.
-
-:FormulaLanguage
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf skos:Concept ;
-    schema:description "Formula Language" ;
-    schema:name "Formula Language" ;
-.
-
-:SourceReference
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    schema:description "Source Reference" ;
-    schema:name "Source Reference" ;
-.
-
-:SpatialRepresentationTypeCode
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf skos:Concept ;
-    schema:description "Spatial Representation Type Code" ;
-    schema:name "Spatial Representation Type Code" ;
-.
-
-:UnitOfMeasure
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    schema:description "Unit Of Measure" ;
-    schema:name "Unit Of Measure" ;
-.
-
-:ValueStructure
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf skos:Concept ;
-    schema:description "Value Structure" ;
-    schema:name "Value Structure" ;
-.
-
-iso19115:Scope
-    a owl:Class ;
-    rdfs:isDefinedBy iso19115-ont: ;
-    rdfs:member ont: ;
-    schema:description "Scope" ;
-    schema:name "Scope" ;
-.
-
-:Completeness
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :QualityElement ;
-    schema:description "Completeness" ;
-    schema:name "Completeness" ;
-.
-
-:ConformanceResult
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :QualityResult ;
-    schema:description "Conformance Result" ;
-    schema:name "Conformance Result" ;
-.
-
-:TypeName
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    schema:description "Type Name" ;
-    schema:name "Type Name" ;
-.
-
-iso19115:Metadata
-    a owl:Class ;
-    rdfs:isDefinedBy iso19115-ont: ;
-    rdfs:member ont: ;
-    schema:description "Metadata" ;
-    schema:name "Metadata" ;
-.
-
-:BasicMeasure
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    schema:description "Basic Measure" ;
-    schema:name "Basic Measure" ;
-.
-
-:DataEvaluation
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :EvaluationMethod ;
-    schema:description "Data Evaluation" ;
-    schema:name "Data Evaluation" ;
-.
-
-:PositionalAccuracy
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :QualityElement ;
-    schema:description "Positional Accuracy" ;
-    schema:name "Positional Accuracy" ;
-.
-
-:SampleBasedInspection
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :DataEvaluation ;
-    schema:description "Sample Based Inspection" ;
-    schema:name "Sample Based Inspection" ;
-.
-
-:TemporalQuality
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :QualityElement ;
-    schema:description "Temporal Quality" ;
-    schema:name "Temporal Quality" ;
-.
-
-:ThematicQuality
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :QualityElement ;
-    schema:description "Thematic Quality" ;
-    schema:name "Thematic Quality" ;
-.
-
-skos:Concept
-    a owl:Class ;
-    rdfs:isDefinedBy skos: ;
-    rdfs:member ont: ;
-    schema:description "Concept" ;
-    schema:name "Concept" ;
-.
-
-iso19115:Resource
-    a owl:Class ;
-    rdfs:isDefinedBy iso19115-ont: ;
-    rdfs:member ont: ;
-    schema:description "Resource" ;
-    schema:name "Resource" ;
-.
-
-:LogicalConsistency
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :QualityElement ;
-    schema:description "Logical Consistency" ;
-    schema:name "Logical Consistency" ;
-.
-
-:MeasureDescription
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    schema:description "Measure Description" ;
-    schema:name "Measure Description" ;
-.
-
-:MeasureParameter
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    schema:description "Measure Parameter" ;
-    schema:name "Measure Parameter" ;
-.
-
-:MeasureReference
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    schema:description "Measure Reference" ;
-    schema:name "Measure Reference" ;
-.
-
-:Metaquality
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    schema:description "Metaquality" ;
-    schema:name "Metaquality" ;
-.
-
-:QuantatitiveResult
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    rdfs:subClassOf :QualityResult ;
-    schema:description "Quantatitive Result" ;
-    schema:name "Quantatitive Result" ;
-.
-
-:DataQuality
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    schema:description "Data Quality" ;
-    schema:name "Data Quality" ;
-.
-
-:FormulaType
-    a owl:Class ;
-    rdfs:isDefinedBy iso19103-ont: ;
-    rdfs:member ont: ;
-    schema:description "Formula Type" ;
-    schema:name "Formula Type" ;
-.
-
-owl:topDataProperty
-    a owl:DatatypeProperty ;
-    rdfs:isDefinedBy owl: ;
-    rdfs:member ont: ;
-    schema:description "top data property" ;
-    schema:name "top data property" ;
-.
-
-iso19115:Citation
-    a owl:Class ;
-    rdfs:isDefinedBy iso19115-ont: ;
-    rdfs:member ont: ;
-    schema:description "Citation" ;
-    schema:name "Citation" ;
-.
-
-iso19115:Identifier
-    a owl:Class ;
-    rdfs:isDefinedBy iso19115-ont: ;
-    rdfs:member ont: ;
-    schema:description "Identifier" ;
-    schema:name "Identifier" ;
-.
-
-:QualityEvaluationReportInformation
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    schema:description "Quality Evaluation Report Information" ;
-    schema:name "Quality Evaluation Report Information" ;
-.
-
-:QualityResult
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    schema:description "Quality Result" ;
-    schema:name "Quality Result" ;
-.
-
-:QualityMeasure
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    schema:description "Quality Measure" ;
-    schema:name "Quality Measure" ;
-.
-
-:EvaluationMethod
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    schema:description "Evaluation Method" ;
-    schema:name "Evaluation Method" ;
-.
-
-:QualityElement
-    a owl:Class ;
-    rdfs:isDefinedBy ont: ;
-    rdfs:member ont: ;
-    schema:description "Quality Element" ;
-    schema:name "Quality Element" ;
-.
-
-ont:
-    a owl:Ontology ;
-    dcterms:requires
-        <https://def.isotc211.org/common/EvaluationMethodTypeCode> ,
-        <https://def.isotc211.org/common/FormulaLanguage> ,
-        <https://def.isotc211.org/common/ValueStructure> ;
-    schema:citation "https://www.iso.org/standard/78900.html"^^xsd:anyURI ;
-    schema:codeRepository "https://github.com/ISO-TC211/ontologies"^^xsd:anyURI ;
-    schema:creator <https://def.isotc211.org/org/tc211> ;
-    schema:dateCreated "2026-03-09"^^xsd:date ;
-    schema:dateIssued "2000-01-01"^^xsd:date ;
-    schema:dateModified "2026-03-09"^^xsd:date ;
-    schema:description "ISO 19157 - Geographic information - Data quality - ontology" ;
-    schema:isBasedOn <https://def.isotc211.org/common/standards/iso-19157-1-2023> ;
-    schema:isPartOf <https://def.isotc211.org/ontologies> ;
-    schema:license <https://rdflicense.linkeddata.es/rdflicense/cc-by4.0> ;
-    schema:name "ISO 19157 - Geographic information - Data quality - ontology" ;
-    schema:publisher <https://def.isotc211.org/org/tc211> ;
-    schema:version "2023" ;
-.
+@prefix : <https://def.isotc211.org/ont/19157/> .
+@prefix ont: <https://def.isotc211.org/ont/19157> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <https://schema.org/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix iso19103: <https://def.isotc211.org/ont/19103/> .
+@prefix iso19115: <https://def.isotc211.org/ont/19115/> .
+@prefix iso19103-ont: <https://def.isotc211.org/ont/19103> .
+@prefix iso19115-ont: <https://def.isotc211.org/ont/19115> .
+@base <https://def.isotc211.org/ont/19157/> .
+
+<https://def.isotc211.org/ont/19157> rdf:type owl:Ontology ;
+                                      dcterms:requires <https://def.isotc211.org/common/EvaluationMethodTypeCode> ,
+                                                       <https://def.isotc211.org/common/FormulaLanguage> ,
+                                                       <https://def.isotc211.org/common/ValueStructure> ;
+                                      schema:citation "https://www.iso.org/standard/78900.html"^^xsd:anyURI ;
+                                      schema:codeRepository "https://github.com/ISO-TC211/ontologies"^^xsd:anyURI ;
+                                      schema:creator <https://def.isotc211.org/org/tc211> ;
+                                      schema:dateCreated "2026-03-09"^^xsd:date ;
+                                      schema:dateIssued "2000-01-01"^^xsd:date ;
+                                      schema:dateModified "2026-03-09"^^xsd:date ;
+                                      schema:description "ISO 19157 - Geographic information - Data quality - ontology" ;
+                                      schema:isBasedOn <https://def.isotc211.org/common/standards/iso-19157-1-2023> ;
+                                      schema:isPartOf <https://def.isotc211.org/ontologies> ;
+                                      schema:license <https://rdflicense.linkeddata.es/rdflicense/cc-by4.0> ;
+                                      schema:name "ISO 19157 - Geographic information - Data quality - ontology" ;
+                                      schema:publisher <https://def.isotc211.org/org/tc211> ;
+                                      schema:version "2023" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/requires
+dcterms:requires rdf:type owl:AnnotationProperty .
+
+
+###  https://schema.org/citation
+schema:citation rdf:type owl:AnnotationProperty .
+
+
+###  https://schema.org/codeRepository
+schema:codeRepository rdf:type owl:AnnotationProperty .
+
+
+###  https://schema.org/creator
+schema:creator rdf:type owl:AnnotationProperty .
+
+
+###  https://schema.org/dateCreated
+schema:dateCreated rdf:type owl:AnnotationProperty .
+
+
+###  https://schema.org/dateIssued
+schema:dateIssued rdf:type owl:AnnotationProperty .
+
+
+###  https://schema.org/dateModified
+schema:dateModified rdf:type owl:AnnotationProperty .
+
+
+###  https://schema.org/description
+schema:description rdf:type owl:AnnotationProperty .
+
+
+###  https://schema.org/isBasedOn
+schema:isBasedOn rdf:type owl:AnnotationProperty .
+
+
+###  https://schema.org/isPartOf
+schema:isPartOf rdf:type owl:AnnotationProperty .
+
+
+###  https://schema.org/license
+schema:license rdf:type owl:AnnotationProperty .
+
+
+###  https://schema.org/name
+schema:name rdf:type owl:AnnotationProperty .
+
+
+###  https://schema.org/publisher
+schema:publisher rdf:type owl:AnnotationProperty .
+
+
+###  https://schema.org/version
+schema:version rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#date
+xsd:date rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://def.isotc211.org/ont/19115/authority
+iso19115:authority rdf:type owl:ObjectProperty ;
+                   rdfs:domain iso19115:Identifier ;
+                   rdfs:range iso19115:Citation ;
+                   rdfs:isDefinedBy iso19115-ont: ;
+                   schema:description "authority" ;
+                   schema:name "authority" .
+
+
+###  https://def.isotc211.org/ont/19115/describes
+iso19115:describes rdf:type owl:ObjectProperty ;
+                   rdfs:domain iso19115:Metadata ;
+                   rdfs:range iso19115:Resource ;
+                   rdfs:isDefinedBy iso19115-ont: ;
+                   schema:description "describes" ;
+                   schema:name "describes" .
+
+
+###  https://def.isotc211.org/ont/19115/resultContent
+iso19115:resultContent rdf:type owl:ObjectProperty ;
+                       rdfs:domain :CoverageResult ;
+                       rdfs:range iso19115:RangeDimension ;
+                       rdfs:isDefinedBy iso19115-ont: ;
+                       schema:description <result content> ;
+                       schema:name "result content" .
+
+
+###  https://def.isotc211.org/ont/19115/resultFormat
+iso19115:resultFormat rdf:type owl:ObjectProperty ;
+                      rdfs:domain :CoverageResult ;
+                      rdfs:range iso19115:Format ;
+                      rdfs:isDefinedBy iso19115-ont: ;
+                      schema:description "result format" ;
+                      schema:name "result format" .
+
+
+###  https://def.isotc211.org/ont/19115/resultSpatialRepresentation
+iso19115:resultSpatialRepresentation rdf:type owl:ObjectProperty ;
+                                     rdfs:domain :CoverageResult ;
+                                     rdfs:range iso19115:SpatialRepresentation ;
+                                     rdfs:isDefinedBy iso19115-ont: ;
+                                     schema:description "result spatial representation" ;
+                                     schema:name "result spatial representation" .
+
+
+###  https://def.isotc211.org/ont/19157/citation
+:citation rdf:type owl:ObjectProperty ;
+          rdfs:domain :SourceReference ;
+          rdfs:range iso19115:Citation ;
+          rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+          schema:description "citation" ;
+          schema:name "citation" .
+
+
+###  https://def.isotc211.org/ont/19157/dataQualityInfo
+:dataQualityInfo rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf owl:topObjectProperty ;
+                 rdfs:domain iso19115:Metadata ;
+                 rdfs:range :DataQuality ;
+                 rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                 schema:description "data quality info" ;
+                 schema:name "data quality info" .
+
+
+###  https://def.isotc211.org/ont/19157/derivedElement
+:derivedElement rdf:type owl:ObjectProperty ;
+                rdfs:domain :QualityElement ;
+                rdfs:range :QualityElement ;
+                rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                schema:description "derived element" ;
+                schema:name "derived element" .
+
+
+###  https://def.isotc211.org/ont/19157/description
+:description rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
+             rdfs:domain :QualityMeasure ;
+             rdfs:range :MeasureDescription ;
+             rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+             schema:description "description" ;
+             schema:name "description" .
+
+
+###  https://def.isotc211.org/ont/19157/elementName
+:elementName rdf:type owl:ObjectProperty ;
+             rdfs:domain :QualityMeasure ;
+             rdfs:range :TypeName ;
+             rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+             schema:description "element name" ;
+             schema:name "element name" .
+
+
+###  https://def.isotc211.org/ont/19157/elementReport
+:elementReport rdf:type owl:ObjectProperty ;
+               rdfs:domain :QualityEvaluationReportInformation ;
+               rdfs:range :QualityElement ;
+               rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+               schema:description "element report" ;
+               schema:name "element report" .
+
+
+###  https://def.isotc211.org/ont/19157/evaluationMethod
+:evaluationMethod rdf:type owl:ObjectProperty ;
+                  rdfs:domain :QualityElement ;
+                  rdfs:range :EvaluationMethod ;
+                  rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                  schema:description "evaluation method" ;
+                  schema:name "evaluation method" .
+
+
+###  https://def.isotc211.org/ont/19157/evaluationMethodType
+:evaluationMethodType rdf:type owl:ObjectProperty ;
+                      rdfs:domain :EvaluationMethod ;
+                      rdfs:range :EvaluationMethodTypeCode ;
+                      rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                      schema:description "evaluation method type" ;
+                      schema:name "evaluation method type" .
+
+
+###  https://def.isotc211.org/ont/19157/evaluationProcedure
+:evaluationProcedure rdf:type owl:ObjectProperty ;
+                     rdfs:domain :EvaluationMethod ;
+                     rdfs:range iso19115:Citation ;
+                     rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                     schema:description "evaluation procedure" ;
+                     schema:name "evaluation procedure" .
+
+
+###  https://def.isotc211.org/ont/19157/example
+:example rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf owl:topObjectProperty ;
+         rdfs:domain :QualityMeasure ;
+         rdfs:range :MeasureDescription ;
+         rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+         schema:description "example" ;
+         schema:name "example" .
+
+
+###  https://def.isotc211.org/ont/19157/extendedDescription
+:extendedDescription rdf:type owl:ObjectProperty ;
+                     rdfs:domain :MeasureDescription ;
+                     rdfs:range iso19115:BrowseGraphic ;
+                     rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                     schema:description "extended description" ;
+                     schema:name "extended description" .
+
+
+###  https://def.isotc211.org/ont/19157/formula
+:formula rdf:type owl:ObjectProperty ;
+         rdfs:domain :MeasureDescription ;
+         rdfs:range :FormulaType ;
+         rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+         schema:description "formula" ;
+         schema:name "formula" .
+
+
+###  https://def.isotc211.org/ont/19157/has
+:has rdf:type owl:ObjectProperty ;
+     rdfs:domain iso19115:Resource ;
+     rdfs:range iso19115:Metadata ;
+     rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+     schema:description "has" ;
+     schema:name "has" .
+
+
+###  https://def.isotc211.org/ont/19157/language
+:language rdf:type owl:ObjectProperty ;
+          rdfs:domain :FormulaType ;
+          rdfs:range :FormulaLanguage ;
+          rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+          schema:description "language" ;
+          schema:name "language" .
+
+
+###  https://def.isotc211.org/ont/19157/measure
+:measure rdf:type owl:ObjectProperty ;
+         rdfs:domain :QualityElement ;
+         rdfs:range :MeasureReference ;
+         rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+         schema:description "measure" ;
+         schema:name "measure" .
+
+
+###  https://def.isotc211.org/ont/19157/measureIdentification
+:measureIdentification rdf:type owl:ObjectProperty ;
+                       rdfs:domain :MeasureReference ;
+                       rdfs:range iso19115:Identifier ;
+                       rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                       schema:description "measure identification" ;
+                       schema:name "measure identification" .
+
+
+###  https://def.isotc211.org/ont/19157/measureIdentifier
+:measureIdentifier rdf:type owl:ObjectProperty ;
+                   rdfs:domain :QualityMeasure ;
+                   rdfs:range iso19115:Identifier ;
+                   rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                   schema:description "measure identifier" ;
+                   schema:name "measure identifier" .
+
+
+###  https://def.isotc211.org/ont/19157/onlineResource
+:onlineResource rdf:type owl:ObjectProperty ;
+                rdfs:domain :QualityEvaluationReportInformation ;
+                rdfs:range iso19115:Resource ;
+                rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                schema:description "online resource" ;
+                schema:name "online resource" .
+
+
+###  https://def.isotc211.org/ont/19157/qualityElement
+:qualityElement rdf:type owl:ObjectProperty ;
+                rdfs:domain :DataQuality ;
+                rdfs:range :QualityElement ;
+                rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                schema:description "quality element" ;
+                schema:name "quality element" .
+
+
+###  https://def.isotc211.org/ont/19157/qualityEvaluationReport
+:qualityEvaluationReport rdf:type owl:ObjectProperty ;
+                         rdfs:domain :DataQuality ;
+                         rdfs:range :QualityEvaluationReportInformation ;
+                         rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                         schema:description "quality evaluation report" ;
+                         schema:name "quality evaluation report" .
+
+
+###  https://def.isotc211.org/ont/19157/referenceDoc
+:referenceDoc rdf:type owl:ObjectProperty ;
+              rdfs:domain :EvaluationMethod ;
+              rdfs:range iso19115:Citation ;
+              rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+              schema:description "reference doc" ;
+              schema:name "reference doc" .
+
+
+###  https://def.isotc211.org/ont/19157/relatedQualityElement
+:relatedQualityElement rdf:type owl:ObjectProperty ;
+                       rdfs:domain :Metaquality ;
+                       rdfs:range :QualityElement ;
+                       rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                       schema:description "related quality element" ;
+                       schema:name "related quality element" .
+
+
+###  https://def.isotc211.org/ont/19157/report
+:report rdf:type owl:ObjectProperty ;
+        rdfs:domain :DataQuality ;
+        rdfs:range :QualityElement ;
+        rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+        schema:description "report" ;
+        schema:name "report" .
+
+
+###  https://def.isotc211.org/ont/19157/report2
+:report2 rdf:type owl:ObjectProperty ;
+         rdfs:domain iso19115:Resource ;
+         rdfs:range :QualityEvaluationReportInformation ;
+         rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+         schema:description "report 2" ;
+         schema:name "report 2" .
+
+
+###  https://def.isotc211.org/ont/19157/reportReference
+:reportReference rdf:type owl:ObjectProperty ;
+                 rdfs:domain :QualityEvaluationReportInformation ;
+                 rdfs:range iso19115:Citation ;
+                 rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                 schema:description "report reference" ;
+                 schema:name "report reference" .
+
+
+###  https://def.isotc211.org/ont/19157/result
+:result rdf:type owl:ObjectProperty ;
+        rdfs:domain :QualityElement ;
+        rdfs:range :QualityResult ;
+        rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+        schema:description "result" ;
+        schema:name "result" .
+
+
+###  https://def.isotc211.org/ont/19157/resultScope
+:resultScope rdf:type owl:ObjectProperty ;
+             rdfs:domain :QualityResult ;
+             rdfs:range iso19115:Scope ;
+             rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+             schema:description "result scope" ;
+             schema:name "result scope" .
+
+
+###  https://def.isotc211.org/ont/19157/scope
+:scope rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf owl:topObjectProperty ;
+       rdfs:domain :DataQuality ;
+       rdfs:range iso19115:Scope ;
+       rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+       schema:description "scope" ;
+       schema:name "scope" .
+
+
+###  https://def.isotc211.org/ont/19157/spatialRepresentationType
+:spatialRepresentationType rdf:type owl:ObjectProperty ;
+                           rdfs:domain :CoverageResult ;
+                           rdfs:range :SpatialRepresentationTypeCode ;
+                           rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                           schema:description "spatial representation type" ;
+                           schema:name "spatial representation type" .
+
+
+###  https://def.isotc211.org/ont/19157/specification
+:specification rdf:type owl:ObjectProperty ;
+               rdfs:domain :QuantitativeResult ;
+               rdfs:range iso19115:Citation ;
+               rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+               schema:description "specification" ;
+               schema:name "specification" .
+
+
+###  https://def.isotc211.org/ont/19157/value
+:value rdf:type owl:ObjectProperty ;
+       rdfs:domain :QuantitativeResult ;
+       rdfs:range iso19103:Record ;
+       rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+       schema:description "value" ;
+       schema:name "value" .
+
+
+###  https://def.isotc211.org/ont/19157/valueRecordType
+:valueRecordType rdf:type owl:ObjectProperty ;
+                 rdfs:domain :QuantitativeResult ;
+                 rdfs:range iso19103:RecordType ;
+                 rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                 schema:description "value record type" ;
+                 schema:name "value record type" .
+
+
+###  https://def.isotc211.org/ont/19157/valueStructure
+:valueStructure rdf:type owl:ObjectProperty ;
+                rdfs:domain [ rdf:type owl:Class ;
+                              owl:unionOf ( :MeasureParameter
+                                            :QualityMeasure
+                                          )
+                            ] ;
+                rdfs:range :ValueStructure ;
+                rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                schema:description "value structure" ;
+                schema:name "value structure" .
+
+
+###  https://def.isotc211.org/ont/19157/valueType
+:valueType rdf:type owl:ObjectProperty ;
+           rdfs:domain [ rdf:type owl:Class ;
+                         owl:unionOf ( :BasicMeasure
+                                       :MeasureParameter
+                                       :QualityMeasure
+                                     )
+                       ] ;
+           rdfs:range :TypeName ;
+           rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+           schema:description "value type" ;
+           schema:name "value type" .
+
+
+###  https://def.isotc211.org/ont/19157/valueUnit
+:valueUnit rdf:type owl:ObjectProperty ;
+           rdfs:domain :QuantitativeResult ;
+           rdfs:range :UnitOfMeasure ;
+           rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+           schema:description "value unit" ;
+           schema:name "value unit" .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.w3.org/2002/07/owl#topDataProperty
+owl:topDataProperty rdf:type owl:DatatypeProperty ;
+                    rdfs:isDefinedBy owl: ;
+                    schema:description "top data property" ;
+                    schema:name "top data property" .
+
+
+###  https://def.isotc211.org/ont/19115/code
+iso19115:code rdf:type owl:DatatypeProperty ;
+              rdfs:domain iso19115:Identifier ;
+              rdfs:range xsd:string ;
+              rdfs:isDefinedBy iso19115-ont: ;
+              schema:description "code" ;
+              schema:name "code" .
+
+
+###  https://def.isotc211.org/ont/19115/codeSpace
+iso19115:codeSpace rdf:type owl:DatatypeProperty ;
+                   rdfs:domain iso19115:Identifier ;
+                   rdfs:range xsd:string ;
+                   rdfs:isDefinedBy iso19115-ont: ;
+                   schema:description "code space" ;
+                   schema:name "code space" .
+
+
+###  https://def.isotc211.org/ont/19115/description
+iso19115:description rdf:type owl:DatatypeProperty ;
+                     rdfs:domain iso19115:Identifier ;
+                     rdfs:range xsd:string ;
+                     rdfs:isDefinedBy iso19115-ont: ;
+                     schema:description "description" ;
+                     schema:name "description" .
+
+
+###  https://def.isotc211.org/ont/19115/version
+iso19115:version rdf:type owl:DatatypeProperty ;
+                 rdfs:domain iso19115:Identifier ;
+                 rdfs:range xsd:string ;
+                 rdfs:isDefinedBy iso19115-ont: ;
+                 schema:description "version" ;
+                 schema:name "version" .
+
+
+###  https://def.isotc211.org/ont/19157/abstract
+:abstract rdf:type owl:DatatypeProperty ;
+          rdfs:domain :QualityEvaluationReportInformation ;
+          rdfs:range xsd:string ;
+          rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+          schema:description "abstract" ;
+          schema:name "abstract" .
+
+
+###  https://def.isotc211.org/ont/19157/alias
+:alias rdf:type owl:DatatypeProperty ;
+       rdfs:domain :QualityMeasure ;
+       rdfs:range xsd:string ;
+       rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+       schema:description "alias" ;
+       schema:name "alias" .
+
+
+###  https://def.isotc211.org/ont/19157/dateTime
+:dateTime rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty ;
+          rdfs:domain [ rdf:type owl:Class ;
+                        owl:unionOf ( :EvaluationMethod
+                                      :QualityResult
+                                    )
+                      ] ;
+          rdfs:range xsd:dateTime ;
+          rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+          schema:description "date time" ;
+          schema:name "date time" .
+
+
+###  https://def.isotc211.org/ont/19157/deductiveSource
+:deductiveSource rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :EvaluationMethod ;
+                 rdfs:range xsd:string ;
+                 rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                 schema:description "deductive source" ;
+                 schema:name "deductive source" .
+
+
+###  https://def.isotc211.org/ont/19157/definition
+:definition rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf owl:topDataProperty ;
+            rdfs:domain [ rdf:type owl:Class ;
+                          owl:unionOf ( :BasicMeasure
+                                        :MeasureParameter
+                                        :QualityMeasure
+                                      )
+                        ] ;
+            rdfs:range xsd:string ;
+            rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+            schema:description "definition" ;
+            schema:name "definition" .
+
+
+###  https://def.isotc211.org/ont/19157/evaluationMethodDescription
+:evaluationMethodDescription rdf:type owl:DatatypeProperty ;
+                             rdfs:domain :EvaluationMethod ;
+                             rdfs:range xsd:string ;
+                             rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                             schema:description "evaluation method description" ;
+                             schema:name "evaluation method description" .
+
+
+###  https://def.isotc211.org/ont/19157/explanation
+:explanation rdf:type owl:DatatypeProperty ;
+             rdfs:domain :ConformanceResult ;
+             rdfs:range xsd:string ;
+             rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+             schema:description "explanation" ;
+             schema:name "explanation" .
+
+
+###  https://def.isotc211.org/ont/19157/key
+:key rdf:type owl:DatatypeProperty ;
+     rdfs:domain :FormulaType ;
+     rdfs:range xsd:string ;
+     rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+     schema:description "key" ;
+     schema:name "key" .
+
+
+###  https://def.isotc211.org/ont/19157/languageVersion
+:languageVersion rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :FormulaType ;
+                 rdfs:range xsd:string ;
+                 rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                 schema:description "language version" ;
+                 schema:name "language version" .
+
+
+###  https://def.isotc211.org/ont/19157/lotDescription
+:lotDescription rdf:type owl:DatatypeProperty ;
+                rdfs:domain :SampleBasedInspection ;
+                rdfs:range xsd:string ;
+                rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                schema:description "lot description" ;
+                schema:name "lot description" .
+
+
+###  https://def.isotc211.org/ont/19157/mathematicalFormula
+:mathematicalFormula rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf owl:topDataProperty ;
+                     rdfs:domain :FormulaType ;
+                     rdfs:range xsd:string ;
+                     rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                     schema:description "mathematical formula" ;
+                     schema:name "mathematical formula" .
+
+
+###  https://def.isotc211.org/ont/19157/measureDescription
+:measureDescription rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf owl:topDataProperty ;
+                    rdfs:domain :MeasureReference ;
+                    rdfs:range xsd:string ;
+                    rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                    schema:description "measure description" ;
+                    schema:name "measure description" .
+
+
+###  https://def.isotc211.org/ont/19157/name
+:name rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf owl:topDataProperty ;
+      rdfs:domain [ rdf:type owl:Class ;
+                    owl:unionOf ( :BasicMeasure
+                                  :EvaluationMethod
+                                  :MeasureParameter
+                                  :QualityMeasure
+                                )
+                  ] ;
+      rdfs:range xsd:string ;
+      rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+      schema:description "name" ;
+      schema:name "name" .
+
+
+###  https://def.isotc211.org/ont/19157/nameOfMeasure
+:nameOfMeasure rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain :MeasureReference ;
+               rdfs:range xsd:string ;
+               rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+               schema:description "name of measure" ;
+               schema:name "name of measure" .
+
+
+###  https://def.isotc211.org/ont/19157/pass
+:pass rdf:type owl:DatatypeProperty ;
+      rdfs:domain :ConformanceResult ;
+      rdfs:range xsd:string ;
+      rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+      schema:description "pass" ;
+      schema:name "pass" .
+
+
+###  https://def.isotc211.org/ont/19157/qualityEvaluationReportDetails
+:qualityEvaluationReportDetails rdf:type owl:DatatypeProperty ;
+                                rdfs:domain :QualityEvaluationReportInformation ;
+                                rdfs:range xsd:string ;
+                                rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                                schema:description "quality evaluation report details" ;
+                                schema:name "quality evaluation report details" .
+
+
+###  https://def.isotc211.org/ont/19157/samplingRatio
+:samplingRatio rdf:type owl:DatatypeProperty ;
+               rdfs:domain :SampleBasedInspection ;
+               rdfs:range xsd:string ;
+               rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+               schema:description "sampling ratio" ;
+               schema:name "sampling ratio" .
+
+
+###  https://def.isotc211.org/ont/19157/samplingScheme
+:samplingScheme rdf:type owl:DatatypeProperty ;
+                rdfs:domain :SampleBasedInspection ;
+                rdfs:range xsd:string ;
+                rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                schema:description "sampling scheme" ;
+                schema:name "sampling scheme" .
+
+
+###  https://def.isotc211.org/ont/19157/statement
+:statement rdf:type owl:DatatypeProperty ;
+           rdfs:domain :DescriptiveResult ;
+           rdfs:range xsd:string ;
+           rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+           schema:description "statement" ;
+           schema:name "statement" .
+
+
+###  https://def.isotc211.org/ont/19157/textDescription
+:textDescription rdf:type owl:DatatypeProperty ;
+                 rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                 schema:description "text description" ;
+                 schema:name "text description" .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.w3.org/2004/02/skos/core#Concept
+skos:Concept rdf:type owl:Class .
+
+
+###  https://def.isotc211.org/ont/19103/Record
+iso19103:Record rdf:type owl:Class ;
+                rdfs:isDefinedBy iso19103-ont: ;
+                schema:description "Record" ;
+                schema:name "Record" .
+
+
+###  https://def.isotc211.org/ont/19103/RecordType
+iso19103:RecordType rdf:type owl:Class ;
+                    rdfs:isDefinedBy iso19103-ont: ;
+                    schema:description "Record Type" ;
+                    schema:name "Record Type" .
+
+
+###  https://def.isotc211.org/ont/19115/BrowseGraphic
+iso19115:BrowseGraphic rdf:type owl:Class ;
+                       rdfs:isDefinedBy iso19115-ont: ;
+                       schema:description "Browse Graphic" ;
+                       schema:name "Browse Graphic" .
+
+
+###  https://def.isotc211.org/ont/19115/Citation
+iso19115:Citation rdf:type owl:Class ;
+                  rdfs:isDefinedBy iso19115-ont: ;
+                  schema:description "Citation" ;
+                  schema:name "Citation" .
+
+
+###  https://def.isotc211.org/ont/19115/Format
+iso19115:Format rdf:type owl:Class ;
+                rdfs:isDefinedBy iso19115-ont: ;
+                schema:description "Format" ;
+                schema:name "Format" .
+
+
+###  https://def.isotc211.org/ont/19115/Identifier
+iso19115:Identifier rdf:type owl:Class ;
+                    rdfs:isDefinedBy iso19115-ont: ;
+                    schema:description "Identifier" ;
+                    schema:name "Identifier" .
+
+
+###  https://def.isotc211.org/ont/19115/Metadata
+iso19115:Metadata rdf:type owl:Class ;
+                  rdfs:isDefinedBy iso19115-ont: ;
+                  schema:description "Metadata" ;
+                  schema:name "Metadata" .
+
+
+###  https://def.isotc211.org/ont/19115/RangeDimension
+iso19115:RangeDimension rdf:type owl:Class ;
+                        rdfs:isDefinedBy iso19115-ont: ;
+                        schema:description "Range Dimension" ;
+                        schema:name "Range Dimension" .
+
+
+###  https://def.isotc211.org/ont/19115/Resource
+iso19115:Resource rdf:type owl:Class ;
+                  rdfs:isDefinedBy iso19115-ont: ;
+                  schema:description "Resource" ;
+                  schema:name "Resource" .
+
+
+###  https://def.isotc211.org/ont/19115/Scope
+iso19115:Scope rdf:type owl:Class ;
+               rdfs:isDefinedBy iso19115-ont: ;
+               schema:description "Scope" ;
+               schema:name "Scope" .
+
+
+###  https://def.isotc211.org/ont/19115/SpatialRepresentation
+iso19115:SpatialRepresentation rdf:type owl:Class ;
+                               rdfs:isDefinedBy iso19115-ont: ;
+                               schema:description "Spatial Representation" ;
+                               schema:name "Spatial Representation" .
+
+
+###  https://def.isotc211.org/ont/19157/AbsolutePositionalAccuracy
+:AbsolutePositionalAccuracy rdf:type owl:Class ;
+                            rdfs:subClassOf :PositionalAccuracy ;
+                            rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                            schema:description "Absolute Positional Accuracy" ;
+                            schema:name "Absolute Positional Accuracy" .
+
+
+###  https://def.isotc211.org/ont/19157/AccuracyOfATimeMeasurement
+:AccuracyOfATimeMeasurement rdf:type owl:Class ;
+                            rdfs:subClassOf :TemporalQuality ;
+                            rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                            schema:description "Accuracy Of A Time Measurement" ;
+                            schema:name "Accuracy Of A Time Measurement" .
+
+
+###  https://def.isotc211.org/ont/19157/AggregationDeviation
+:AggregationDeviation rdf:type owl:Class ;
+                      rdfs:subClassOf :EvaluationMethod ;
+                      rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                      schema:description "Aggregation Deviation" ;
+                      schema:name "Aggregation Deviation" .
+
+
+###  https://def.isotc211.org/ont/19157/BasicMeasure
+:BasicMeasure rdf:type owl:Class ;
+              rdfs:isDefinedBy iso19103-ont: ;
+              schema:description "Basic Measure" ;
+              schema:name "Basic Measure" .
+
+
+###  https://def.isotc211.org/ont/19157/Commission
+:Commission rdf:type owl:Class ;
+            rdfs:subClassOf :Completeness ;
+            rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+            schema:description "Commission" ;
+            schema:name "Commission" .
+
+
+###  https://def.isotc211.org/ont/19157/Completeness
+:Completeness rdf:type owl:Class ;
+              rdfs:subClassOf :QualityElement ;
+              rdfs:isDefinedBy iso19103-ont: ;
+              schema:description "Completeness" ;
+              schema:name "Completeness" .
+
+
+###  https://def.isotc211.org/ont/19157/ConceptualConsistency
+:ConceptualConsistency rdf:type owl:Class ;
+                       rdfs:subClassOf :LogicalConsistency ;
+                       rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                       schema:description "Conceptual Consistency" ;
+                       schema:name "Conceptual Consistency" .
+
+
+###  https://def.isotc211.org/ont/19157/Confidence
+:Confidence rdf:type owl:Class ;
+            rdfs:subClassOf :Metaquality ;
+            rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+            schema:description "Confidence" ;
+            schema:name "Confidence" .
+
+
+###  https://def.isotc211.org/ont/19157/ConformanceResult
+:ConformanceResult rdf:type owl:Class ;
+                   rdfs:subClassOf :QualityResult ;
+                   rdfs:isDefinedBy iso19103-ont: ;
+                   schema:description "Conformance Result" ;
+                   schema:name "Conformance Result" .
+
+
+###  https://def.isotc211.org/ont/19157/CoverageResult
+:CoverageResult rdf:type owl:Class ;
+                rdfs:subClassOf :QualityResult ;
+                rdfs:isDefinedBy iso19103-ont: ;
+                schema:description "Coverage Result" ;
+                schema:name "Coverage Result" .
+
+
+###  https://def.isotc211.org/ont/19157/DataEvaluation
+:DataEvaluation rdf:type owl:Class ;
+                rdfs:subClassOf :EvaluationMethod ;
+                rdfs:isDefinedBy iso19103-ont: ;
+                schema:description "Data Evaluation" ;
+                schema:name "Data Evaluation" .
+
+
+###  https://def.isotc211.org/ont/19157/DataQuality
+:DataQuality rdf:type owl:Class ;
+             rdfs:isDefinedBy iso19103-ont: ;
+             schema:description "Data Quality" ;
+             schema:name "Data Quality" .
+
+
+###  https://def.isotc211.org/ont/19157/DescriptiveResult
+:DescriptiveResult rdf:type owl:Class ;
+                   rdfs:subClassOf :QualityResult ;
+                   rdfs:isDefinedBy iso19103-ont: ;
+                   schema:description "Descriptive Result" ;
+                   schema:name "Descriptive Result" .
+
+
+###  https://def.isotc211.org/ont/19157/DomainConsistency
+:DomainConsistency rdf:type owl:Class ;
+                   rdfs:subClassOf :LogicalConsistency ;
+                   rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                   schema:description "Domain Consistency" ;
+                   schema:name "Domain Consistency" .
+
+
+###  https://def.isotc211.org/ont/19157/EvaluationMethod
+:EvaluationMethod rdf:type owl:Class ;
+                  rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                  schema:description "Evaluation Method" ;
+                  schema:name "Evaluation Method" .
+
+
+###  https://def.isotc211.org/ont/19157/EvaluationMethodTypeCode
+:EvaluationMethodTypeCode rdf:type owl:Class ;
+                          rdfs:subClassOf skos:Concept ;
+                          rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                          schema:description "Evaluation Method Type Code" ;
+                          schema:name "Evaluation Method Type Code" .
+
+
+###  https://def.isotc211.org/ont/19157/FormatConsistency
+:FormatConsistency rdf:type owl:Class ;
+                   rdfs:subClassOf :LogicalConsistency ;
+                   rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                   schema:description "Format Consistency" ;
+                   schema:name "Format Consistency" .
+
+
+###  https://def.isotc211.org/ont/19157/FormulaLanguage
+:FormulaLanguage rdf:type owl:Class ;
+                 rdfs:subClassOf skos:Concept ;
+                 rdfs:isDefinedBy iso19103-ont: ;
+                 schema:description "Formula Language" ;
+                 schema:name "Formula Language" .
+
+
+###  https://def.isotc211.org/ont/19157/FormulaType
+:FormulaType rdf:type owl:Class ;
+             rdfs:isDefinedBy iso19103-ont: ;
+             schema:description "Formula Type" ;
+             schema:name "Formula Type" .
+
+
+###  https://def.isotc211.org/ont/19157/FullInspection
+:FullInspection rdf:type owl:Class ;
+                rdfs:subClassOf :DataEvaluation ;
+                rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                schema:description "Full Inspection" ;
+                schema:name "Full Inspection" .
+
+
+###  https://def.isotc211.org/ont/19157/GriddedDataPositionalAccuracy
+:GriddedDataPositionalAccuracy rdf:type owl:Class ;
+                               rdfs:subClassOf :PositionalAccuracy ;
+                               rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                               schema:description "Gridded Data Positional Accuracy" ;
+                               schema:name "Gridded Data Positional Accuracy" .
+
+
+###  https://def.isotc211.org/ont/19157/Homogeneity
+:Homogeneity rdf:type owl:Class ;
+             rdfs:subClassOf :Metaquality ;
+             rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+             schema:description "Homogeneity" ;
+             schema:name "Homogeneity" .
+
+
+###  https://def.isotc211.org/ont/19157/IndirectEvaluation
+:IndirectEvaluation rdf:type owl:Class ;
+                    rdfs:subClassOf :DataEvaluation ;
+                    rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                    schema:description "Indirect Evaluation" ;
+                    schema:name "Indirect Evaluation" .
+
+
+###  https://def.isotc211.org/ont/19157/LogicalConsistency
+:LogicalConsistency rdf:type owl:Class ;
+                    rdfs:subClassOf :QualityElement ;
+                    rdfs:isDefinedBy iso19103-ont: ;
+                    schema:description "Logical Consistency" ;
+                    schema:name "Logical Consistency" .
+
+
+###  https://def.isotc211.org/ont/19157/MeasureDescription
+:MeasureDescription rdf:type owl:Class ;
+                    rdfs:isDefinedBy iso19103-ont: ;
+                    schema:description "Measure Description" ;
+                    schema:name "Measure Description" .
+
+
+###  https://def.isotc211.org/ont/19157/MeasureParameter
+:MeasureParameter rdf:type owl:Class ;
+                  rdfs:isDefinedBy iso19103-ont: ;
+                  schema:description "Measure Parameter" ;
+                  schema:name "Measure Parameter" .
+
+
+###  https://def.isotc211.org/ont/19157/MeasureReference
+:MeasureReference rdf:type owl:Class ;
+                  rdfs:isDefinedBy iso19103-ont: ;
+                  schema:description "Measure Reference" ;
+                  schema:name "Measure Reference" .
+
+
+###  https://def.isotc211.org/ont/19157/Metaquality
+:Metaquality rdf:type owl:Class ;
+             rdfs:isDefinedBy iso19103-ont: ;
+             schema:description "Metaquality" ;
+             schema:name "Metaquality" .
+
+
+###  https://def.isotc211.org/ont/19157/NonQuantitativeAttributeCorrectness
+:NonQuantitativeAttributeCorrectness rdf:type owl:Class ;
+                                     rdfs:subClassOf :ThematicQuality ;
+                                     rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                                     schema:description "Non Quantitative Attribute Correctness" ;
+                                     schema:name "Non Quantitative Attribute Correctness" .
+
+
+###  https://def.isotc211.org/ont/19157/Omission
+:Omission rdf:type owl:Class ;
+          rdfs:subClassOf :Completeness ;
+          rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+          schema:description "Omission" ;
+          schema:name "Omission" .
+
+
+###  https://def.isotc211.org/ont/19157/PositionalAccuracy
+:PositionalAccuracy rdf:type owl:Class ;
+                    rdfs:subClassOf :QualityElement ;
+                    rdfs:isDefinedBy iso19103-ont: ;
+                    schema:description "Positional Accuracy" ;
+                    schema:name "Positional Accuracy" .
+
+
+###  https://def.isotc211.org/ont/19157/QualityElement
+:QualityElement rdf:type owl:Class ;
+                rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                schema:description "Quality Element" ;
+                schema:name "Quality Element" .
+
+
+###  https://def.isotc211.org/ont/19157/QualityEvaluationReportInformation
+:QualityEvaluationReportInformation rdf:type owl:Class ;
+                                    rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                                    schema:description "Quality Evaluation Report Information" ;
+                                    schema:name "Quality Evaluation Report Information" .
+
+
+###  https://def.isotc211.org/ont/19157/QualityMeasure
+:QualityMeasure rdf:type owl:Class ;
+                rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                schema:description "Quality Measure" ;
+                schema:name "Quality Measure" .
+
+
+###  https://def.isotc211.org/ont/19157/QualityResult
+:QualityResult rdf:type owl:Class ;
+               rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+               schema:description "Quality Result" ;
+               schema:name "Quality Result" .
+
+
+###  https://def.isotc211.org/ont/19157/QuantitativeAttributeAccuracy
+:QuantitativeAttributeAccuracy rdf:type owl:Class ;
+                               rdfs:subClassOf :ThematicQuality ;
+                               rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                               schema:description "Quantitative Attribute Accuracy" ;
+                               schema:name "Quantitative Attribute Accuracy" .
+
+
+###  https://def.isotc211.org/ont/19157/QuantitativeResult
+:QuantitativeResult rdf:type owl:Class ;
+                    rdfs:subClassOf :QualityResult ;
+                    rdfs:isDefinedBy iso19103-ont: ;
+                    schema:description "Quantitative Result" ;
+                    schema:name "Quantitative Result" .
+
+
+###  https://def.isotc211.org/ont/19157/RelativePositionalAccuracy
+:RelativePositionalAccuracy rdf:type owl:Class ;
+                            rdfs:subClassOf :PositionalAccuracy ;
+                            rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                            schema:description "Relative Positional Accuracy" ;
+                            schema:name "Relative Positional Accuracy" .
+
+
+###  https://def.isotc211.org/ont/19157/Representativity
+:Representativity rdf:type owl:Class ;
+                  rdfs:subClassOf :Metaquality ;
+                  rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                  schema:description "Representativity" ;
+                  schema:name "Representativity" .
+
+
+###  https://def.isotc211.org/ont/19157/SampleBasedInspection
+:SampleBasedInspection rdf:type owl:Class ;
+                       rdfs:subClassOf :DataEvaluation ;
+                       rdfs:isDefinedBy iso19103-ont: ;
+                       schema:description "Sample Based Inspection" ;
+                       schema:name "Sample Based Inspection" .
+
+
+###  https://def.isotc211.org/ont/19157/SourceReference
+:SourceReference rdf:type owl:Class ;
+                 rdfs:isDefinedBy iso19103-ont: ;
+                 schema:description "Source Reference" ;
+                 schema:name "Source Reference" .
+
+
+###  https://def.isotc211.org/ont/19157/SpatialRepresentationTypeCode
+:SpatialRepresentationTypeCode rdf:type owl:Class ;
+                               rdfs:subClassOf skos:Concept ;
+                               rdfs:isDefinedBy iso19103-ont: ;
+                               schema:description "Spatial Representation Type Code" ;
+                               schema:name "Spatial Representation Type Code" .
+
+
+###  https://def.isotc211.org/ont/19157/TemporalConsistency
+:TemporalConsistency rdf:type owl:Class ;
+                     rdfs:subClassOf :TemporalQuality ;
+                     rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                     schema:description "Temporal Consistency" ;
+                     schema:name "Temporal Consistency" .
+
+
+###  https://def.isotc211.org/ont/19157/TemporalQuality
+:TemporalQuality rdf:type owl:Class ;
+                 rdfs:subClassOf :QualityElement ;
+                 rdfs:isDefinedBy iso19103-ont: ;
+                 schema:description "Temporal Quality" ;
+                 schema:name "Temporal Quality" .
+
+
+###  https://def.isotc211.org/ont/19157/TemporalValidity
+:TemporalValidity rdf:type owl:Class ;
+                  rdfs:subClassOf :TemporalQuality ;
+                  rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                  schema:description "Temporal Validity" ;
+                  schema:name "Temporal Validity" .
+
+
+###  https://def.isotc211.org/ont/19157/ThematicClassificationCorrectness
+:ThematicClassificationCorrectness rdf:type owl:Class ;
+                                   rdfs:subClassOf :ThematicQuality ;
+                                   rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                                   schema:description "Thematic Classification Correctness" ;
+                                   schema:name "Thematic Classification Correctness" .
+
+
+###  https://def.isotc211.org/ont/19157/ThematicQuality
+:ThematicQuality rdf:type owl:Class ;
+                 rdfs:subClassOf :QualityElement ;
+                 rdfs:isDefinedBy iso19103-ont: ;
+                 schema:description "Thematic Quality" ;
+                 schema:name "Thematic Quality" .
+
+
+###  https://def.isotc211.org/ont/19157/TopologicalConsistency
+:TopologicalConsistency rdf:type owl:Class ;
+                        rdfs:subClassOf :LogicalConsistency ;
+                        rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                        schema:description "Topological Consistency" ;
+                        schema:name "Topological Consistency" .
+
+
+###  https://def.isotc211.org/ont/19157/TypeName
+:TypeName rdf:type owl:Class ;
+          rdfs:isDefinedBy iso19103-ont: ;
+          schema:description "Type Name" ;
+          schema:name "Type Name" .
+
+
+###  https://def.isotc211.org/ont/19157/UnitOfMeasure
+:UnitOfMeasure rdf:type owl:Class ;
+               rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+               schema:description "Unit Of Measure" ;
+               schema:name "Unit Of Measure" .
+
+
+###  https://def.isotc211.org/ont/19157/ValueStructure
+:ValueStructure rdf:type owl:Class ;
+                rdfs:subClassOf skos:Concept ;
+                rdfs:isDefinedBy iso19103-ont: ;
+                schema:description "Value Structure" ;
+                schema:name "Value Structure" .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
