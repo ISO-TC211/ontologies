@@ -2,13 +2,15 @@
 
 This repository contains the point-of-truth source data of the [International Standards Organization](https://www.iso.org)'s [Technical Committee 211 (Geographic information/Geomatics)](https://committee.iso.org/home/tc211)'s ontologies. These ontologies are [Semantic Web](https://en.wikipedia.org/wiki/Semantic_Web) implementations of TC-211's _Harmonized Model_'s models.
 
-The ontology content here is stored here in [RDF](https://www.w3.org/TR/rdf12-concepts/) data files in the [Turtle format](https://www.w3.org/TR/rdf12-turtle/) as [Semantic Web](https://en.wikipedia.org/wiki/Semantic_Web) ontologies according to the [Ontology Publication Profile of OWL](https://linked.data.gov.au/def/ontpub/spec), with OWL being the [OWL 2 Web Ontology Language](https://www.w3.org/TR/owl2-overview/)
+The ontology content here is stored here in [RDF](https://www.w3.org/TR/rdf12-concepts/) data files in the [Turtle format](https://www.w3.org/TR/rdf12-turtle/) as [Semantic Web](https://en.wikipedia.org/wiki/Semantic_Web) ontologies according to the [Ontology Publication Profile of OWL](https://linked.data.gov.au/def/ontpub/spec), with OWL being the [OWL 2 Web Ontology Language](https://www.w3.org/TR/owl2-overview/).
+
+The repository also contains the software that produces the ontologies from the TC's "Harmonized Model", within the `HarmonizedOntology/ho/` folder. See the README in that folder for details.
 
 ## Status
 
 These ontologies will be published online at [IRI](https://en.wikipedia.org/wiki/Internationalized_Resource_Identifier) persistent identifier locations resolved via the [Open Geospatial Consortium's "Rainbow" reference data publication system](https://defs.opengis.net) by May 2026.
 
-Until then, the ontologies are in draft form and may be test published only.
+Until then, the ontologies are in draft form and may be test-published only.
 
 
 ## Maintenance
@@ -40,9 +42,9 @@ The RDF resources in this repository within the `resources/` folder that constit
 
 ## License & Use
 
-These vocabularies are available for reuse under the conditions of the [Creative Commons BY 4.0 License](https://creativecommons.org/licenses/by/4.0/), a copy of the deed of which is contained in this repository in the LICENSE file.
+These ontologies are available for reuse under the conditions of the [Creative Commons BY 4.0 License](https://creativecommons.org/licenses/by/4.0/), a copy of the deed of which is contained in this repository in the LICENSE file.
 
-These vocabularies and the software in this repository is copyright as follows:
+These ontologies and the software in this repository is copyright as follows:
 
 &copy; International Organization for Standardization, 2026
 
