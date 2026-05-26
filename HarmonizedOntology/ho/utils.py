@@ -143,7 +143,6 @@ def make_identifiers_map(tree: _ElementTree, prefix: TypingLiteral["std", "mpkg"
     if prefix == "pred":
         for elem in tree.findall(f".//UML:Attribute", namespaces=NS):
             if elem.get("name") is not None:
-                print(elem.get("name"))
                 iri = make_iri(prefix, elem)
                 if iri is not None:
                     ids[elem.xpath("UML:ModelElement.taggedValue/UML:TaggedValue[@tag='ea_guid']/@value",

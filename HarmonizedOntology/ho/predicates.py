@@ -28,8 +28,13 @@ def print_predicate_list(tree: _ElementTree):
     print(f"Association: {int(classes)}")
     print()
 
+    print("Predicates")
+    print("-------------------")
+
     # Associations
     print("Associations")
+    print("-------------------")
+    print()
     for pred in tree.findall(".//UML:Association", namespaces=NS):
         if pred.get("name") is not None:
             # print(pred.get("xmi.id"))
@@ -55,6 +60,7 @@ def print_predicate_list(tree: _ElementTree):
 
     # Attributes
     print("Attributes")
+    print("-------------------")
     for pred in tree.findall(".//UML:Attribute", namespaces=NS):
         # exclude CodeLists
         cl = pred.xpath("ancestor::UML:Class[1]/UML:ModelElement.stereotype/UML:Stereotype/@name", namespaces=NS)
@@ -149,7 +155,6 @@ def main(xml_file_path) -> None:
     print_predicate_list(tree)
 
     s_iri = make_iri("std", xml_file_path)
-    print(s_iri)
     d = make_outputs_folder(s_iri)
 
     extract_predicates(tree, s_iri, d)

@@ -11,17 +11,7 @@ try:
         make_identifiers_map, EXCLUDED_CLASS_STEREOTYPES
 except ImportError:
     from utils import element_name, make_iri, bind_iso_prefixes, ISO_PREFIXES, make_outputs_folder, HO, XMI_FILES_ROOT, \
-        NS, make_identifiers_map
-
-UML_CLASS = f"{{{NS['UML']}}}Class"
-
-
-def child_classes(package: etree._Element) -> list[etree._Element]:
-    owned_elements = package.find("UML:Namespace.ownedElement", namespaces=NS)
-    if owned_elements is None:
-        return []
-
-    return [child for child in owned_elements if child.tag == UML_CLASS]
+        NS, make_identifiers_map, EXCLUDED_CLASS_STEREOTYPES
 
 
 def has_excluded_stereotype(uml_class: etree._Element) -> bool:
@@ -29,7 +19,7 @@ def has_excluded_stereotype(uml_class: etree._Element) -> bool:
     return any(stereotype.get("name") in EXCLUDED_CLASS_STEREOTYPES for stereotype in stereotypes)
 
 
-def print_class_list(tree: _ElementTree):
+def print_class_hierarchy(tree: _ElementTree):
     packages = tree.xpath(
         "count(//UML:Package)",
         namespaces=NS,
@@ -58,6 +48,9 @@ def print_class_list(tree: _ElementTree):
         )
         if len(packages) > 0:
             classes_by_package.setdefault(packages[0], []).append(cls)
+
+    print("Classes per Package")
+    print("-------------------")
 
     for package_id, pkg in sorted(packages_by_id.items(), key=lambda item: element_name(item[1])):
         package_classes = classes_by_package.get(package_id, [])
@@ -98,6 +91,8 @@ def print_class_list(tree: _ElementTree):
             print_class_hierarchy(child_name, depth + 1, ancestors | {class_name})
 
     print("Class hierarchy")
+    print("-------------------")
+
     for class_name in sorted(class_names):
         if class_name not in child_names:
             print_class_hierarchy(class_name)
@@ -151,7 +146,7 @@ def main(xml_file_path) -> None:
 
     tree = etree.parse(str(xml_file_path))
 
-    print_class_list(tree)
+    print_class_hierarchy(tree)
 
     s_iri = make_iri("std", xml_file_path)
     d = make_outputs_folder(s_iri)

@@ -23,6 +23,9 @@ def print_package_hierarchy(tree: _ElementTree):
     print(f"Packages: {int(packages)}")
     print()
 
+    print("Package Hierarchy")
+    print("-------------------")
+
     package_elements = tree.findall(".//UML:Package", namespaces=NS)
     packages_by_id = {pkg.get("xmi.id"): pkg for pkg in package_elements}
     children_by_parent = {}
@@ -95,6 +98,6 @@ def main(xml_file_path) -> None:
 
 
 if __name__ == "__main__":
-    # main(XMI_FILES_ROOT / "ISO 19160-1 Edition 1.xml")
+    main(XMI_FILES_ROOT / "ISO 19160-1 Edition 1.xml")
     # main(XMI_FILES_ROOT / "ISO 19115-1 Edition 1.xml")
-    main(XMI_FILES_ROOT / "ISO 19157-1 Edition 1.xml")
+    # main(XMI_FILES_ROOT / "ISO 19157-1 Edition 1.xml")
