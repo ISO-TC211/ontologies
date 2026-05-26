@@ -1,0 +1,10 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <https://schema.org/>
+
+<https://def.isotc211.org/def/ho/ModelPackage>
+    a owl:Class ;
+    rdfs:subClassOf rdfs:Container ;
+    schema:name "Model Package" ;
+    schema:description "A container of model elements" ;
+.
