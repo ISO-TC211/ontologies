@@ -1,3 +1,4 @@
+PREFIX : <https://def.isotc211.org/def/ho/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX schema: <https://schema.org/>
@@ -7,4 +8,10 @@ PREFIX schema: <https://schema.org/>
     rdfs:subClassOf rdfs:Container ;
     schema:name "Model Package" ;
     schema:description "A container of model elements" ;
+.
+
+:xmiId
+    a rdfs:DataType
+    schema:name "XMI Identifier" ;
+    schema:description "The internal identifier used within Enterprise Architect's XMI export files" ;
 .

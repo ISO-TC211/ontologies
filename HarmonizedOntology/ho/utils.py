@@ -25,18 +25,32 @@ ISO_PREFIXES = {
 
 
 def bind_iso_prefixes(g: Graph):
+    """Adds standard ISO prefixes to a graph"""
     for k, v in ISO_PREFIXES.items():
         g.bind(k, v)
 
 
-def element_name(element: etree._Element) -> str:
-    name = element.get("name", "(unnamed element)")
+def element_name(element: etree._Element, element_type: TypingLiteral["mpkg", "cls", "pred", "std"]) -> str:
+    """Finds a string literal name for an element or from a string"""
+    if isinstance(element, etree._Element):
+        name = element.get("name", "(unnamed element)")
+    else:
+        name = element
     name = re.sub(r"(?<=[A-Z])(?=[A-Z][a-z])", " ", name)
-    return re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", name)
+    name = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", name)
+
+    if element_type == "pred":
+        name = name.lower()
+    # elif element_type in ["mpkg", "cls", "std"]:
+    else:
+        name = name.title()
+
+    return name
 
 
 def standard_name(name: str) -> str:
-    name = name.replace("Edition 1", "")
+    """Creates a name for a standard from the file name"""
+    name = name.replace(" Edition 1", "")
     name = name.replace(".xml", "")
     return name
 
@@ -63,12 +77,14 @@ def make_iri(prefix: str, elem: etree._Element | Path | str) -> URIRef:
         name = name.replace(" Edition 1", "")
         name = name.replace(" ", "")
     else:
-        name = elem
+        name = elem.replace(" ", "")
 
     return URIRef(ISO_PREFIXES[prefix] + quote(name, safe=""))
 
 
 def batch_replace_in_file(file_path: Path, replacements: list[tuple[str, str]]):
+    """Replaces all instances of the first string per pair in replacements with the second"""
+
     # 1. Read the original content
     content = file_path.read_text(encoding="utf-8")
 
@@ -89,6 +105,8 @@ def batch_replace_in_file(file_path: Path, replacements: list[tuple[str, str]]):
 
 
 def replace_iris_in_graph(graph: Graph, replacements: list[tuple[str, str]]) -> Graph:
+    """Replaces all IRIs - the first string per pair in replacements - with the second in a graph"""
+
     # 1. Convert the string tuples into a dictionary of URIRef objects for fast lookup
     iri_map = {URIRef(old): URIRef(new) for old, new in replacements}
 
@@ -119,6 +137,8 @@ def replace_iris_in_graph(graph: Graph, replacements: list[tuple[str, str]]) -> 
 
 
 def make_outputs_folder(s_iri):
+    """Makes or returns and existing outputs folder per standard"""
+
     d = OUTPUT_ROOT / str(s_iri).replace(ISO_PREFIXES["std"], "")
     # if d.exists() and d.is_dir():
     #     shutil.rmtree(d)
@@ -128,6 +148,11 @@ def make_outputs_folder(s_iri):
 
 
 def make_identifiers_map(tree: _ElementTree, prefix: TypingLiteral["std", "mpkg", "cls", "pred"]):
+    """Creates a map (dictionary) of identifiers for a type of object - Standard, Package, Class or Predicate - in an Element Tree
+
+    The map maps internal XMI IDs (keys) to IRIs (values)
+    """
+
     ids = {}
 
     xpaths = {
@@ -151,4 +176,5 @@ def make_identifiers_map(tree: _ElementTree, prefix: TypingLiteral["std", "mpkg"
     return ids
 
 
+# class types not for class processing
 EXCLUDED_CLASS_STEREOTYPES = {"dataType", "codeList", "CodeList"}

@@ -1,2 +1,3 @@
 lxml
 rdflib
+pytest

@@ -1,3 +1,5 @@
+"""Extracts ho:ModelPackage instances from UML:Package instances within an XMI file"""
+import sys
 from pathlib import Path
 
 from lxml import etree
@@ -5,15 +7,16 @@ from lxml.etree import _ElementTree
 from rdflib import Graph, Literal, URIRef, SDO
 from rdflib.namespace import RDF, RDFS
 
-try:
-    from .utils import element_name, make_iri, bind_iso_prefixes, ISO_PREFIXES, replace_iris_in_graph, XMI_FILES_ROOT, \
+if __package__:
+    from .utils import element_name, make_iri, bind_iso_prefixes, ISO_PREFIXES, replace_iris_in_graph, \
         NS, make_outputs_folder, HO
-except ImportError:
-    from utils import element_name, make_iri, bind_iso_prefixes, ISO_PREFIXES, XMI_FILES_ROOT, NS, make_outputs_folder, \
+else:
+    from utils import element_name, make_iri, bind_iso_prefixes, ISO_PREFIXES, NS, make_outputs_folder, \
         replace_iris_in_graph, HO
 
 
 def print_package_hierarchy(tree: _ElementTree):
+    """Prints the hierarchy of Packages as seen in an ElementTree"""
     packages = tree.xpath(
         "count(//UML:Package)",
         namespaces=NS,
@@ -41,10 +44,10 @@ def print_package_hierarchy(tree: _ElementTree):
     def print_package(pkg, depth=0):
         print(f"{'  ' * depth}{pkg.get('name')}")
 
-        for child in sorted(children_by_parent.get(pkg.get("xmi.id"), []), key=element_name):
+        for child in sorted(children_by_parent.get(pkg.get("xmi.id"), []), key=lambda item: element_name(item[1], "mpkg")):
             print_package(child, depth + 1)
 
-    for pkg in sorted(package_elements, key=element_name):
+    for pkg in sorted(package_elements, key=lambda item: element_name(item[1], "mpkg")):
         parents = pkg.xpath(
             "UML:ModelElement.taggedValue/UML:TaggedValue[@tag='parent']/@value",
             namespaces=NS,
@@ -54,6 +57,7 @@ def print_package_hierarchy(tree: _ElementTree):
 
 
 def extract_packages(tree, s_iri, d) -> None:
+    """Extracts objects of type UML:Package from an ElementTree and creates RDFS Property instances of ho:ModelPackage from them"""
     g = Graph()
     bind_iso_prefixes(g)
 
@@ -61,7 +65,7 @@ def extract_packages(tree, s_iri, d) -> None:
 
     for pkg in tree.findall(".//UML:Package", namespaces=NS):
         p_iri = URIRef("http://package/" + pkg.get("xmi.id"))
-        p_name = element_name(pkg)
+        p_name = element_name(pkg, "mpkg")
 
         g.add((p_iri, RDF.type, HO.ModelPackage))
         g.add((p_iri, SDO.identifier, Literal(pkg.get("xmi.id"), datatype=HO.xmiId)))
@@ -98,6 +102,8 @@ def main(xml_file_path) -> None:
 
 
 if __name__ == "__main__":
-    main(XMI_FILES_ROOT / "ISO 19160-1 Edition 1.xml")
-    # main(XMI_FILES_ROOT / "ISO 19115-1 Edition 1.xml")
-    # main(XMI_FILES_ROOT / "ISO 19157-1 Edition 1.xml")
+    if not Path.exists(sys.argv[1]):
+        raise SystemExit(f"XMI file not found: {sys.argv[1]}")
+
+    print(f"Processing {sys.argv[1]}")
+    main(sys.argv[1])
