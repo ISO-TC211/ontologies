@@ -127,7 +127,7 @@ iso19115:resultContent rdf:type owl:ObjectProperty ;
                        rdfs:domain :CoverageResult ;
                        rdfs:range iso19115:RangeDimension ;
                        rdfs:isDefinedBy iso19115-ont: ;
-                       schema:description <result content> ;
+                       schema:description "result content" ;
                        schema:name "result content" .
 
 
@@ -147,6 +147,15 @@ iso19115:resultSpatialRepresentation rdf:type owl:ObjectProperty ;
                                      rdfs:isDefinedBy iso19115-ont: ;
                                      schema:description "result spatial representation" ;
                                      schema:name "result spatial representation" .
+
+
+###  https://def.isotc211.org/ont/19157/basicMeasure
+:basicMeasure rdf:type owl:ObjectProperty ;
+       rdfs:domain :QualityMeasure ;
+       rdfs:range :BasicMeasure ;
+       rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+       schema:description "basic measure" ;
+       schema:name "basic measure" .
 
 
 ###  https://def.isotc211.org/ont/19157/citation
@@ -180,7 +189,11 @@ iso19115:resultSpatialRepresentation rdf:type owl:ObjectProperty ;
 ###  https://def.isotc211.org/ont/19157/description
 :description rdf:type owl:ObjectProperty ;
              rdfs:subPropertyOf owl:topObjectProperty ;
-             rdfs:domain :QualityMeasure ;
+             rdfs:domain    [ rdf:type owl:Class ;
+                              owl:unionOf ( :MeasureParameter
+                                           :QualityMeasure
+                                          )
+                            ] ;
              rdfs:range :MeasureDescription ;
              rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
              schema:description "description" ;
@@ -235,7 +248,11 @@ iso19115:resultSpatialRepresentation rdf:type owl:ObjectProperty ;
 ###  https://def.isotc211.org/ont/19157/example
 :example rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf owl:topObjectProperty ;
-         rdfs:domain :QualityMeasure ;
+         rdfs:domain [ rdf:type owl:Class ;
+                       owl:unionOf ( :QualityMeasure 
+                                     :BasicMeasure
+                                   )
+                     ] ;
          rdfs:range :MeasureDescription ;
          rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
          schema:description "example" ;
@@ -314,13 +331,16 @@ iso19115:resultSpatialRepresentation rdf:type owl:ObjectProperty ;
                 schema:name "online resource" .
 
 
-###  https://def.isotc211.org/ont/19157/qualityElement
-:qualityElement rdf:type owl:ObjectProperty ;
-                rdfs:domain :DataQuality ;
-                rdfs:range :QualityElement ;
-                rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
-                schema:description "quality element" ;
-                schema:name "quality element" .
+###  https://def.isotc211.org/ont/19157/parameter
+:parameter rdf:type owl:ObjectProperty ;
+       rdfs:domain :QualityMeasure ;
+       rdfs:range :MeasureParameter ;
+       rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+       schema:description "measure parameter" ;
+       schema:name "measure parameter" . 
+
+
+# Deleted :qualityElement. :report is the only relation specified between domain :DataQuality and range :QualityElement. :qualityElment is therefore redundant. I have removed it
 
 
 ###  https://def.isotc211.org/ont/19157/qualityEvaluationReport
@@ -405,18 +425,27 @@ iso19115:resultSpatialRepresentation rdf:type owl:ObjectProperty ;
        schema:name "scope" .
 
 
+###  https://def.isotc211.org/ont/19157/sourceReference
+:sourceReference rdf:type owl:ObjectProperty ;
+       rdfs:domain :QualityMeasure ;
+       rdfs:range :SourceReference ;
+       rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+       schema:description "source reference" ; 
+       schema:name "source reference" .
+
+
 ###  https://def.isotc211.org/ont/19157/spatialRepresentationType
 :spatialRepresentationType rdf:type owl:ObjectProperty ;
                            rdfs:domain :CoverageResult ;
-                           rdfs:range :SpatialRepresentationTypeCode ;
-                           rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+                           rdfs:range :SpatialRepresentationTypeCode ; 
+                           rdfs:isDefinedBy iso19115-ont: ;
                            schema:description "spatial representation type" ;
                            schema:name "spatial representation type" .
 
 
 ###  https://def.isotc211.org/ont/19157/specification
 :specification rdf:type owl:ObjectProperty ;
-               rdfs:domain :QuantitativeResult ;
+               rdfs:domain :ConformanceResult ;
                rdfs:range iso19115:Citation ;
                rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
                schema:description "specification" ;
@@ -598,6 +627,13 @@ iso19115:version rdf:type owl:DatatypeProperty ;
              schema:name "explanation" .
 
 
+###  https://def.isotc211.org/ont/19157/formulaType
+:formulaType rdf:type owl:DatatypeProperty ;
+             rdfs:isDefinedBy iso19103-ont: ;
+             schema:description "formula type" ;
+             schema:name "formula type" .
+
+
 ###  https://def.isotc211.org/ont/19157/key
 :key rdf:type owl:DatatypeProperty ;
      rdfs:domain :FormulaType ;
@@ -674,7 +710,7 @@ iso19115:version rdf:type owl:DatatypeProperty ;
 ###  https://def.isotc211.org/ont/19157/pass
 :pass rdf:type owl:DatatypeProperty ;
       rdfs:domain :ConformanceResult ;
-      rdfs:range xsd:string ;
+      rdfs:range xsd:boolean ;
       rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
       schema:description "pass" ;
       schema:name "pass" .
@@ -718,6 +754,8 @@ iso19115:version rdf:type owl:DatatypeProperty ;
 
 ###  https://def.isotc211.org/ont/19157/textDescription
 :textDescription rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :MeasureDescription ;
+                 rdfs:range xsd:string ;
                  rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
                  schema:description "text description" ;
                  schema:name "text description" .
@@ -753,7 +791,7 @@ iso19115:BrowseGraphic rdf:type owl:Class ;
 
 
 ###  https://def.isotc211.org/ont/19115/Citation
-iso19115:Citation rdf:type owl:Class ;
+iso19115:Citation rdf:type owl:Class ; 
                   rdfs:isDefinedBy iso19115-ont: ;
                   schema:description "Citation" ;
                   schema:name "Citation" .
@@ -874,7 +912,7 @@ iso19115:SpatialRepresentation rdf:type owl:Class ;
 ###  https://def.isotc211.org/ont/19157/ConformanceResult
 :ConformanceResult rdf:type owl:Class ;
                    rdfs:subClassOf :QualityResult ;
-                   rdfs:isDefinedBy iso19103-ont: ;
+                   rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
                    schema:description "Conformance Result" ;
                    schema:name "Conformance Result" .
 
@@ -882,7 +920,7 @@ iso19115:SpatialRepresentation rdf:type owl:Class ;
 ###  https://def.isotc211.org/ont/19157/CoverageResult
 :CoverageResult rdf:type owl:Class ;
                 rdfs:subClassOf :QualityResult ;
-                rdfs:isDefinedBy iso19103-ont: ;
+                rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
                 schema:description "Coverage Result" ;
                 schema:name "Coverage Result" .
 
@@ -890,7 +928,7 @@ iso19115:SpatialRepresentation rdf:type owl:Class ;
 ###  https://def.isotc211.org/ont/19157/DataEvaluation
 :DataEvaluation rdf:type owl:Class ;
                 rdfs:subClassOf :EvaluationMethod ;
-                rdfs:isDefinedBy iso19103-ont: ;
+                rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
                 schema:description "Data Evaluation" ;
                 schema:name "Data Evaluation" .
 
@@ -947,13 +985,6 @@ iso19115:SpatialRepresentation rdf:type owl:Class ;
                  rdfs:isDefinedBy iso19103-ont: ;
                  schema:description "Formula Language" ;
                  schema:name "Formula Language" .
-
-
-###  https://def.isotc211.org/ont/19157/FormulaType
-:FormulaType rdf:type owl:Class ;
-             rdfs:isDefinedBy iso19103-ont: ;
-             schema:description "Formula Type" ;
-             schema:name "Formula Type" .
 
 
 ###  https://def.isotc211.org/ont/19157/FullInspection
@@ -1019,6 +1050,7 @@ iso19115:SpatialRepresentation rdf:type owl:Class ;
 
 ###  https://def.isotc211.org/ont/19157/Metaquality
 :Metaquality rdf:type owl:Class ;
+             rdfs:subClassOf :QualityElement ;
              rdfs:isDefinedBy iso19103-ont: ;
              schema:description "Metaquality" ;
              schema:name "Metaquality" .
@@ -1087,7 +1119,7 @@ iso19115:SpatialRepresentation rdf:type owl:Class ;
 ###  https://def.isotc211.org/ont/19157/QuantitativeResult
 :QuantitativeResult rdf:type owl:Class ;
                     rdfs:subClassOf :QualityResult ;
-                    rdfs:isDefinedBy iso19103-ont: ;
+                    rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
                     schema:description "Quantitative Result" ;
                     schema:name "Quantitative Result" .
 
@@ -1118,7 +1150,7 @@ iso19115:SpatialRepresentation rdf:type owl:Class ;
 
 ###  https://def.isotc211.org/ont/19157/SourceReference
 :SourceReference rdf:type owl:Class ;
-                 rdfs:isDefinedBy iso19103-ont: ;
+                 rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
                  schema:description "Source Reference" ;
                  schema:name "Source Reference" .
 
@@ -1126,7 +1158,7 @@ iso19115:SpatialRepresentation rdf:type owl:Class ;
 ###  https://def.isotc211.org/ont/19157/SpatialRepresentationTypeCode
 :SpatialRepresentationTypeCode rdf:type owl:Class ;
                                rdfs:subClassOf skos:Concept ;
-                               rdfs:isDefinedBy iso19103-ont: ;
+                               rdfs:isDefinedBy iso19115-ont: ;
                                schema:description "Spatial Representation Type Code" ;
                                schema:name "Spatial Representation Type Code" .
 
@@ -1188,7 +1220,7 @@ iso19115:SpatialRepresentation rdf:type owl:Class ;
 
 ###  https://def.isotc211.org/ont/19157/UnitOfMeasure
 :UnitOfMeasure rdf:type owl:Class ;
-               rdfs:isDefinedBy <https://def.isotc211.org/ont/19157> ;
+               rdfs:isDefinedBy iso19103-ont: ;
                schema:description "Unit Of Measure" ;
                schema:name "Unit Of Measure" .
 
