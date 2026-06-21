@@ -88,7 +88,7 @@ def extract_packages(tree, s_iri, d) -> None:
 
 
 def main(xml_file_path) -> None:
-    if not xml_file_path.exists():
+    if not Path(xml_file_path).exists():
         raise SystemExit(f"XML file not found: {xml_file_path}")
 
     tree = etree.parse(str(xml_file_path))
@@ -102,7 +102,10 @@ def main(xml_file_path) -> None:
 
 
 if __name__ == "__main__":
-    if not Path.exists(sys.argv[1]):
+    if len(sys.argv) < 2:
+        raise SystemExit("Usage: python packages.py <path_to_xmi_file>")
+    
+    if not Path(sys.argv[1]).exists():
         raise SystemExit(f"XMI file not found: {sys.argv[1]}")
 
     print(f"Processing {sys.argv[1]}")
