@@ -1,0 +1,2607 @@
+@prefix : <http://www.w3.org/ns/prov#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.w3.org/ns/prov#> .
+@prefix isoClass: <https://def.isotc211.org/class/> .
+@prefix isoStandard: <https://def.isotc211.org/standard/> .
+
+<http://www.w3.org/ns/prov#> rdf:type owl:Ontology ;
+                              owl:imports <file:/Users/deepdivrr/Desktop/Uni/Hons/01%20Repos/ontologies/HarmonizedOntology/outputs/ISO19157-1.xml/predicates.ttl> ;
+                              rdfs:comment """This document is published by the Provenance Working Group (http://www.w3.org/2011/prov/wiki/Main_Page). 
+
+If you wish to make comments regarding this document, please send them to public-prov-comments@w3.org (subscribe public-prov-comments-request@w3.org, archives http://lists.w3.org/Archives/Public/public-prov-comments/). All feedback is welcome."""@en ;
+                              rdfs:label "W3C PROVenance Interchange Ontology (PROV-O)"@en ;
+                              rdfs:seeAlso <http://www.w3.org/TR/prov-o/> ,
+                                           <http://www.w3.org/ns/prov> ;
+                              owl:versionInfo "Recommendation version 2013-04-30"@en .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://schema.org/description
+<http://schema.org/description> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2000/01/rdf-schema#comment
+rdfs:comment rdf:type owl:AnnotationProperty ;
+             rdfs:comment ""@en ;
+             rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> .
+
+
+###  http://www.w3.org/2000/01/rdf-schema#isDefinedBy
+rdfs:isDefinedBy rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2000/01/rdf-schema#label
+rdfs:label rdf:type owl:AnnotationProperty ;
+           rdfs:comment ""@en ;
+           rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> .
+
+
+###  http://www.w3.org/2000/01/rdf-schema#seeAlso
+rdfs:seeAlso rdf:type owl:AnnotationProperty ;
+             rdfs:comment ""@en .
+
+
+###  http://www.w3.org/2002/07/owl#versionInfo
+owl:versionInfo rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/prov#aq
+:aq rdf:type owl:AnnotationProperty ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+    rdfs:subPropertyOf rdfs:seeAlso .
+
+
+###  http://www.w3.org/ns/prov#category
+:category rdf:type owl:AnnotationProperty ;
+          rdfs:comment "Classify prov-o terms into three categories, including 'starting-point', 'qualifed', and 'extended'. This classification is used by the prov-o html document to gently introduce prov-o terms to its users. "@en ;
+          rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> .
+
+
+###  http://www.w3.org/ns/prov#component
+:component rdf:type owl:AnnotationProperty ;
+           rdfs:comment "Classify prov-o terms into six components according to prov-dm, including 'agents-responsibility', 'alternate', 'annotations', 'collections', 'derivations', and 'entities-activities'. This classification is used so that readers of prov-o specification can find its correspondence with the prov-dm specification."@en ;
+           rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> .
+
+
+###  http://www.w3.org/ns/prov#constraints
+:constraints rdf:type owl:AnnotationProperty ;
+             rdfs:comment "A reference to the principal section of the PROV-CONSTRAINTS document that describes this concept."@en ;
+             rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+             rdfs:subPropertyOf rdfs:seeAlso .
+
+
+###  http://www.w3.org/ns/prov#definition
+:definition rdf:type owl:AnnotationProperty ;
+            rdfs:comment "A definition quoted from PROV-DM or PROV-CONSTRAINTS that describes the concept expressed with this OWL term."@en ;
+            rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> .
+
+
+###  http://www.w3.org/ns/prov#dm
+:dm rdf:type owl:AnnotationProperty ;
+    rdfs:comment "A reference to the principal section of the PROV-DM document that describes this concept."@en ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+    rdfs:subPropertyOf rdfs:seeAlso .
+
+
+###  http://www.w3.org/ns/prov#editorialNote
+:editorialNote rdf:type owl:AnnotationProperty ;
+               rdfs:comment "A note by the OWL development team about how this term expresses the PROV-DM concept, or how it should be used in context of semantic web or linked data."@en ;
+               rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> .
+
+
+###  http://www.w3.org/ns/prov#editorsDefinition
+:editorsDefinition rdf:type owl:AnnotationProperty ;
+                   rdfs:comment "When the prov-o term does not have a definition drawn from prov-dm, and the prov-o editor provides one."@en ;
+                   rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                   rdfs:subPropertyOf :definition .
+
+
+###  http://www.w3.org/ns/prov#inverse
+:inverse rdf:type owl:AnnotationProperty ;
+         rdfs:comment "PROV-O does not define all property inverses. The directionalities defined in PROV-O should be given preference over those not defined. However, if users wish to name the inverse of a PROV-O property, the local name given by prov:inverse should be used."@en ;
+         rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+         rdfs:seeAlso <http://www.w3.org/TR/prov-o/#names-of-inverse-properties> .
+
+
+###  http://www.w3.org/ns/prov#n
+:n rdf:type owl:AnnotationProperty ;
+   rdfs:comment "A reference to the principal section of the PROV-DM document that describes this concept."@en ;
+   rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+   rdfs:subPropertyOf rdfs:seeAlso .
+
+
+###  http://www.w3.org/ns/prov#order
+:order rdf:type owl:AnnotationProperty ;
+       rdfs:comment "The position that this OWL term should be listed within documentation. The scope of the documentation (e.g., among all terms, among terms within a prov:category, among properties applying to a particular class, etc.) is unspecified."@en ;
+       rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> .
+
+
+###  http://www.w3.org/ns/prov#qualifiedForm
+:qualifiedForm rdf:type owl:AnnotationProperty ;
+               rdfs:comment """This annotation property links a subproperty of prov:wasInfluencedBy with the subclass of prov:Influence and the qualifying property that are used to qualify it. 
+
+Example annotation:
+
+    prov:wasGeneratedBy prov:qualifiedForm prov:qualifiedGeneration, prov:Generation .
+
+Then this unqualified assertion:
+
+    :entity1 prov:wasGeneratedBy :activity1 .
+
+can be qualified by adding:
+
+   :entity1 prov:qualifiedGeneration :entity1Gen .
+   :entity1Gen 
+       a prov:Generation, prov:Influence;
+       prov:activity :activity1;
+       :customValue 1337 .
+
+Note how the value of the unqualified influence (prov:wasGeneratedBy :activity1) is mirrored as the value of the prov:activity (or prov:entity, or prov:agent) property on the influence class."""@en ;
+               rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+               rdfs:subPropertyOf rdfs:seeAlso .
+
+
+###  http://www.w3.org/ns/prov#sharesDefinitionWith
+:sharesDefinitionWith rdf:type owl:AnnotationProperty ;
+                      rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                      rdfs:subPropertyOf rdfs:seeAlso .
+
+
+###  http://www.w3.org/ns/prov#specializationOf
+:specializationOf rdf:type owl:AnnotationProperty ;
+                  rdfs:range :Entity .
+
+
+###  http://www.w3.org/ns/prov#todo
+:todo rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/prov#unqualifiedForm
+:unqualifiedForm rdf:type owl:AnnotationProperty ;
+                 rdfs:comment "Classes and properties used to qualify relationships are annotated with prov:unqualifiedForm to indicate the property used to assert an unqualified provenance relation."@en ;
+                 rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                 rdfs:subPropertyOf rdfs:seeAlso .
+
+
+###  http://www.w3.org/ns/prov#wasRevisionOf
+:wasRevisionOf rdf:type owl:AnnotationProperty ;
+               rdfs:range :Entity .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.w3.org/ns/prov#actedOnBehalfOf
+:actedOnBehalfOf rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf :wasInfluencedBy ;
+                 rdfs:domain :Agent ;
+                 rdfs:range :Agent ;
+                 owl:propertyChainAxiom ( :qualifiedDelegation
+                                          :agent
+                                        ) ;
+                 rdfs:comment "An object property to express the accountability of an agent towards another agent. The subordinate agent acted on behalf of the responsible agent in an actual activity. "@en ;
+                 rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                 rdfs:label "actedOnBehalfOf" ;
+                 :category "starting-point" ;
+                 :component "agents-responsibility" ;
+                 :inverse "hadDelegate" ;
+                 :qualifiedForm :Delegation ,
+                                :qualifiedDelegation .
+
+
+###  http://www.w3.org/ns/prov#activity
+:activity rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :influencer ;
+          rdfs:domain :ActivityInfluence ;
+          rdfs:range :Activity ;
+          rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+          rdfs:label "activity" ;
+          :category "qualified" ;
+          :editorialNote "This property behaves in spirit like rdf:object; it references the object of a prov:wasInfluencedBy triple."@en ;
+          :editorsDefinition "The prov:activity property references an prov:Activity which influenced a resource. This property applies to an prov:ActivityInfluence, which is given by a subproperty of prov:qualifiedInfluence from the influenced prov:Entity, prov:Activity or prov:Agent." ;
+          :inverse "activityOfInfluence" .
+
+
+###  http://www.w3.org/ns/prov#agent
+:agent rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf :influencer ;
+       rdfs:domain :AgentInfluence ;
+       rdfs:range :Agent ;
+       rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+       rdfs:label "agent" ;
+       :category "qualified" ;
+       :editorialNote "This property behaves in spirit like rdf:object; it references the object of a prov:wasInfluencedBy triple."@en ;
+       :editorsDefinition "The prov:agent property references an prov:Agent which influenced a resource. This property applies to an prov:AgentInfluence, which is given by a subproperty of prov:qualifiedInfluence from the influenced prov:Entity, prov:Activity or prov:Agent."@en ;
+       :inverse "agentOfInfluence" .
+
+
+###  http://www.w3.org/ns/prov#alternateOf
+:alternateOf rdf:type owl:ObjectProperty ;
+             rdfs:domain :Entity ;
+             rdfs:range :Entity ;
+             rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+             rdfs:label "alternateOf" ;
+             rdfs:seeAlso :specializationOf ;
+             :category "expanded" ;
+             :component "alternate" ;
+             :constraints "http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#prov-dm-constraints-fig"^^xsd:anyURI ;
+             :definition "Two alternate entities present aspects of the same thing. These aspects may be the same or different, and the alternate entities may or may not overlap in time."@en ;
+             :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-alternate"^^xsd:anyURI ;
+             :inverse "alternateOf" ;
+             :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-alternate"^^xsd:anyURI .
+
+
+###  http://www.w3.org/ns/prov#atLocation
+:atLocation rdf:type owl:ObjectProperty ;
+            rdfs:domain [ rdf:type owl:Class ;
+                          owl:unionOf ( :Activity
+                                        :Agent
+                                        :Entity
+                                        :InstantaneousEvent
+                                      )
+                        ] ;
+            rdfs:range :Location ;
+            rdfs:comment "The Location of any resource."@en ,
+                         "This property has multiple RDFS domains to suit multiple OWL Profiles. See <a href=\"#owl-profile\">PROV-O OWL Profile</a>." ;
+            rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+            rdfs:label "atLocation" ;
+            :category "expanded" ;
+            :editorialNote "The naming of prov:atLocation parallels prov:atTime, and is not named prov:hadLocation to avoid conflicting with the convention that prov:had* properties are used on prov:Influence classes."@en ,
+                           "This property is not functional because the many values could be at a variety of granularies (In this building, in this room, in that chair)."@en ;
+            :inverse "locationOf" ;
+            :sharesDefinitionWith :Location .
+
+
+###  http://www.w3.org/ns/prov#entity
+:entity rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf :influencer ;
+        rdfs:domain :EntityInfluence ;
+        rdfs:range :Entity ;
+        rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+        rdfs:label "entity" ;
+        :category "qualified" ;
+        :editorialNote "This property behaves in spirit like rdf:object; it references the object of a prov:wasInfluencedBy triple."@en ;
+        :editorsDefinition "The prov:entity property references an prov:Entity which influenced a resource. This property applies to an prov:EntityInfluence, which is given by a subproperty of prov:qualifiedInfluence from the influenced prov:Entity, prov:Activity or prov:Agent." ;
+        :inverse "entityOfInfluence" .
+
+
+###  http://www.w3.org/ns/prov#generated
+:generated rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :influenced ;
+           owl:inverseOf :wasGeneratedBy ;
+           rdfs:domain :Activity ;
+           rdfs:range :Entity ;
+           rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+           rdfs:label "generated" ;
+           :category "expanded" ;
+           :component "entities-activities" ;
+           :editorialNote "prov:generated is one of few inverse property defined, to allow Activity-oriented assertions in addition to Entity-oriented assertions."@en ;
+           :inverse "wasGeneratedBy" ;
+           :sharesDefinitionWith :Generation .
+
+
+###  http://www.w3.org/ns/prov#hadActivity
+:hadActivity rdf:type owl:ObjectProperty ;
+             rdfs:domain :Influence ,
+                         [ rdf:type owl:Class ;
+                           owl:unionOf ( :Delegation
+                                         :Derivation
+                                         :End
+                                         :Start
+                                       )
+                         ] ;
+             rdfs:range :Activity ;
+             rdfs:comment "The _optional_ Activity of an Influence, which used, generated, invalidated, or was the responsibility of some Entity. This property is _not_ used by ActivityInfluence (use prov:activity instead)."@en ,
+                          "This property has multiple RDFS domains to suit multiple OWL Profiles. See <a href=\"#owl-profile\">PROV-O OWL Profile</a>." ;
+             rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+             rdfs:label "hadActivity" ;
+             :category "qualified" ;
+             :component "derivations" ;
+             :editorialNote "The multiple rdfs:domain assertions are intended. One is simpler and works for OWL-RL, the union is more specific but is not recognized by OWL-RL."@en ;
+             :inverse "wasActivityOfInfluence" ;
+             :sharesDefinitionWith :Activity .
+
+
+###  http://www.w3.org/ns/prov#hadGeneration
+:hadGeneration rdf:type owl:ObjectProperty ;
+               rdfs:domain :Derivation ;
+               rdfs:range :Generation ;
+               rdfs:comment "The _optional_ Generation involved in an Entity's Derivation."@en ;
+               rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+               rdfs:label "hadGeneration" ;
+               :category "qualified" ;
+               :component "derivations" ;
+               :inverse "generatedAsDerivation" ;
+               :sharesDefinitionWith :Generation .
+
+
+###  http://www.w3.org/ns/prov#hadMember
+:hadMember rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :wasInfluencedBy ;
+           rdfs:domain :Collection ;
+           rdfs:range :Entity ;
+           rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+           rdfs:label "hadMember" ;
+           :category "expanded" ;
+           :component "expanded" ;
+           :inverse "wasMemberOf" ;
+           :sharesDefinitionWith :Collection .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :hadMember ;
+   owl:annotatedProperty rdfs:range ;
+   owl:annotatedTarget :Entity ;
+   rdfs:comment "A collection is an entity that provides a structure to some constituents, which are themselves entities. These constituents are said to be member of the collections."@en ;
+   :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-collection"
+ ] .
+
+
+###  http://www.w3.org/ns/prov#hadPlan
+:hadPlan rdf:type owl:ObjectProperty ;
+         rdfs:domain :Association ;
+         rdfs:range :Plan ;
+         rdfs:comment "The _optional_ Plan adopted by an Agent in Association with some Activity. Plan specifications are out of the scope of this specification."@en ;
+         rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+         rdfs:label "hadPlan" ;
+         :category "qualified" ;
+         :component "agents-responsibility" ;
+         :inverse "wasPlanOf" ;
+         :sharesDefinitionWith :Plan .
+
+
+###  http://www.w3.org/ns/prov#hadPrimarySource
+:hadPrimarySource rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf :wasDerivedFrom ;
+                  rdfs:domain :Entity ;
+                  rdfs:range :Entity ;
+                  owl:propertyChainAxiom ( :qualifiedPrimarySource
+                                           :entity
+                                         ) ;
+                  rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                  rdfs:label "hadPrimarySource" ;
+                  :category "expanded" ;
+                  :component "derivations" ;
+                  :inverse "wasPrimarySourceOf" ;
+                  :qualifiedForm :PrimarySource ,
+                                 :qualifiedPrimarySource .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :hadPrimarySource ;
+   owl:annotatedProperty rdfs:subPropertyOf ;
+   owl:annotatedTarget :wasDerivedFrom ;
+   rdfs:comment "hadPrimarySource property is a particular case of wasDerivedFrom (see http://www.w3.org/TR/prov-dm/#term-original-source) that aims to give credit to the source that originated some information."
+ ] .
+
+
+###  http://www.w3.org/ns/prov#hadRole
+:hadRole rdf:type owl:ObjectProperty ;
+         rdfs:domain :Influence ,
+                     [ rdf:type owl:Class ;
+                       owl:unionOf ( :Association
+                                     :InstantaneousEvent
+                                   )
+                     ] ;
+         rdfs:range :Role ;
+         rdfs:comment "The _optional_ Role that an Entity assumed in the context of an Activity. For example, :baking prov:used :spoon; prov:qualified [ a prov:Usage; prov:entity :spoon; prov:hadRole roles:mixing_implement ]."@en ,
+                      "This property has multiple RDFS domains to suit multiple OWL Profiles. See <a href=\"#owl-profile\">PROV-O OWL Profile</a>." ;
+         rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+         rdfs:label "hadRole" ;
+         :category "qualified" ;
+         :component "agents-responsibility" ;
+         :editorsDefinition "prov:hadRole references the Role (i.e. the function of an entity with respect to an activity), in the context of an instantaneous usage, generation, association, start, and end."@en ;
+         :inverse "wasRoleIn" ;
+         :sharesDefinitionWith :Role .
+
+
+###  http://www.w3.org/ns/prov#hadUsage
+:hadUsage rdf:type owl:ObjectProperty ;
+          rdfs:domain :Derivation ;
+          rdfs:range :Usage ;
+          rdfs:comment "The _optional_ Usage involved in an Entity's Derivation."@en ;
+          rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+          rdfs:label "hadUsage" ;
+          :category "qualified" ;
+          :component "derivations" ;
+          :inverse "wasUsedInDerivation" ;
+          :sharesDefinitionWith :Usage .
+
+
+###  http://www.w3.org/ns/prov#influenced
+:influenced rdf:type owl:ObjectProperty ;
+            owl:inverseOf :wasInfluencedBy ;
+            rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+            rdfs:label "influenced" ;
+            :category "expanded" ;
+            :component "agents-responsibility" ;
+            :inverse "wasInfluencedBy" ;
+            :sharesDefinitionWith :Influence .
+
+
+###  http://www.w3.org/ns/prov#influencer
+:influencer rdf:type owl:ObjectProperty ;
+            rdfs:domain :Influence ;
+            rdfs:range owl:Thing ;
+            rdfs:comment "Subproperties of prov:influencer are used to cite the object of an unqualified PROV-O triple whose predicate is a subproperty of prov:wasInfluencedBy (e.g. prov:used, prov:wasGeneratedBy). prov:influencer is used much like rdf:object is used."@en ;
+            rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+            rdfs:label "influencer" ;
+            :category "qualified" ;
+            :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-influence"^^xsd:anyURI ;
+            :editorialNote "This property and its subproperties are used in the same way as the rdf:object property, i.e. to reference the object of an unqualified prov:wasInfluencedBy or prov:influenced triple."@en ;
+            :editorsDefinition "This property is used as part of the qualified influence pattern. Subclasses of prov:Influence use these subproperties to reference the resource (Entity, Agent, or Activity) whose influence is being qualified."@en ;
+            :inverse "hadInfluence" .
+
+
+###  http://www.w3.org/ns/prov#invalidated
+:invalidated rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf :influenced ;
+             owl:inverseOf :wasInvalidatedBy ;
+             rdfs:domain :Activity ;
+             rdfs:range :Entity ;
+             rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+             rdfs:label "invalidated" ;
+             :category "expanded" ;
+             :component "entities-activities" ;
+             :editorialNote "prov:invalidated is one of few inverse property defined, to allow Activity-oriented assertions in addition to Entity-oriented assertions."@en ;
+             :inverse "wasInvalidatedBy" ;
+             :sharesDefinitionWith :Invalidation .
+
+
+###  http://www.w3.org/ns/prov#qualifiedAssociation
+:qualifiedAssociation rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf :qualifiedInfluence ;
+                      rdfs:domain :Activity ;
+                      rdfs:range :Association ;
+                      rdfs:comment "If this Activity prov:wasAssociatedWith Agent :ag, then it can qualify the Association using prov:qualifiedAssociation [ a prov:Association;  prov:agent :ag; :foo :bar ]."@en ;
+                      rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                      rdfs:label "qualifiedAssociation" ;
+                      :category "qualified" ;
+                      :component "agents-responsibility" ;
+                      :inverse "qualifiedAssociationOf" ;
+                      :sharesDefinitionWith :Association ;
+                      :unqualifiedForm :wasAssociatedWith .
+
+
+###  http://www.w3.org/ns/prov#qualifiedAttribution
+:qualifiedAttribution rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf :qualifiedInfluence ;
+                      rdfs:domain :Entity ;
+                      rdfs:range :Attribution ;
+                      rdfs:comment "If this Entity prov:wasAttributedTo Agent :ag, then it can qualify how it was influenced using prov:qualifiedAttribution [ a prov:Attribution;  prov:agent :ag; :foo :bar ]."@en ;
+                      rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                      rdfs:label "qualifiedAttribution" ;
+                      :category "qualified" ;
+                      :component "agents-responsibility" ;
+                      :inverse "qualifiedAttributionOf" ;
+                      :sharesDefinitionWith :Attribution ;
+                      :unqualifiedForm :wasAttributedTo .
+
+
+###  http://www.w3.org/ns/prov#qualifiedCommunication
+:qualifiedCommunication rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf :qualifiedInfluence ;
+                        rdfs:domain :Activity ;
+                        rdfs:range :Communication ;
+                        rdfs:comment "If this Activity prov:wasInformedBy Activity :a, then it can qualify how it was influenced using prov:qualifiedCommunication [ a prov:Communication;  prov:activity :a; :foo :bar ]."@en ;
+                        rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                        rdfs:label "qualifiedCommunication" ;
+                        :category "qualified" ;
+                        :component "entities-activities" ;
+                        :inverse "qualifiedCommunicationOf" ;
+                        :qualifiedForm :Communication ;
+                        :sharesDefinitionWith :Communication .
+
+
+###  http://www.w3.org/ns/prov#qualifiedDelegation
+:qualifiedDelegation rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf :qualifiedInfluence ;
+                     rdfs:domain :Agent ;
+                     rdfs:range :Delegation ;
+                     rdfs:comment "If this Agent prov:actedOnBehalfOf Agent :ag, then it can qualify how with prov:qualifiedResponsibility [ a prov:Responsibility;  prov:agent :ag; :foo :bar ]."@en ;
+                     rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                     rdfs:label "qualifiedDelegation" ;
+                     :category "qualified" ;
+                     :component "agents-responsibility" ;
+                     :inverse "qualifiedDelegationOf" ;
+                     :sharesDefinitionWith :Delegation ;
+                     :unqualifiedForm :actedOnBehalfOf .
+
+
+###  http://www.w3.org/ns/prov#qualifiedDerivation
+:qualifiedDerivation rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf :qualifiedInfluence ;
+                     rdfs:domain :Entity ;
+                     rdfs:range :Derivation ;
+                     rdfs:comment "If this Entity prov:wasDerivedFrom Entity :e, then it can qualify how it was derived using prov:qualifiedDerivation [ a prov:Derivation;  prov:entity :e; :foo :bar ]."@en ;
+                     rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                     rdfs:label "qualifiedDerivation" ;
+                     :category "qualified" ;
+                     :component "derivations" ;
+                     :inverse "qualifiedDerivationOf" ;
+                     :sharesDefinitionWith :Derivation ;
+                     :unqualifiedForm :wasDerivedFrom .
+
+
+###  http://www.w3.org/ns/prov#qualifiedEnd
+:qualifiedEnd rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf :qualifiedInfluence ;
+              rdfs:domain :Activity ;
+              rdfs:range :End ;
+              rdfs:comment "If this Activity prov:wasEndedBy Entity :e1, then it can qualify how it was ended using prov:qualifiedEnd [ a prov:End;  prov:entity :e1; :foo :bar ]."@en ;
+              rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+              rdfs:label "qualifiedEnd" ;
+              :category "qualified" ;
+              :component "entities-activities" ;
+              :inverse "qualifiedEndOf" ;
+              :sharesDefinitionWith :End ;
+              :unqualifiedForm :wasEndedBy .
+
+
+###  http://www.w3.org/ns/prov#qualifiedGeneration
+:qualifiedGeneration rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf :qualifiedInfluence ;
+                     rdfs:domain :Entity ;
+                     rdfs:range :Generation ;
+                     rdfs:comment "If this Activity prov:generated Entity :e, then it can qualify how it performed the Generation using prov:qualifiedGeneration [ a prov:Generation;  prov:entity :e; :foo :bar ]."@en ;
+                     rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                     rdfs:label "qualifiedGeneration" ;
+                     :category "qualified" ;
+                     :component "entities-activities" ;
+                     :inverse "qualifiedGenerationOf" ;
+                     :sharesDefinitionWith :Generation ;
+                     :unqualifiedForm :wasGeneratedBy .
+
+
+###  http://www.w3.org/ns/prov#qualifiedInfluence
+:qualifiedInfluence rdf:type owl:ObjectProperty ;
+                    rdfs:domain [ rdf:type owl:Class ;
+                                  owl:unionOf ( :Activity
+                                                :Agent
+                                                :Entity
+                                              )
+                                ] ;
+                    rdfs:range :Influence ;
+                    rdfs:comment "Because prov:qualifiedInfluence is a broad relation, the more specific relations (qualifiedCommunication, qualifiedDelegation, qualifiedEnd, etc.) should be used when applicable."@en ;
+                    rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                    rdfs:label "qualifiedInfluence" ;
+                    :category "qualified" ;
+                    :component "derivations" ;
+                    :inverse "qualifiedInfluenceOf" ;
+                    :sharesDefinitionWith :Influence ;
+                    :unqualifiedForm :wasInfluencedBy .
+
+
+###  http://www.w3.org/ns/prov#qualifiedInvalidation
+:qualifiedInvalidation rdf:type owl:ObjectProperty ;
+                       rdfs:subPropertyOf :qualifiedInfluence ;
+                       rdfs:domain :Entity ;
+                       rdfs:range :Invalidation ;
+                       rdfs:comment "If this Entity prov:wasInvalidatedBy Activity :a, then it can qualify how it was invalidated using prov:qualifiedInvalidation [ a prov:Invalidation;  prov:activity :a; :foo :bar ]."@en ;
+                       rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                       rdfs:label "qualifiedInvalidation" ;
+                       :category "qualified" ;
+                       :component "entities-activities" ;
+                       :inverse "qualifiedInvalidationOf" ;
+                       :sharesDefinitionWith :Invalidation ;
+                       :unqualifiedForm :wasInvalidatedBy .
+
+
+###  http://www.w3.org/ns/prov#qualifiedPrimarySource
+:qualifiedPrimarySource rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf :qualifiedInfluence ;
+                        rdfs:domain :Entity ;
+                        rdfs:range :PrimarySource ;
+                        rdfs:comment "If this Entity prov:hadPrimarySource Entity :e, then it can qualify how using prov:qualifiedPrimarySource [ a prov:PrimarySource; prov:entity :e; :foo :bar ]."@en ;
+                        rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                        rdfs:label "qualifiedPrimarySource" ;
+                        :category "qualified" ;
+                        :component "derivations" ;
+                        :inverse "qualifiedSourceOf" ;
+                        :sharesDefinitionWith :PrimarySource ;
+                        :unqualifiedForm :hadPrimarySource .
+
+
+###  http://www.w3.org/ns/prov#qualifiedQuotation
+:qualifiedQuotation rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf :qualifiedInfluence ;
+                    rdfs:domain :Entity ;
+                    rdfs:range :Quotation ;
+                    rdfs:comment "If this Entity prov:wasQuotedFrom Entity :e, then it can qualify how using prov:qualifiedQuotation [ a prov:Quotation;  prov:entity :e; :foo :bar ]."@en ;
+                    rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                    rdfs:label "qualifiedQuotation" ;
+                    :category "qualified" ;
+                    :component "derivations" ;
+                    :inverse "qualifiedQuotationOf" ;
+                    :sharesDefinitionWith :Quotation ;
+                    :unqualifiedForm :wasQuotedFrom .
+
+
+###  http://www.w3.org/ns/prov#qualifiedRevision
+:qualifiedRevision rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf :qualifiedInfluence ;
+                   rdfs:domain :Entity ;
+                   rdfs:range :Revision ;
+                   rdfs:comment "If this Entity prov:wasRevisionOf Entity :e, then it can qualify how it was revised using prov:qualifiedRevision [ a prov:Revision;  prov:entity :e; :foo :bar ]."@en ;
+                   rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                   rdfs:label "qualifiedRevision" ;
+                   :category "qualified" ;
+                   :component "derivations" ;
+                   :inverse "revisedEntity" ;
+                   :sharesDefinitionWith :Revision ;
+                   :unqualifiedForm :wasRevisionOf .
+
+
+###  http://www.w3.org/ns/prov#qualifiedStart
+:qualifiedStart rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf :qualifiedInfluence ;
+                rdfs:domain :Activity ;
+                rdfs:range :Start ;
+                rdfs:comment "If this Activity prov:wasStartedBy Entity :e1, then it can qualify how it was started using prov:qualifiedStart [ a prov:Start;  prov:entity :e1; :foo :bar ]."@en ;
+                rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                rdfs:label "qualifiedStart" ;
+                :category "qualified" ;
+                :component "entities-activities" ;
+                :inverse "qualifiedStartOf" ;
+                :sharesDefinitionWith :Start ;
+                :unqualifiedForm :wasStartedBy .
+
+
+###  http://www.w3.org/ns/prov#qualifiedUsage
+:qualifiedUsage rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf :qualifiedInfluence ;
+                rdfs:domain :Activity ;
+                rdfs:range :Usage ;
+                rdfs:comment "If this Activity prov:used Entity :e, then it can qualify how it used it using prov:qualifiedUsage [ a prov:Usage; prov:entity :e; :foo :bar ]."@en ;
+                rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                rdfs:label "qualifiedUsage" ;
+                :category "qualified" ;
+                :component "entities-activities" ;
+                :inverse "qualifiedUsingActivity" ;
+                :sharesDefinitionWith :Usage ;
+                :unqualifiedForm :used .
+
+
+###  http://www.w3.org/ns/prov#specializationOf
+:specializationOf rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf :alternateOf ;
+                  rdfs:domain :Entity .
+
+
+###  http://www.w3.org/ns/prov#used
+:used rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :wasInfluencedBy ;
+      rdfs:domain :Activity ;
+      rdfs:range :Entity ;
+      owl:propertyChainAxiom ( :qualifiedUsage
+                               :entity
+                             ) ;
+      rdfs:comment "A prov:Entity that was used by this prov:Activity. For example, :baking prov:used :spoon, :egg, :oven ."@en ;
+      rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+      rdfs:label "used" ;
+      :category "starting-point" ;
+      :component "entities-activities" ;
+      :inverse "wasUsedBy" ;
+      :qualifiedForm :Usage ,
+                     :qualifiedUsage .
+
+
+###  http://www.w3.org/ns/prov#wasAssociatedWith
+:wasAssociatedWith rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf :wasInfluencedBy ;
+                   rdfs:domain :Activity ;
+                   rdfs:range :Agent ;
+                   owl:propertyChainAxiom ( :qualifiedAssociation
+                                            :agent
+                                          ) ;
+                   rdfs:comment "An prov:Agent that had some (unspecified) responsibility for the occurrence of this prov:Activity."@en ;
+                   rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                   rdfs:label "wasAssociatedWith" ;
+                   :category "starting-point" ;
+                   :component "agents-responsibility" ;
+                   :inverse "wasAssociateFor" ;
+                   :qualifiedForm :Association ,
+                                  :qualifiedAssociation .
+
+
+###  http://www.w3.org/ns/prov#wasAttributedTo
+:wasAttributedTo rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf :wasInfluencedBy ;
+                 rdfs:domain :Entity ;
+                 rdfs:range :Agent ;
+                 owl:propertyChainAxiom ( :qualifiedAttribution
+                                          :agent
+                                        ) ;
+                 rdfs:comment "Attribution is the ascribing of an entity to an agent."@en ;
+                 rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                 rdfs:label "wasAttributedTo" ;
+                 :category "starting-point" ;
+                 :component "agents-responsibility" ;
+                 :definition "Attribution is the ascribing of an entity to an agent."@en ;
+                 :inverse "contributed" ;
+                 :qualifiedForm :Attribution ,
+                                :qualifiedAttribution .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :wasAttributedTo ;
+   owl:annotatedProperty rdfs:subPropertyOf ;
+   owl:annotatedTarget :wasInfluencedBy ;
+   rdfs:comment "Attribution is a particular case of trace (see http://www.w3.org/TR/prov-dm/#concept-trace), in the sense that it links an entity to the agent that ascribed it." ;
+   :definition "IF wasAttributedTo(e2,ag1,aAttr) holds, THEN wasInfluencedBy(e2,ag1) also holds. "
+ ] .
+
+
+###  http://www.w3.org/ns/prov#wasDerivedFrom
+:wasDerivedFrom rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf :wasInfluencedBy ;
+                rdfs:domain :Entity ;
+                rdfs:range :Entity ;
+                owl:propertyChainAxiom ( :qualifiedDerivation
+                                         :entity
+                                       ) ;
+                rdfs:comment "The more specific subproperties of prov:wasDerivedFrom (i.e., prov:wasQuotedFrom, prov:wasRevisionOf, prov:hadPrimarySource) should be used when applicable."@en ;
+                rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                rdfs:label "wasDerivedFrom" ;
+                :category "starting-point" ;
+                :component "derivations" ;
+                :definition "A derivation is a transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a pre-existing entity."@en ;
+                :inverse "hadDerivation" ;
+                :qualifiedForm :Derivation ,
+                               :qualifiedDerivation .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :wasDerivedFrom ;
+   owl:annotatedProperty rdfs:subPropertyOf ;
+   owl:annotatedTarget :wasInfluencedBy ;
+   rdfs:comment "Derivation is a particular case of trace (see http://www.w3.org/TR/prov-dm/#term-trace), since it links an entity to another entity that contributed to its existence."
+ ] .
+
+
+###  http://www.w3.org/ns/prov#wasEndedBy
+:wasEndedBy rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf :wasInfluencedBy ;
+            rdfs:domain :Activity ;
+            rdfs:range :Entity ;
+            owl:propertyChainAxiom ( :qualifiedEnd
+                                     :entity
+                                   ) ;
+            rdfs:comment "End is when an activity is deemed to have ended. An end may refer to an entity, known as trigger, that terminated the activity."@en ;
+            rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+            rdfs:label "wasEndedBy" ;
+            :category "expanded" ;
+            :component "entities-activities" ;
+            :inverse "ended" ;
+            :qualifiedForm :End ,
+                           :qualifiedEnd .
+
+
+###  http://www.w3.org/ns/prov#wasGeneratedBy
+:wasGeneratedBy rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf :wasInfluencedBy ;
+                rdfs:domain :Entity ;
+                rdfs:range :Activity ;
+                owl:propertyChainAxiom ( :qualifiedGeneration
+                                         :activity
+                                       ) ;
+                rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                rdfs:label "wasGeneratedBy" ;
+                :category "starting-point" ;
+                :component "entities-activities" ;
+                :inverse "generated" ;
+                :qualifiedForm :Generation ,
+                               :qualifiedGeneration .
+
+
+###  http://www.w3.org/ns/prov#wasInfluencedBy
+:wasInfluencedBy rdf:type owl:ObjectProperty ;
+                 rdfs:domain _:genid38 ;
+                 rdfs:range _:genid43 ;
+                 rdfs:comment "Because prov:wasInfluencedBy is a broad relation, its more specific subproperties (e.g. prov:wasInformedBy, prov:actedOnBehalfOf, prov:wasEndedBy, etc.) should be used when applicable."@en ,
+                              "This property has multiple RDFS domains to suit multiple OWL Profiles. See <a href=\"#owl-profile\">PROV-O OWL Profile</a>." ;
+                 rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                 rdfs:label "wasInfluencedBy" ;
+                 :category "qualified" ;
+                 :component "agents-responsibility" ;
+                 :editorialNote """The sub-properties of prov:wasInfluencedBy can be elaborated in more detail using the Qualification Pattern. For example, the binary relation :baking prov:used :spoon can be qualified by asserting :baking prov:qualifiedUsage [ a prov:Usage; prov:entity :spoon; prov:atLocation :kitchen ] .
+
+Subproperties of prov:wasInfluencedBy may also be asserted directly without being qualified.
+
+prov:wasInfluencedBy should not be used without also using one of its subproperties. 
+"""@en ;
+                 :inverse "influenced" ;
+                 :qualifiedForm :Influence ,
+                                :qualifiedInfluence ;
+                 :sharesDefinitionWith :Influence .
+
+_:genid38 rdf:type owl:Class ;
+           owl:unionOf ( :Activity
+                         :Agent
+                         :Entity
+                       ) .
+
+_:genid43 rdf:type owl:Class ;
+           owl:unionOf ( :Activity
+                         :Agent
+                         :Entity
+                       ) .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :wasInfluencedBy ;
+   owl:annotatedProperty rdfs:domain ;
+   owl:annotatedTarget _:genid38 ;
+   :definition "influencee: an identifier (o2) for an entity, activity, or agent; " ;
+   :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-influence"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :wasInfluencedBy ;
+   owl:annotatedProperty rdfs:range ;
+   owl:annotatedTarget _:genid43 ;
+   :definition "influencer: an identifier (o1) for an ancestor entity, activity, or agent that the former depends on;" ;
+   :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-influence"
+ ] .
+
+
+###  http://www.w3.org/ns/prov#wasInformedBy
+:wasInformedBy rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf :wasInfluencedBy ;
+               rdfs:domain :Activity ;
+               rdfs:range :Activity ;
+               owl:propertyChainAxiom ( :qualifiedCommunication
+                                        :activity
+                                      ) ;
+               rdfs:comment "An activity a2 is dependent on or informed by another activity a1, by way of some unspecified entity that is generated by a1 and used by a2."@en ;
+               rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+               rdfs:label "wasInformedBy" ;
+               :category "starting-point" ;
+               :component "entities-activities" ;
+               :inverse "informed" ;
+               :qualifiedForm :Communication ,
+                              :qualifiedCommunication .
+
+
+###  http://www.w3.org/ns/prov#wasInvalidatedBy
+:wasInvalidatedBy rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf :wasInfluencedBy ;
+                  rdfs:domain :Entity ;
+                  rdfs:range :Activity ;
+                  owl:propertyChainAxiom ( :qualifiedInvalidation
+                                           :activity
+                                         ) ;
+                  rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                  rdfs:label "wasInvalidatedBy" ;
+                  :category "expanded" ;
+                  :component "entities-activities" ;
+                  :inverse "invalidated" ;
+                  :qualifiedForm :Invalidation ,
+                                 :qualifiedInvalidation .
+
+
+###  http://www.w3.org/ns/prov#wasQuotedFrom
+:wasQuotedFrom rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf :wasDerivedFrom ;
+               rdfs:domain :Entity ;
+               rdfs:range :Entity ;
+               owl:propertyChainAxiom ( :qualifiedQuotation
+                                        :entity
+                                      ) ;
+               rdfs:comment "An entity is derived from an original entity by copying, or 'quoting', some or all of it."@en ;
+               rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+               rdfs:label "wasQuotedFrom" ;
+               :category "expanded" ;
+               :component "derivations" ;
+               :inverse "quotedAs" ;
+               :qualifiedForm :Quotation ,
+                              :qualifiedQuotation .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :wasQuotedFrom ;
+   owl:annotatedProperty rdfs:subPropertyOf ;
+   owl:annotatedTarget :wasDerivedFrom ;
+   rdfs:comment "Quotation is a particular case of derivation (see http://www.w3.org/TR/prov-dm/#term-quotation) in which an entity is derived from an original entity by copying, or \"quoting\", some or all of it. "
+ ] .
+
+
+###  http://www.w3.org/ns/prov#wasRevisionOf
+:wasRevisionOf rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf :wasDerivedFrom ;
+               rdfs:domain :Entity ;
+               owl:propertyChainAxiom ( :qualifiedRevision
+                                        :entity
+                                      ) .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :wasRevisionOf ;
+   owl:annotatedProperty rdfs:subPropertyOf ;
+   owl:annotatedTarget :wasDerivedFrom ;
+   rdfs:comment """Revision is a derivation (see http://www.w3.org/TR/prov-dm/#term-Revision). Moreover, according to 
+http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 2012 'wasRevisionOf is a strict sub-relation of wasDerivedFrom since two entities e2 and e1 may satisfy wasDerivedFrom(e2,e1) without being a variant of each other.'"""
+ ] .
+
+
+###  http://www.w3.org/ns/prov#wasStartedBy
+:wasStartedBy rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf :wasInfluencedBy ;
+              rdfs:domain :Activity ;
+              rdfs:range :Entity ;
+              owl:propertyChainAxiom ( :qualifiedStart
+                                       :entity
+                                     ) ;
+              rdfs:comment "Start is when an activity is deemed to have started. A start may refer to an entity, known as trigger, that initiated the activity."@en ;
+              rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+              rdfs:label "wasStartedBy" ;
+              :category "expanded" ;
+              :component "entities-activities" ;
+              :inverse "started" ;
+              :qualifiedForm :Start ,
+                             :qualifiedStart .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.w3.org/ns/prov#atTime
+:atTime rdf:type owl:DatatypeProperty ;
+        rdfs:domain :InstantaneousEvent ;
+        rdfs:range xsd:dateTime ;
+        rdfs:comment "The time at which an InstantaneousEvent occurred, in the form of xsd:dateTime."@en ;
+        rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+        rdfs:label "atTime" ;
+        :category "qualified" ;
+        :component "entities-activities" ;
+        :sharesDefinitionWith :InstantaneousEvent ;
+        :unqualifiedForm :endedAtTime ,
+                         :generatedAtTime ,
+                         :invalidatedAtTime ,
+                         :startedAtTime .
+
+
+###  http://www.w3.org/ns/prov#endedAtTime
+:endedAtTime rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Activity ;
+             rdfs:range xsd:dateTime ;
+             rdfs:comment "The time at which an activity ended. See also prov:startedAtTime."@en ;
+             rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+             rdfs:label "endedAtTime" ;
+             :category "starting-point" ;
+             :component "entities-activities" ;
+             :editorialNote "It is the intent that the property chain holds: (prov:qualifiedEnd o prov:atTime) rdfs:subPropertyOf prov:endedAtTime."@en ;
+             :qualifiedForm :End ,
+                            :atTime .
+
+
+###  http://www.w3.org/ns/prov#generatedAtTime
+:generatedAtTime rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :Entity ;
+                 rdfs:range xsd:dateTime ;
+                 rdfs:comment "The time at which an entity was completely created and is available for use."@en ;
+                 rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                 rdfs:label "generatedAtTime" ;
+                 :category "expanded" ;
+                 :component "entities-activities" ;
+                 :editorialNote "It is the intent that the property chain holds: (prov:qualifiedGeneration o prov:atTime) rdfs:subPropertyOf prov:generatedAtTime."@en ;
+                 :qualifiedForm :Generation ,
+                                :atTime .
+
+
+###  http://www.w3.org/ns/prov#invalidatedAtTime
+:invalidatedAtTime rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :Entity ;
+                   rdfs:range xsd:dateTime ;
+                   rdfs:comment "The time at which an entity was invalidated (i.e., no longer usable)."@en ;
+                   rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                   rdfs:label "invalidatedAtTime" ;
+                   :category "expanded" ;
+                   :component "entities-activities" ;
+                   :editorialNote "It is the intent that the property chain holds: (prov:qualifiedInvalidation o prov:atTime) rdfs:subPropertyOf prov:invalidatedAtTime."@en ;
+                   :qualifiedForm :Invalidation ,
+                                  :atTime .
+
+
+###  http://www.w3.org/ns/prov#startedAtTime
+:startedAtTime rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Activity ;
+               rdfs:range xsd:dateTime ;
+               rdfs:comment "The time at which an activity started. See also prov:endedAtTime."@en ;
+               rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+               rdfs:label "startedAtTime" ;
+               :category "starting-point" ;
+               :component "entities-activities" ;
+               :editorialNote "It is the intent that the property chain holds: (prov:qualifiedStart o prov:atTime) rdfs:subPropertyOf prov:startedAtTime."@en ;
+               :qualifiedForm :Start ,
+                              :atTime .
+
+
+###  http://www.w3.org/ns/prov#value
+:value rdf:type owl:DatatypeProperty ;
+       rdfs:domain :Entity ;
+       rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+       rdfs:label "value" ;
+       :category "expanded" ;
+       :component "entities-activities" ;
+       :definition "Provides a value that is a direct representation of an entity."@en ;
+       :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-attribute-value"^^xsd:anyURI ;
+       :editorialNote "This property serves the same purpose as rdf:value, but has been reintroduced to avoid some of the definitional ambiguity in the RDF specification (specifically, 'may be used in describing structured values')."@en ,
+                      "The editor's definition comes from http://www.w3.org/TR/rdf-primer/#rdfvalue" .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.w3.org/2002/07/owl#Thing
+owl:Thing rdf:type owl:Class .
+
+
+###  http://www.w3.org/ns/prov#Activity
+:Activity rdf:type owl:Class ;
+          owl:disjointWith :Entity ;
+          rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+          rdfs:label "Activity" ;
+          :category "starting-point" ;
+          :component "entities-activities" ;
+          :constraints "http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#prov-dm-constraints-fig"^^xsd:anyURI ;
+          :definition "An activity is something that occurs over a period of time and acts upon or with entities; it may include consuming, processing, transforming, modifying, relocating, using, or generating entities." ;
+          :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-Activity"^^xsd:anyURI ;
+          :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-Activity"^^xsd:anyURI .
+
+
+###  http://www.w3.org/ns/prov#ActivityInfluence
+:ActivityInfluence rdf:type owl:Class ;
+                   rdfs:subClassOf :Influence ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty :hadActivity ;
+                                     owl:maxCardinality "0"^^xsd:nonNegativeInteger
+                                   ] ;
+                   owl:disjointWith :EntityInfluence ;
+                   rdfs:comment "ActivityInfluence provides additional descriptions of an Activity's binary influence upon any other kind of resource. Instances of ActivityInfluence use the prov:activity property to cite the influencing Activity."@en ,
+                                "It is not recommended that the type ActivityInfluence be asserted without also asserting one of its more specific subclasses."@en ;
+                   rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                   rdfs:label "ActivityInfluence" ;
+                   rdfs:seeAlso :activity ;
+                   :category "qualified" ;
+                   :editorsDefinition "ActivitiyInfluence is the capacity of an activity to have an effect on the character, development, or behavior of another by means of generation, invalidation, communication, or other."@en .
+
+
+###  http://www.w3.org/ns/prov#Agent
+:Agent rdf:type owl:Class ;
+       owl:disjointWith :InstantaneousEvent ;
+       rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+       rdfs:label "Agent" ;
+       :category "starting-point" ;
+       :component "agents-responsibility" ;
+       :definition "An agent is something that bears some form of responsibility for an activity taking place, for the existence of an entity, or for another agent's activity. "@en ;
+       :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-agent"^^xsd:anyURI ;
+       :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-Agent"^^xsd:anyURI .
+
+
+###  http://www.w3.org/ns/prov#AgentInfluence
+:AgentInfluence rdf:type owl:Class ;
+                rdfs:subClassOf :Influence ;
+                rdfs:comment "AgentInfluence provides additional descriptions of an Agent's binary influence upon any other kind of resource. Instances of AgentInfluence use the prov:agent property to cite the influencing Agent."@en ,
+                             "It is not recommended that the type AgentInfluence be asserted without also asserting one of its more specific subclasses."@en ;
+                rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                rdfs:label "AgentInfluence" ;
+                rdfs:seeAlso :agent ;
+                :category "qualified" ;
+                :editorsDefinition "AgentInfluence is the capacity of an agent to have an effect on the character, development, or behavior of another by means of attribution, association, delegation, or other."@en .
+
+
+###  http://www.w3.org/ns/prov#Association
+:Association rdf:type owl:Class ;
+             rdfs:subClassOf :AgentInfluence ;
+             rdfs:comment "An instance of prov:Association provides additional descriptions about the binary prov:wasAssociatedWith relation from an prov:Activity to some prov:Agent that had some responsiblity for it. For example, :baking prov:wasAssociatedWith :baker; prov:qualifiedAssociation [ a prov:Association; prov:agent :baker; :foo :bar ]."@en ;
+             rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+             rdfs:label "Association" ;
+             :category "qualified" ;
+             :component "agents-responsibility" ;
+             :definition "An activity association is an assignment of responsibility to an agent for an activity, indicating that the agent had a role in the activity. It further allows for a plan to be specified, which is the plan intended by the agent to achieve some goals in the context of this activity."@en ;
+             :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-Association"^^xsd:anyURI ;
+             :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-Association"^^xsd:anyURI ;
+             :unqualifiedForm :wasAssociatedWith .
+
+
+###  http://www.w3.org/ns/prov#Attribution
+:Attribution rdf:type owl:Class ;
+             rdfs:subClassOf :AgentInfluence ;
+             rdfs:comment "An instance of prov:Attribution provides additional descriptions about the binary prov:wasAttributedTo relation from an prov:Entity to some prov:Agent that had some responsible for it. For example, :cake prov:wasAttributedTo :baker; prov:qualifiedAttribution [ a prov:Attribution; prov:entity :baker; :foo :bar ]."@en ;
+             rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+             rdfs:label "Attribution" ;
+             :category "qualified" ;
+             :component "agents-responsibility" ;
+             :constraints "http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#prov-dm-constraints-fig"^^xsd:anyURI ;
+             :definition """Attribution is the ascribing of an entity to an agent.
+
+When an entity e is attributed to agent ag, entity e was generated by some unspecified activity that in turn was associated to agent ag. Thus, this relation is useful when the activity is not known, or irrelevant."""@en ;
+             :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-attribution"^^xsd:anyURI ;
+             :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-attribution"^^xsd:anyURI ;
+             :unqualifiedForm :wasAttributedTo .
+
+
+###  http://www.w3.org/ns/prov#Bundle
+:Bundle rdf:type owl:Class ;
+        rdfs:subClassOf :Entity ;
+        rdfs:comment "Note that there are kinds of bundles (e.g. handwritten letters, audio recordings, etc.) that are not expressed in PROV-O, but can be still be described by PROV-O."@en ;
+        rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+        rdfs:label "Bundle" ;
+        :category "expanded" ;
+        :definition "A bundle is a named set of provenance descriptions, and is itself an Entity, so allowing provenance of provenance to be expressed."@en ;
+        :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-bundle-entity"^^xsd:anyURI ;
+        :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-bundle-declaration"^^xsd:anyURI .
+
+
+###  http://www.w3.org/ns/prov#Collection
+:Collection rdf:type owl:Class ;
+            rdfs:subClassOf :Entity ;
+            rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+            rdfs:label "Collection" ;
+            :category "expanded" ;
+            :component "collections" ;
+            :definition "A collection is an entity that provides a structure to some constituents, which are themselves entities. These constituents are said to be member of the collections."@en ;
+            :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-collection"^^xsd:anyURI .
+
+
+###  http://www.w3.org/ns/prov#Communication
+:Communication rdf:type owl:Class ;
+               rdfs:subClassOf :ActivityInfluence ;
+               rdfs:comment "An instance of prov:Communication provides additional descriptions about the binary prov:wasInformedBy relation from an informed prov:Activity to the prov:Activity that informed it. For example, :you_jumping_off_bridge prov:wasInformedBy :everyone_else_jumping_off_bridge; prov:qualifiedCommunication [ a prov:Communication; prov:activity :everyone_else_jumping_off_bridge; :foo :bar ]."@en ;
+               rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+               rdfs:label "Communication" ;
+               :category "qualified" ;
+               :component "entities-activities" ;
+               :constraints "http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#prov-dm-constraints-fig"^^xsd:anyURI ;
+               :definition "Communication is the exchange of an entity by two activities, one activity using the entity generated by the other." ;
+               :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-Communication"^^xsd:anyURI ;
+               :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-wasInformedBy"^^xsd:anyURI ;
+               :unqualifiedForm :wasInformedBy .
+
+
+###  http://www.w3.org/ns/prov#Delegation
+:Delegation rdf:type owl:Class ;
+            rdfs:subClassOf :AgentInfluence ;
+            rdfs:comment "An instance of prov:Delegation provides additional descriptions about the binary prov:actedOnBehalfOf relation from a performing prov:Agent to some prov:Agent for whom it was performed. For example, :mixing prov:wasAssociatedWith :toddler . :toddler prov:actedOnBehalfOf :mother; prov:qualifiedDelegation [ a prov:Delegation; prov:entity :mother; :foo :bar ]."@en ;
+            rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+            rdfs:label "Delegation" ;
+            :category "qualified" ;
+            :component "agents-responsibility" ;
+            :definition """Delegation is the assignment of authority and responsibility to an agent (by itself or by another agent) to carry out a specific activity as a delegate or representative, while the agent it acts on behalf of retains some responsibility for the outcome of the delegated work.
+
+For example, a student acted on behalf of his supervisor, who acted on behalf of the department chair, who acted on behalf of the university; all those agents are responsible in some way for the activity that took place but we do not say explicitly who bears responsibility and to what degree."""@en ;
+            :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-delegation"^^xsd:anyURI ;
+            :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-delegation"^^xsd:anyURI ;
+            :unqualifiedForm :actedOnBehalfOf .
+
+
+###  http://www.w3.org/ns/prov#Derivation
+:Derivation rdf:type owl:Class ;
+            rdfs:subClassOf :EntityInfluence ;
+            rdfs:comment "An instance of prov:Derivation provides additional descriptions about the binary prov:wasDerivedFrom relation from some derived prov:Entity to another prov:Entity from which it was derived. For example, :chewed_bubble_gum prov:wasDerivedFrom :unwrapped_bubble_gum; prov:qualifiedDerivation [ a prov:Derivation; prov:entity :unwrapped_bubble_gum; :foo :bar ]."@en ,
+                         "The more specific forms of prov:Derivation (i.e., prov:Revision, prov:Quotation, prov:PrimarySource) should be asserted if they apply."@en ;
+            rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+            rdfs:label "Derivation" ;
+            :category "qualified" ;
+            :component "derivations" ;
+            :constraints "http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#prov-dm-constraints-fig"^^xsd:anyURI ;
+            :definition "A derivation is a transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a pre-existing entity."@en ;
+            :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-Derivation"^^xsd:anyURI ;
+            :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#Derivation-Relation"^^xsd:anyURI ;
+            :unqualifiedForm :wasDerivedFrom .
+
+
+###  http://www.w3.org/ns/prov#EmptyCollection
+:EmptyCollection rdf:type owl:Class ;
+                 rdfs:subClassOf :Collection .
+
+
+###  http://www.w3.org/ns/prov#End
+:End rdf:type owl:Class ;
+     rdfs:subClassOf :EntityInfluence ,
+                     :InstantaneousEvent ;
+     rdfs:comment "An instance of prov:End provides additional descriptions about the binary prov:wasEndedBy relation from some ended prov:Activity to an prov:Entity that ended it. For example, :ball_game prov:wasEndedBy :buzzer; prov:qualifiedEnd [ a prov:End; prov:entity :buzzer; :foo :bar; prov:atTime '2012-03-09T08:05:08-05:00'^^xsd:dateTime ]."@en ;
+     rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+     rdfs:label "End" ;
+     :category "qualified" ;
+     :component "entities-activities" ;
+     :constraints "http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#prov-dm-constraints-fig"^^xsd:anyURI ;
+     :definition "End is when an activity is deemed to have been ended by an entity, known as trigger. The activity no longer exists after its end. Any usage, generation, or invalidation involving an activity precedes the activity's end. An end may refer to a trigger entity that terminated the activity, or to an activity, known as ender that generated the trigger."@en ;
+     :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-End"^^xsd:anyURI ;
+     :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-End"^^xsd:anyURI ;
+     :unqualifiedForm :wasEndedBy .
+
+
+###  http://www.w3.org/ns/prov#Entity
+:Entity rdf:type owl:Class ;
+        owl:disjointWith :InstantaneousEvent ;
+        rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+        rdfs:label "Entity" ;
+        :category "starting-point" ;
+        :component "entities-activities" ;
+        :constraints "http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#prov-dm-constraints-fig"^^xsd:anyURI ;
+        :definition "An entity is a physical, digital, conceptual, or other kind of thing with some fixed aspects; entities may be real or imaginary. "@en ;
+        :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-entity"^^xsd:anyURI ;
+        :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-Entity"^^xsd:anyURI .
+
+
+###  http://www.w3.org/ns/prov#EntityInfluence
+:EntityInfluence rdf:type owl:Class ;
+                 rdfs:subClassOf :Influence ;
+                 rdfs:comment "EntityInfluence provides additional descriptions of an Entity's binary influence upon any other kind of resource. Instances of EntityInfluence use the prov:entity property to cite the influencing Entity."@en ,
+                              "It is not recommended that the type EntityInfluence be asserted without also asserting one of its more specific subclasses."@en ;
+                 rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                 rdfs:label "EntityInfluence" ;
+                 rdfs:seeAlso :entity ;
+                 :category "qualified" ;
+                 :editorsDefinition "EntityInfluence is the capacity of an entity to have an effect on the character, development, or behavior of another by means of usage, start, end, derivation, or other. "@en .
+
+
+###  http://www.w3.org/ns/prov#Generation
+:Generation rdf:type owl:Class ;
+            rdfs:subClassOf :ActivityInfluence ,
+                            :InstantaneousEvent ;
+            rdfs:comment "An instance of prov:Generation provides additional descriptions about the binary prov:wasGeneratedBy relation from a generated prov:Entity to the prov:Activity that generated it. For example, :cake prov:wasGeneratedBy :baking; prov:qualifiedGeneration [ a prov:Generation; prov:activity :baking; :foo :bar ]."@en ;
+            rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+            rdfs:label "Generation" ;
+            :category "qualified" ;
+            :component "entities-activities" ;
+            :constraints "http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#prov-dm-constraints-fig"^^xsd:anyURI ;
+            :definition "Generation is the completion of production of a new entity by an activity. This entity did not exist before generation and becomes available for usage after this generation."@en ;
+            :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-Generation"^^xsd:anyURI ;
+            :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-Generation"^^xsd:anyURI ;
+            :unqualifiedForm :wasGeneratedBy .
+
+
+###  http://www.w3.org/ns/prov#Influence
+:Influence rdf:type owl:Class ;
+           rdfs:comment "An instance of prov:Influence provides additional descriptions about the binary prov:wasInfluencedBy relation from some influenced Activity, Entity, or Agent to the influencing Activity, Entity, or Agent. For example, :stomach_ache prov:wasInfluencedBy :spoon; prov:qualifiedInfluence [ a prov:Influence; prov:entity :spoon; :foo :bar ] . Because prov:Influence is a broad relation, the more specific relations (Communication, Delegation, End, etc.) should be used when applicable."@en ,
+                        "Because prov:Influence is a broad relation, its most specific subclasses (e.g. prov:Communication, prov:Delegation, prov:End, prov:Revision, etc.) should be used when applicable."@en ;
+           rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+           rdfs:label "Influence" ;
+           :category "qualified" ;
+           :component "derivations" ;
+           :definition "Influence is the capacity of an entity, activity, or agent to have an effect on the character, development, or behavior of another by means of usage, start, end, generation, invalidation, communication, derivation, attribution, association, or delegation."@en ;
+           :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-influence"^^xsd:anyURI ;
+           :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-influence"^^xsd:anyURI ;
+           :unqualifiedForm :wasInfluencedBy .
+
+
+###  http://www.w3.org/ns/prov#InstantaneousEvent
+:InstantaneousEvent rdf:type owl:Class ;
+                    rdfs:comment "An instantaneous event, or event for short, happens in the world and marks a change in the world, in its activities and in its entities. The term 'event' is commonly used in process algebra with a similar meaning. Events represent communications or interactions; they are assumed to be atomic and instantaneous."@en ;
+                    rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                    rdfs:label "InstantaneousEvent" ;
+                    :category "qualified" ;
+                    :component "entities-activities" ;
+                    :constraints "http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#dfn-event"^^xsd:anyURI ;
+                    :definition "The PROV data model is implicitly based on a notion of instantaneous events (or just events), that mark transitions in the world. Events include generation, usage, or invalidation of entities, as well as starting or ending of activities. This notion of event is not first-class in the data model, but it is useful for explaining its other concepts and its semantics."@en .
+
+
+###  http://www.w3.org/ns/prov#Invalidation
+:Invalidation rdf:type owl:Class ;
+              rdfs:subClassOf :ActivityInfluence ,
+                              :InstantaneousEvent ;
+              rdfs:comment "An instance of prov:Invalidation provides additional descriptions about the binary prov:wasInvalidatedBy relation from an invalidated prov:Entity to the prov:Activity that invalidated it. For example, :uncracked_egg prov:wasInvalidatedBy :baking; prov:qualifiedInvalidation [ a prov:Invalidation; prov:activity :baking; :foo :bar ]."@en ;
+              rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+              rdfs:label "Invalidation" ;
+              :category "qualified" ;
+              :component "entities-activities" ;
+              :constraints "http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#prov-dm-constraints-fig"^^xsd:anyURI ;
+              :definition "Invalidation is the start of the destruction, cessation, or expiry of an existing entity by an activity. The entity is no longer available for use (or further invalidation) after invalidation. Any generation or usage of an entity precedes its invalidation." ;
+              :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-Invalidation"^^xsd:anyURI ;
+              :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-Invalidation"^^xsd:anyURI ;
+              :unqualifiedForm :wasInvalidatedBy .
+
+
+###  http://www.w3.org/ns/prov#Location
+:Location rdf:type owl:Class ;
+          rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+          rdfs:label "Location" ;
+          rdfs:seeAlso :atLocation ;
+          :category "expanded" ;
+          :definition "A location can be an identifiable geographic place (ISO 19112), but it can also be a non-geographic place such as a directory, row, or column. As such, there are numerous ways in which location can be expressed, such as by a coordinate, address, landmark, and so forth."@en ;
+          :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-attribute-location"^^xsd:anyURI ;
+          :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-attribute"^^xsd:anyURI .
+
+
+###  http://www.w3.org/ns/prov#Organization
+:Organization rdf:type owl:Class ;
+              rdfs:subClassOf :Agent ;
+              rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+              rdfs:label "Organization" ;
+              :category "expanded" ;
+              :component "agents-responsibility" ;
+              :definition "An organization is a social or legal institution such as a company, society, etc." ;
+              :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-agent"^^xsd:anyURI ;
+              :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-types"^^xsd:anyURI .
+
+
+###  http://www.w3.org/ns/prov#Person
+:Person rdf:type owl:Class ;
+        rdfs:subClassOf :Agent ;
+        rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+        rdfs:label "Person" ;
+        :category "expanded" ;
+        :component "agents-responsibility" ;
+        :definition "Person agents are people."@en ;
+        :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-agent"^^xsd:anyURI ;
+        :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-types"^^xsd:anyURI .
+
+
+###  http://www.w3.org/ns/prov#Plan
+:Plan rdf:type owl:Class ;
+      rdfs:subClassOf :Entity ;
+      rdfs:comment "There exist no prescriptive requirement on the nature of plans, their representation, the actions or steps they consist of, or their intended goals. Since plans may evolve over time, it may become necessary to track their provenance, so plans themselves are entities. Representing the plan explicitly in the provenance can be useful for various tasks: for example, to validate the execution as represented in the provenance record, to manage expectation failures, or to provide explanations."@en ;
+      rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+      rdfs:label "Plan" ;
+      :category "expanded" ,
+                "qualified" ;
+      :component "agents-responsibility" ;
+      :definition "A plan is an entity that represents a set of actions or steps intended by one or more agents to achieve some goals." ;
+      :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-Association"^^xsd:anyURI ;
+      :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-Association"^^xsd:anyURI .
+
+
+###  http://www.w3.org/ns/prov#PrimarySource
+:PrimarySource rdf:type owl:Class ;
+               rdfs:subClassOf :Derivation ;
+               rdfs:comment "An instance of prov:PrimarySource provides additional descriptions about the binary prov:hadPrimarySource relation from some secondary prov:Entity to an earlier, primary prov:Entity. For example, :blog prov:hadPrimarySource :newsArticle; prov:qualifiedPrimarySource [ a prov:PrimarySource; prov:entity :newsArticle; :foo :bar ] ."@en ;
+               rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+               rdfs:label "PrimarySource" ;
+               :category "qualified" ;
+               :component "derivations" ;
+               :definition """A primary source for a topic refers to something produced by some agent with direct experience and knowledge about the topic, at the time of the topic's study, without benefit from hindsight.
+
+Because of the directness of primary sources, they 'speak for themselves' in ways that cannot be captured through the filter of secondary sources. As such, it is important for secondary sources to reference those primary sources from which they were derived, so that their reliability can be investigated.
+
+A primary source relation is a particular case of derivation of secondary materials from their primary sources. It is recognized that the determination of primary sources can be up to interpretation, and should be done according to conventions accepted within the application's domain."""@en ;
+               :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-primary-source"^^xsd:anyURI ;
+               :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-original-source"^^xsd:anyURI ;
+               :unqualifiedForm :hadPrimarySource .
+
+
+###  http://www.w3.org/ns/prov#Quotation
+:Quotation rdf:type owl:Class ;
+           rdfs:subClassOf :Derivation ;
+           rdfs:comment "An instance of prov:Quotation provides additional descriptions about the binary prov:wasQuotedFrom relation from some taken prov:Entity from an earlier, larger prov:Entity. For example, :here_is_looking_at_you_kid prov:wasQuotedFrom :casablanca_script; prov:qualifiedQuotation [ a prov:Quotation; prov:entity :casablanca_script; :foo :bar ]."@en ;
+           rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+           rdfs:label "Quotation" ;
+           :category "qualified" ;
+           :component "derivations" ;
+           :definition "A quotation is the repeat of (some or all of) an entity, such as text or image, by someone who may or may not be its original author. Quotation is a particular case of derivation."@en ;
+           :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-quotation"^^xsd:anyURI ;
+           :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-quotation"^^xsd:anyURI ;
+           :unqualifiedForm :wasQuotedFrom .
+
+
+###  http://www.w3.org/ns/prov#Revision
+:Revision rdf:type owl:Class ;
+          rdfs:subClassOf :Derivation ;
+          rdfs:comment "An instance of prov:Revision provides additional descriptions about the binary prov:wasRevisionOf relation from some newer prov:Entity to an earlier prov:Entity. For example, :draft_2 prov:wasRevisionOf :draft_1; prov:qualifiedRevision [ a prov:Revision; prov:entity :draft_1; :foo :bar ]."@en ;
+          rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+          rdfs:label "Revision" ;
+          :category "qualified" ;
+          :component "derivations" ;
+          :definition "A revision is a derivation for which the resulting entity is a revised version of some original. The implication here is that the resulting entity contains substantial content from the original. Revision is a particular case of derivation."@en ;
+          :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-revision"^^xsd:anyURI ;
+          :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-Revision"^^xsd:anyURI ;
+          :unqualifiedForm :wasRevisionOf .
+
+
+###  http://www.w3.org/ns/prov#Role
+:Role rdf:type owl:Class ;
+      rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+      rdfs:label "Role" ;
+      rdfs:seeAlso :hadRole ;
+      :category "qualified" ;
+      :component "agents-responsibility" ;
+      :definition "A role is the function of an entity or agent with respect to an activity, in the context of a usage, generation, invalidation, association, start, and end."@en ;
+      :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-attribute-role"^^xsd:anyURI ;
+      :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-attribute"^^xsd:anyURI .
+
+
+###  http://www.w3.org/ns/prov#SoftwareAgent
+:SoftwareAgent rdf:type owl:Class ;
+               rdfs:subClassOf :Agent ;
+               rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+               rdfs:label "SoftwareAgent" ;
+               :category "expanded" ;
+               :component "agents-responsibility" ;
+               :definition "A software agent is running software."@en ;
+               :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-agent"^^xsd:anyURI ;
+               :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-types"^^xsd:anyURI .
+
+
+###  http://www.w3.org/ns/prov#Start
+:Start rdf:type owl:Class ;
+       rdfs:subClassOf :EntityInfluence ,
+                       :InstantaneousEvent ;
+       rdfs:comment "An instance of prov:Start provides additional descriptions about the binary prov:wasStartedBy relation from some started prov:Activity to an prov:Entity that started it. For example, :foot_race prov:wasStartedBy :bang; prov:qualifiedStart [ a prov:Start; prov:entity :bang; :foo :bar; prov:atTime '2012-03-09T08:05:08-05:00'^^xsd:dateTime ] ."@en ;
+       rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+       rdfs:label "Start" ;
+       :category "qualified" ;
+       :component "entities-activities" ;
+       :constraints "http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#prov-dm-constraints-fig"^^xsd:anyURI ;
+       :definition "Start is when an activity is deemed to have been started by an entity, known as trigger. The activity did not exist before its start. Any usage, generation, or invalidation involving an activity follows the activity's start. A start may refer to a trigger entity that set off the activity, or to an activity, known as starter, that generated the trigger."@en ;
+       :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-Start"^^xsd:anyURI ;
+       :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-Start"^^xsd:anyURI ;
+       :unqualifiedForm :wasStartedBy .
+
+
+###  http://www.w3.org/ns/prov#Usage
+:Usage rdf:type owl:Class ;
+       rdfs:subClassOf :EntityInfluence ,
+                       :InstantaneousEvent ;
+       rdfs:comment "An instance of prov:Usage provides additional descriptions about the binary prov:used relation from some prov:Activity to an prov:Entity that it used. For example, :keynote prov:used :podium; prov:qualifiedUsage [ a prov:Usage; prov:entity :podium; :foo :bar ]."@en ;
+       rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+       rdfs:label "Usage" ;
+       :category "qualified" ;
+       :component "entities-activities" ;
+       :constraints "http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#prov-dm-constraints-fig"^^xsd:anyURI ;
+       :definition "Usage is the beginning of utilizing an entity by an activity. Before usage, the activity had not begun to utilize this entity and could not have been affected by the entity."@en ;
+       :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-Usage"^^xsd:anyURI ;
+       :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-Usage"^^xsd:anyURI ;
+       :unqualifiedForm :used .
+
+
+###  https://def.isotc211.org/class/AbsolutePositionalAccuracy
+isoClass:AbsolutePositionalAccuracy rdf:type owl:Class ;
+                                                            rdfs:subClassOf isoClass:PositionalAccuracy ;
+                                                            <http://schema.org/description> "closeness of reported coordinate values to values accepted as or being true" ;
+                                                            rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                            rdfs:label "Absolute Positional Accuracy" ;
+                                                            <https://schema.org/identifier> "EAID_0944E929_46D9_48a0_BF1E_345704AD233C"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/AccuracyOfATimeMeasurement
+isoClass:AccuracyOfATimeMeasurement rdf:type owl:Class ;
+                                                            rdfs:subClassOf isoClass:TemporalQuality ;
+                                                            <http://schema.org/description> "correctness of the temporal references of an item (reporting of error in time measurement)" ;
+                                                            rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                            rdfs:label "Accuracy Of A Time Measurement" ;
+                                                            <https://schema.org/identifier> "EAID_ECA52CA0_0F22_4a9c_A3BE_F2AB2D299DF3"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/Address
+isoClass:Address rdf:type owl:Class ;
+                                         rdfs:subClassOf :Entity ,
+                                                         isoClass:Address .
+
+
+###  https://def.isotc211.org/class/AggregationDerivation
+isoClass:AggregationDerivation rdf:type owl:Class ;
+                                                       rdfs:subClassOf isoClass:EvaluationMethod ;
+                                                       <http://schema.org/description> "Aggregation or derivation method" ;
+                                                       rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                       rdfs:label "Aggregation Derivation" ;
+                                                       <https://schema.org/identifier> "EAID_07B2270E_3DC3_41d0_A56E_016B1FFB29CB"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/BasicMeasure
+isoClass:BasicMeasure rdf:type owl:Class ;
+                                              rdfs:subClassOf :Entity ;
+                                              <http://schema.org/description> "data quality basic measure" ;
+                                              rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                              rdfs:label "Basic Measure" ;
+                                              <https://schema.org/identifier> "EAID_1A9B7FB8_1095_4fb4_B4D3_8D5E49731AEF"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/CI_Citation
+isoClass:CI_Citation rdfs:subClassOf :Entity .
+
+
+###  https://def.isotc211.org/class/Commission
+isoClass:Commission rdf:type owl:Class ;
+                                            rdfs:subClassOf isoClass:Completeness ;
+                                            <http://schema.org/description> "excess data present in the dataset, as described by the scope" ;
+                                            rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                            rdfs:label "Commission" ;
+                                            <https://schema.org/identifier> "EAID_E6B405FF_DD66_444b_97F9_BCF312A14E33"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/Completeness
+isoClass:Completeness rdf:type owl:Class ;
+                                              rdfs:subClassOf isoClass:QualityElement ;
+                                              <http://schema.org/description> "presence and absence of features, their attributes and their relationships" ;
+                                              rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                              rdfs:label "Completeness" ;
+                                              <https://schema.org/identifier> "EAID_58A2F212_16E8_47a0_B619_12A8A67CA6AE"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/ConceptualConsistency
+isoClass:ConceptualConsistency rdf:type owl:Class ;
+                                                       rdfs:subClassOf isoClass:LogicalConsistency ;
+                                                       <http://schema.org/description> "adherence to rules of the conceptual schema" ;
+                                                       rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                       rdfs:label "Conceptual Consistency" ;
+                                                       <https://schema.org/identifier> "EAID_91CC4ABB_8D75_4807_A660_C9EB9107EDA9"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/Confidence
+isoClass:Confidence rdf:type owl:Class ;
+                                            rdfs:subClassOf isoClass:Metaquality ;
+                                            <http://schema.org/description> "trustworthiness of a data quality result" ;
+                                            rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                            rdfs:label "Confidence" ;
+                                            <https://schema.org/identifier> "EAID_758224A8_8FB2_4322_BAB7_06C82D431E0F"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/ConformanceResult
+isoClass:ConformanceResult rdf:type owl:Class ;
+                                                   rdfs:subClassOf :Entity ,
+                                                                   isoClass:QualityResult ;
+                                                   <http://schema.org/description> "information about the outcome of evaluating the obtained value (or set of values) against a specified acceptable conformance quality level" ;
+                                                   rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                   rdfs:label "Conformance Result" ;
+                                                   <https://schema.org/identifier> "EAID_467C878D_C11A_4408_8E91_2DF5C23A6CED"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/CoverageResult
+isoClass:CoverageResult rdf:type owl:Class ;
+                                                rdfs:subClassOf :Entity ,
+                                                                isoClass:QualityResult ;
+                                                <http://schema.org/description> "result of a data quality measure organising the measured values as a coverage" ;
+                                                rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                rdfs:label "Coverage Result" ;
+                                                <https://schema.org/identifier> "EAID_04F923CB_3B27_421d_B14C_685FA1C5DB45"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQM_BasicMeasure
+isoClass:DQM_BasicMeasure rdf:type owl:Class ;
+                                                  rdfs:subClassOf :Entity ;
+                                                  <http://schema.org/description> "data quality basic measure" ;
+                                                  rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                  rdfs:label "Dqm_Basic Measure" ;
+                                                  <https://schema.org/identifier> "EAID_1ACE64AC_4296_4c11_A5C1_8E5AAF5F8C7F"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQM_Description
+isoClass:DQM_Description rdf:type owl:Class ;
+                                                 rdfs:subClassOf :Entity ;
+                                                 <http://schema.org/description> "data quality measure description" ;
+                                                 rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                 rdfs:label "Dqm_Description" ;
+                                                 <https://schema.org/identifier> "EAID_E9D3E9D5_34E1_4001_A229_83FD4A5C3E6D"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQM_Measure
+isoClass:DQM_Measure rdf:type owl:Class ;
+                                             rdfs:subClassOf :Entity ;
+                                             <http://schema.org/description> "Data quality measure" ;
+                                             rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                             rdfs:label "Dqm_Measure" ;
+                                             <https://schema.org/identifier> "EAID_A862D4B1_33D6_4854_9E0D_F4884F634D4D"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQM_MeasureCatalogue
+isoClass:DQM_MeasureCatalogue rdf:type owl:Class ;
+                                                      rdfs:subClassOf :Collection ;
+                                                      rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                      rdfs:label "Dqm_Measure Catalogue" ;
+                                                      <https://schema.org/identifier> "EAID_A6E00741_08F1_4211_9123_EB757D6F9F25"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQM_Parameter
+isoClass:DQM_Parameter rdf:type owl:Class ;
+                                               rdfs:subClassOf :Entity ;
+                                               <http://schema.org/description> "data quality parameter" ;
+                                               rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                               rdfs:label "Dqm_Parameter" ;
+                                               <https://schema.org/identifier> "EAID_5AFE8289_8362_4a04_B325_C5FC972385E5"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQM_RegisteredDataQualityBasicMeasure
+isoClass:DQM_RegisteredDataQualityBasicMeasure rdf:type owl:Class ;
+                                                                       rdfs:subClassOf :Entity ;
+                                                                       rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                                       rdfs:label "Dqm_Registered Data Quality Basic Measure" ;
+                                                                       <https://schema.org/identifier> "EAID_3C6B9721_FD02_43c6_9EFA_A8791DEBF528"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQM_RegisteredDataQualityMeasure
+isoClass:DQM_RegisteredDataQualityMeasure rdf:type owl:Class ;
+                                                                  rdfs:subClassOf :Entity ;
+                                                                  rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                                  rdfs:label "Dqm_Registered Data Quality Measure" ;
+                                                                  <https://schema.org/identifier> "EAID_7395A73F_0311_4601_A943_2F7517CC3DD5"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQM_RegisteredDataQualityParameter
+isoClass:DQM_RegisteredDataQualityParameter rdf:type owl:Class ;
+                                                                    rdfs:subClassOf :Entity ;
+                                                                    rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                                    rdfs:label "Dqm_Registered Data Quality Parameter" ;
+                                                                    <https://schema.org/identifier> "EAID_F3148653_3480_4980_835A_287E2FE0B0E4"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQM_SourceReference
+isoClass:DQM_SourceReference rdf:type owl:Class ;
+                                                     rdfs:subClassOf :Entity ;
+                                                     <http://schema.org/description> "reference to the source of the data quality measure" ;
+                                                     rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                     rdfs:label "Dqm_Source Reference" ;
+                                                     <https://schema.org/identifier> "EAID_09EDDC17_3213_462d_860F_EBFF03E84886"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQM_ValueStructure
+isoClass:DQM_ValueStructure rdfs:subClassOf :Entity .
+
+
+###  https://def.isotc211.org/class/DQ_AbsoluteExternalPositionalAccuracy
+isoClass:DQ_AbsoluteExternalPositionalAccuracy rdf:type owl:Class ;
+                                                                       rdfs:subClassOf isoClass:DQ_PositionalAccuracy ;
+                                                                       <http://schema.org/description> "closeness of reported coordinate values to values accepted as or being true" ;
+                                                                       rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                                       rdfs:label "Dq_Absolute External Positional Accuracy" ;
+                                                                       <https://schema.org/identifier> "EAID_544E5270_2595_403d_BFBF_D937B1F6E586"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_AccuracyOfATimeMeasurement
+isoClass:DQ_AccuracyOfATimeMeasurement rdf:type owl:Class ;
+                                                               rdfs:subClassOf isoClass:DQ_TemporalQuality ;
+                                                               <http://schema.org/description> "correctness of the temporal references of an item (reporting of error in time measurement)" ;
+                                                               rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                               rdfs:label "Dq_Accuracy Of A Time Measurement" ;
+                                                               <https://schema.org/identifier> "EAID_22B1EF46_C219_4ed0_8F21_1945BAF5FEC4"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_AggregationDerivation
+isoClass:DQ_AggregationDerivation rdf:type owl:Class ;
+                                                          rdfs:subClassOf isoClass:DQ_EvaluationMethod ;
+                                                          <http://schema.org/description> "Aggregation or derivation method" ;
+                                                          rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                          rdfs:label "Dq_Aggregation Derivation" ;
+                                                          <https://schema.org/identifier> "EAID_21E0F93A_596C_451f_94A2_88339ECE194D"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_Completeness
+isoClass:DQ_Completeness rdf:type owl:Class ;
+                                                 rdfs:subClassOf isoClass:DQ_Element ;
+                                                 <http://schema.org/description> "presence and absence of features, their attributes and their relationships" ;
+                                                 rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                 rdfs:label "Dq_Completeness" ;
+                                                 <https://schema.org/identifier> "EAID_38212E98_101C_47a5_8EAB_32A796DFEE89"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_CompletenessCommission
+isoClass:DQ_CompletenessCommission rdf:type owl:Class ;
+                                                           rdfs:subClassOf isoClass:DQ_Completeness ;
+                                                           <http://schema.org/description> "excess data present in the dataset, as described by the scope" ;
+                                                           rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                           rdfs:label "Dq_Completeness Commission" ;
+                                                           <https://schema.org/identifier> "EAID_B5E5A897_79AF_4316_8CFF_472FF6BFA84F"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_CompletenessOmission
+isoClass:DQ_CompletenessOmission rdf:type owl:Class ;
+                                                         rdfs:subClassOf isoClass:DQ_Completeness ;
+                                                         <http://schema.org/description> "data absent from the dataset, as described by the scope" ;
+                                                         rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                         rdfs:label "Dq_Completeness Omission" ;
+                                                         <https://schema.org/identifier> "EAID_E92334B4_2B92_493b_AEC0_0FB4CE4E02E2"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_ConceptualConsistency
+isoClass:DQ_ConceptualConsistency rdf:type owl:Class ;
+                                                          rdfs:subClassOf isoClass:DQ_LogicalConsistency ;
+                                                          <http://schema.org/description> "adherence to rules of the conceptual schema" ;
+                                                          rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                          rdfs:label "Dq_Conceptual Consistency" ;
+                                                          <https://schema.org/identifier> "EAID_D78D6B32_CE81_48b4_9619_4F09EAAE7C90"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_Confidence
+isoClass:DQ_Confidence rdf:type owl:Class ;
+                                               rdfs:subClassOf isoClass:DQ_Metaquality ;
+                                               <http://schema.org/description> "trustworthiness of a data quality result" ;
+                                               rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                               rdfs:label "Dq_Confidence" ;
+                                               <https://schema.org/identifier> "EAID_5074A006_C269_4324_ADCE_A22D7DFFCBE0"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_ConformanceResult
+isoClass:DQ_ConformanceResult rdf:type owl:Class ;
+                                                      rdfs:subClassOf isoClass:DQ_Result ;
+                                                      <http://schema.org/description> "information about the outcome of evaluating the obtained value (or set of values) against a specified acceptable conformance quality level" ;
+                                                      rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                      rdfs:label "Dq_Conformance Result" ;
+                                                      <https://schema.org/identifier> "EAID_B0493529_EE5C_4507_B7BB_47EC6A2AD28F"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_CoverageResult
+isoClass:DQ_CoverageResult rdf:type owl:Class ;
+                                                   rdfs:subClassOf isoClass:DQ_Result ;
+                                                   <http://schema.org/description> "result of a data quality measure organising the measured values as a coverage" ;
+                                                   rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                   rdfs:label "Dq_Coverage Result" ;
+                                                   <https://schema.org/identifier> "EAID_956EA163_16E3_40e1_B63B_3824431614A5"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_DataEvaluation
+isoClass:DQ_DataEvaluation rdf:type owl:Class ;
+                                                   rdfs:subClassOf isoClass:DQ_EvaluationMethod ;
+                                                   <http://schema.org/description> "data evaluation method" ;
+                                                   rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                   rdfs:label "Dq_Data Evaluation" ;
+                                                   <https://schema.org/identifier> "EAID_98CB6DB3_1988_4281_B8E3_FA1ACDF0CBD4"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_DataInspection
+isoClass:DQ_DataInspection rdf:type owl:Class ;
+                                                   rdfs:subClassOf isoClass:DQ_EvaluationMethod ;
+                                                   rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                   rdfs:label "Dq_Data Inspection" ;
+                                                   <https://schema.org/identifier> "EAID_63530578_CD16_4088_B9EC_26EAEE944D5E"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_DataQuality
+isoClass:DQ_DataQuality rdf:type owl:Class ;
+                                                rdfs:subClassOf :Collection ;
+                                                <http://schema.org/description> "quality information for the data specified by a data quality scope" ;
+                                                rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                rdfs:label "Dq_Data Quality" ;
+                                                <https://schema.org/identifier> "EAID_3C8E715B_EF87_4795_94D2_DDF941FD8980"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_DescriptiveResult
+isoClass:DQ_DescriptiveResult rdf:type owl:Class ;
+                                                      rdfs:subClassOf isoClass:DQ_Result ;
+                                                      <http://schema.org/description> "data quality descriptive result" ;
+                                                      rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                      rdfs:label "Dq_Descriptive Result" ;
+                                                      <https://schema.org/identifier> "EAID_BBF10175_7FA4_424d_8C1A_00C183E14F4A"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_DomainConsistency
+isoClass:DQ_DomainConsistency rdf:type owl:Class ;
+                                                      rdfs:subClassOf isoClass:DQ_LogicalConsistency ;
+                                                      <http://schema.org/description> "adherence of values to the value domains" ;
+                                                      rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                      rdfs:label "Dq_Domain Consistency" ;
+                                                      <https://schema.org/identifier> "EAID_F829D0A5_6091_463f_88CD_14CF93EF6DCC"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_Element
+isoClass:DQ_Element rdf:type owl:Class ;
+                                            rdfs:subClassOf :Entity ;
+                                            <http://schema.org/description> "aspect of quantitative quality information" ;
+                                            rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                            rdfs:label "Dq_Element" ;
+                                            <https://schema.org/identifier> "EAID_FFF7F59E_8189_4c3c_9A7C_0F78BD7D4D73"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_EvaluationMethod
+isoClass:DQ_EvaluationMethod rdf:type owl:Class ;
+                                                     rdfs:subClassOf :Entity ;
+                                                     <http://schema.org/description> "Description of the evaluation method and procedure applied" ;
+                                                     rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                     rdfs:label "Dq_Evaluation Method" ;
+                                                     <https://schema.org/identifier> "EAID_C3EDE8E0_7ADD_4ab2_860A_9E425E18E7F7"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_EvaluationMethodTypeCode
+isoClass:DQ_EvaluationMethodTypeCode rdfs:subClassOf :Activity .
+
+
+###  https://def.isotc211.org/class/DQ_FormatConsistency
+isoClass:DQ_FormatConsistency rdf:type owl:Class ;
+                                                      rdfs:subClassOf isoClass:DQ_LogicalConsistency ;
+                                                      <http://schema.org/description> "degree to which data is stored in accordance with the physical structure of the dataset, as described by the scope" ;
+                                                      rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                      rdfs:label "Dq_Format Consistency" ;
+                                                      <https://schema.org/identifier> "EAID_7C0E39B7_5D20_4967_9AEA_9B24B442B9E0"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_FullInspection
+isoClass:DQ_FullInspection rdf:type owl:Class ;
+                                                   rdfs:subClassOf isoClass:DQ_DataEvaluation ;
+                                                   <http://schema.org/description> "full inspection" ;
+                                                   rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                   rdfs:label "Dq_Full Inspection" ;
+                                                   <https://schema.org/identifier> "EAID_AE41D809_7A0D_4539_9011_714A75DCBA77"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_GriddedDataPositionalAccuracy
+isoClass:DQ_GriddedDataPositionalAccuracy rdf:type owl:Class ;
+                                                                  rdfs:subClassOf isoClass:DQ_PositionalAccuracy ;
+                                                                  <http://schema.org/description> "closeness of gridded data position values to values accepted as or being true" ;
+                                                                  rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                                  rdfs:label "Dq_Gridded Data Positional Accuracy" ;
+                                                                  <https://schema.org/identifier> "EAID_5F291046_95B3_4a68_BFE8_BB8B2C2A315A"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_Homogeneity
+isoClass:DQ_Homogeneity rdf:type owl:Class ;
+                                                rdfs:subClassOf isoClass:DQ_Metaquality ;
+                                                <http://schema.org/description> "expected or tested uniformity of the results obtained for a data quality evaluation" ;
+                                                rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                rdfs:label "Dq_Homogeneity" ;
+                                                <https://schema.org/identifier> "EAID_2CC13250_B97C_45e9_B919_4C5A817CC483"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_IndirectEvaluation
+isoClass:DQ_IndirectEvaluation rdf:type owl:Class ;
+                                                       rdfs:subClassOf isoClass:DQ_DataEvaluation ;
+                                                       <http://schema.org/description> "indirect evaluation" ;
+                                                       rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                       rdfs:label "Dq_Indirect Evaluation" ;
+                                                       <https://schema.org/identifier> "EAID_0F97D478_C843_4934_98A4_D8DDAA049738"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_LogicalConsistency
+isoClass:DQ_LogicalConsistency rdf:type owl:Class ;
+                                                       rdfs:subClassOf isoClass:DQ_Element ;
+                                                       <http://schema.org/description> "degree of adherence to logical rules of data structure, attribution and relationships (data structure can be conceptual, logical or physical)" ;
+                                                       rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                       rdfs:label "Dq_Logical Consistency" ;
+                                                       <https://schema.org/identifier> "EAID_8EC62BC0_8C8A_4c40_AF14_4C9B2EBDD447"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_MeasureReference
+isoClass:DQ_MeasureReference rdf:type owl:Class ;
+                                                     rdfs:subClassOf :Entity ;
+                                                     <http://schema.org/description> "reference to the measure used" ;
+                                                     rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                     rdfs:label "Dq_Measure Reference" ;
+                                                     <https://schema.org/identifier> "EAID_3D7B62BA_5DF6_4974_89E5_53123475EDA8"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_Metaquality
+isoClass:DQ_Metaquality rdf:type owl:Class ;
+                                                rdfs:subClassOf isoClass:DQ_Element ;
+                                                <http://schema.org/description> "information about the reliability of data quality results" ;
+                                                rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                rdfs:label "Dq_Metaquality" ;
+                                                <https://schema.org/identifier> "EAID_AD1AEBFF_97EE_4083_87D2_56CF0AA900B0"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_NonQuantitativeAttributeCorrectness
+isoClass:DQ_NonQuantitativeAttributeCorrectness rdf:type owl:Class ;
+                                                                        rdfs:subClassOf isoClass:DQ_ThematicAccuracy ;
+                                                                        <http://schema.org/description> "correctness of non-quantitative attributes" ;
+                                                                        rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                                        rdfs:label "Dq_Non Quantitative Attribute Correctness" ;
+                                                                        <https://schema.org/identifier> "EAID_E37E1F48_D4BD_4619_89FC_41D9C9E067A0"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_PositionalAccuracy
+isoClass:DQ_PositionalAccuracy rdf:type owl:Class ;
+                                                       rdfs:subClassOf isoClass:DQ_Element ;
+                                                       <http://schema.org/description> "accuracy of the position of features" ;
+                                                       rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                       rdfs:label "Dq_Positional Accuracy" ;
+                                                       <https://schema.org/identifier> "EAID_7F61790C_BB0A_4aca_84A0_2CF06711A3A3"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_QuantitativeAttributeAccuracy
+isoClass:DQ_QuantitativeAttributeAccuracy rdf:type owl:Class ;
+                                                                  rdfs:subClassOf isoClass:DQ_ThematicAccuracy ;
+                                                                  <http://schema.org/description> "accuracy of quantitative attributes" ;
+                                                                  rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                                  rdfs:label "Dq_Quantitative Attribute Accuracy" ;
+                                                                  <https://schema.org/identifier> "EAID_1148C85A_1A12_498f_A872_AD2CDDDA550D"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_QuantitativeResult
+isoClass:DQ_QuantitativeResult rdf:type owl:Class ;
+                                                       rdfs:subClassOf isoClass:DQ_Result ;
+                                                       <http://schema.org/description> "the values or information about the value(s) (or set of values) obtained from applying a data quality measure" ;
+                                                       rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                       rdfs:label "Dq_Quantitative Result" ;
+                                                       <https://schema.org/identifier> "EAID_94413BF8_C4C1_4807_B7F5_D9E25401CCCF"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_RelativeInternalPositionalAccuracy
+isoClass:DQ_RelativeInternalPositionalAccuracy rdf:type owl:Class ;
+                                                                       rdfs:subClassOf isoClass:DQ_PositionalAccuracy ;
+                                                                       <http://schema.org/description> "closeness of the relative positions of features in the scope to their respective relative positions accepted as or being true" ;
+                                                                       rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                                       rdfs:label "Dq_Relative Internal Positional Accuracy" ;
+                                                                       <https://schema.org/identifier> "EAID_23C79A9C_B619_4894_814D_716D1A935083"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_Representativity
+isoClass:DQ_Representativity rdf:type owl:Class ;
+                                                     rdfs:subClassOf isoClass:DQ_Metaquality ;
+                                                     <http://schema.org/description> "degree to which the sample used has produced a result which is representative of the data within the data quality scope" ;
+                                                     rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                     rdfs:label "Dq_Representativity" ;
+                                                     <https://schema.org/identifier> "EAID_220D8D56_BF09_40a0_A131_6262FF1C4096"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_Result
+isoClass:DQ_Result rdf:type owl:Class ;
+                                           rdfs:subClassOf :Entity ;
+                                           <http://schema.org/description> "generalization of more specific result classes" ;
+                                           rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                           rdfs:label "Dq_Result" ;
+                                           <https://schema.org/identifier> "EAID_7F920908_3E16_499e_B1E0_5CF6A34C1A9D"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_SampleBasedInspection
+isoClass:DQ_SampleBasedInspection rdf:type owl:Class ;
+                                                          rdfs:subClassOf isoClass:DQ_DataEvaluation ;
+                                                          <http://schema.org/description> "sample based inspection" ;
+                                                          rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                          rdfs:label "Dq_Sample Based Inspection" ;
+                                                          <https://schema.org/identifier> "EAID_DC18543C_0CB4_4257_89E7_5344A8668BA7"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_StandaloneQualityReportInformation
+isoClass:DQ_StandaloneQualityReportInformation rdf:type owl:Class ;
+                                                                       rdfs:subClassOf :Collection ;
+                                                                       <http://schema.org/description> "reference to an external standalone quality report" ;
+                                                                       rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                                       rdfs:label "Dq_Standalone Quality Report Information" ;
+                                                                       <https://schema.org/identifier> "EAID_F7DE8EF4_AF81_4787_9669_15ED04DF05E2"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_TemporalConsistency
+isoClass:DQ_TemporalConsistency rdf:type owl:Class ;
+                                                        rdfs:subClassOf isoClass:DQ_TemporalQuality ;
+                                                        <http://schema.org/description> "correctness of ordered events or sequences, if reported" ;
+                                                        rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                        rdfs:label "Dq_Temporal Consistency" ;
+                                                        <https://schema.org/identifier> "EAID_400E872C_5B5A_4213_A7DA_EFF1608BE58A"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_TemporalQuality
+isoClass:DQ_TemporalQuality rdf:type owl:Class ;
+                                                    rdfs:subClassOf isoClass:DQ_Element ;
+                                                    <http://schema.org/description> "accuracy of the temporal attributes and temporal relationships of features" ;
+                                                    rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                    rdfs:label "Dq_Temporal Quality" ;
+                                                    <https://schema.org/identifier> "EAID_161D9CB6_7684_4885_A33A_EF2AF0D28DCB"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_TemporalValidity
+isoClass:DQ_TemporalValidity rdf:type owl:Class ;
+                                                     rdfs:subClassOf isoClass:DQ_TemporalQuality ;
+                                                     <http://schema.org/description> "validity of data specified by the scope with respect to time" ;
+                                                     rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                     rdfs:label "Dq_Temporal Validity" ;
+                                                     <https://schema.org/identifier> "EAID_48F41B62_2230_4c9b_BBB4_F413F5E0C1FC"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_ThematicAccuracy
+isoClass:DQ_ThematicAccuracy rdf:type owl:Class ;
+                                                     rdfs:subClassOf isoClass:DQ_Element ;
+                                                     <http://schema.org/description> "accuracy of quantitative attributes and the correctness of non-quantitative attributes and of the classifications of features and their relationships" ;
+                                                     rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                     rdfs:label "Dq_Thematic Accuracy" ;
+                                                     <https://schema.org/identifier> "EAID_54216305_8DC1_491f_9547_BEF8475175C9"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_ThematicClassificationCorrectness
+isoClass:DQ_ThematicClassificationCorrectness rdf:type owl:Class ;
+                                                                      rdfs:subClassOf isoClass:DQ_ThematicAccuracy ;
+                                                                      <http://schema.org/description> "comparison of the classes assigned to features or their attributes to a universe of discourse" ;
+                                                                      rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                                      rdfs:label "Dq_Thematic Classification Correctness" ;
+                                                                      <https://schema.org/identifier> "EAID_9A6FAE6B_8745_4f80_9A50_B2BCF31B88C9"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_TopologicalConsistency
+isoClass:DQ_TopologicalConsistency rdf:type owl:Class ;
+                                                           rdfs:subClassOf isoClass:DQ_LogicalConsistency ;
+                                                           <http://schema.org/description> "correctness of the explicitly encoded topological characteristics of the dataset as described by the scope" ;
+                                                           rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                           rdfs:label "Dq_Topological Consistency" ;
+                                                           <https://schema.org/identifier> "EAID_41EAC806_0362_4e47_9971_9ABDD958ACE2"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DQ_UsabilityElement
+isoClass:DQ_UsabilityElement rdf:type owl:Class ;
+                                                     rdfs:subClassOf isoClass:DQ_Element ;
+                                                     <http://schema.org/description> "degree of adherence of a dataset to a specific set of requirements" ;
+                                                     rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                     rdfs:label "Dq_Usability Element" ;
+                                                     <https://schema.org/identifier> "EAID_A178192F_4878_422d_8F20_1FD0DC7B3C5F"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DS_Resource
+isoClass:DS_Resource rdfs:subClassOf :Entity .
+
+
+###  https://def.isotc211.org/class/Data
+isoClass:Data rdfs:subClassOf :Entity .
+
+
+###  https://def.isotc211.org/class/DataEvaluation
+isoClass:DataEvaluation rdf:type owl:Class ;
+                                                rdfs:subClassOf isoClass:EvaluationMethod ;
+                                                <http://schema.org/description> "data evaluation method" ;
+                                                rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                rdfs:label "Data Evaluation" ;
+                                                <https://schema.org/identifier> "EAID_2064569C_981F_4db1_A12A_CC23058F0FA4"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DataQuality
+isoClass:DataQuality rdf:type owl:Class ;
+                                             rdfs:subClassOf :Entity ;
+                                             <http://schema.org/description> "degree to which a set of inherent characteristics of data fulfils requirement" ,
+                                                                             "quality information for the data specified by a data quality scope" ;
+                                             rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                             rdfs:label "Data Quality" ;
+                                             <https://schema.org/identifier> "EAID_245629D2_5B48_4562_A5C5_85F6B4BA0A1B"^^<https://def.isotc211.org/def/ho/xmiId> ,
+                                                                             "EAID_A3EF595D_58E1_4b2f_9DAA_D38F6A3A349E"^^<https://def.isotc211.org/def/ho/xmiId> ,
+                                                                             "EAID_DE88C8AF_F930_4dd5_AA45_55BCAED7F32E"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DataQualityElement
+isoClass:DataQualityElement rdf:type owl:Class ;
+                                                    rdfs:subClassOf :Entity ;
+                                                    <http://schema.org/description> "Aspect of quantitative quality information." ;
+                                                    rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                    rdfs:label "Data Quality Element" ;
+                                                    <https://schema.org/identifier> "EAID_04609E99_7BB5_49cb_9408_5D916F81580E"^^<https://def.isotc211.org/def/ho/xmiId> ,
+                                                                                    "EAID_2DB9B425_F358_4a8e_9936_3F4B0842B28D"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DataQualityEvaluation
+isoClass:DataQualityEvaluation rdf:type owl:Class ;
+                                                       rdfs:subClassOf :Activity ;
+                                                       <http://schema.org/description> "systematic examination of the extent to which an entity is capable of fulfilling specified requirements" ;
+                                                       rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                       rdfs:label "Data Quality Evaluation" ;
+                                                       <https://schema.org/identifier> "EAID_573125F3_C5E9_4a52_9E12_5CE886C03002"^^<https://def.isotc211.org/def/ho/xmiId> ,
+                                                                                       "EAID_BAE44E11_F9B0_417e_8842_4804E98A2253"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DataQualityMeasure
+isoClass:DataQualityMeasure rdf:type owl:Class ;
+                                                    rdfs:subClassOf :Entity ;
+                                                    <http://schema.org/description> "variable to which a value is assigned as the result of measurement of a data quality characteristic" ;
+                                                    rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                    rdfs:label "Data Quality Measure" ;
+                                                    <https://schema.org/identifier> "EAID_B88B7B8F_5279_4040_9A6E_2F5634532EED"^^<https://def.isotc211.org/def/ho/xmiId> ,
+                                                                                    "EAID_C589DE3E_34E8_4201_B0DD_46563374E514"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DataQualityMeasureRegister
+isoClass:DataQualityMeasureRegister rdf:type owl:Class ;
+                                                            rdfs:subClassOf :Collection ;
+                                                            <http://schema.org/description> "set of files containing identifiers assigned to items with descriptions of the associated items Note: items in this case are the quality measures" ;
+                                                            rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                            rdfs:label "Data Quality Measure Register" ;
+                                                            <https://schema.org/identifier> "EAID_95A47E84_A749_4b53_A38F_E80FD5C233D5"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DataQualityResult
+isoClass:DataQualityResult rdf:type owl:Class ;
+                                                   rdfs:subClassOf :Entity ;
+                                                   <http://schema.org/description> "Value (or set of values) obtained from applying a data quality measure or the outcome of evaluating the obtained value (or set of values) against a specified acceptable conformance quality level." ;
+                                                   rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                   rdfs:label "Data Quality Result" ;
+                                                   <https://schema.org/identifier> "EAID_1BA6EE39_5F83_44b5_93E6_D9A114A9C8D6"^^<https://def.isotc211.org/def/ho/xmiId> ,
+                                                                                   "EAID_7D011CFF_E2DF_4663_8868_49A584F92A7B"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DataQualityScope
+isoClass:DataQualityScope rdf:type owl:Class ;
+                                                  rdfs:subClassOf :Entity ;
+                                                  <http://schema.org/description> "specific extent to which the data quality information applies" ;
+                                                  rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                  rdfs:label "Data Quality Scope" ;
+                                                  <https://schema.org/identifier> "EAID_A9617F3F_A8E4_4dda_985C_1F950F6781D1"^^<https://def.isotc211.org/def/ho/xmiId> ,
+                                                                                  "EAID_CF37C7A5_33B7_4190_8CDF_81C7CA476D62"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/Dataproducer
+isoClass:Dataproducer rdfs:subClassOf :Agent .
+
+
+###  https://def.isotc211.org/class/Dataquality
+isoClass:Dataquality rdfs:subClassOf :Collection .
+
+
+###  https://def.isotc211.org/class/Datauser
+isoClass:Datauser rdfs:subClassOf :Agent .
+
+
+###  https://def.isotc211.org/class/DescriptiveResult
+isoClass:DescriptiveResult rdf:type owl:Class ;
+                                                   rdfs:subClassOf :Entity ,
+                                                                   isoClass:QualityResult ;
+                                                   <http://schema.org/description> "data quality descriptive result" ;
+                                                   rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                   rdfs:label "Descriptive Result" ;
+                                                   <https://schema.org/identifier> "EAID_06B238DE_5512_40db_8034_4C68CCB72245"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/DomainConsistency
+isoClass:DomainConsistency rdf:type owl:Class ;
+                                                   rdfs:subClassOf isoClass:LogicalConsistency ;
+                                                   <http://schema.org/description> "adherence of values to the value domains" ;
+                                                   rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                   rdfs:label "Domain Consistency" ;
+                                                   <https://schema.org/identifier> "EAID_5C1AA67E_EB74_4cc7_965A_D28115F6DDB9"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/EARootClass
+isoClass:EARootClass rdf:type owl:Class ;
+                                             rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                             rdfs:label "Ea Root Class" ;
+                                             <https://schema.org/identifier> "EAID_11111111_5487_4080_A7F4_41526CB0AA00"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/EvaluationMethod
+isoClass:EvaluationMethod rdf:type owl:Class ;
+                                                  rdfs:subClassOf :Entity ;
+                                                  <http://schema.org/description> "Description of the evaluation method and procedure applied" ;
+                                                  rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                  rdfs:label "Evaluation Method" ;
+                                                  <https://schema.org/identifier> "EAID_98168C7A_D956_4363_958A_6A2FA513AAB7"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/EvaluationMethodTypeCode
+isoClass:EvaluationMethodTypeCode rdfs:subClassOf :Entity .
+
+
+###  https://def.isotc211.org/class/FormatConsistency
+isoClass:FormatConsistency rdf:type owl:Class ;
+                                                   rdfs:subClassOf isoClass:LogicalConsistency ;
+                                                   <http://schema.org/description> "degree to which data is stored in accordance with the physical structure of the dataset, as described by the scope" ;
+                                                   rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                   rdfs:label "Format Consistency" ;
+                                                   <https://schema.org/identifier> "EAID_E02622E8_D217_4c84_8C8E_51E5B25A0C45"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/FullInspection
+isoClass:FullInspection rdf:type owl:Class ;
+                                                rdfs:subClassOf isoClass:DataEvaluation ;
+                                                <http://schema.org/description> "full inspection" ;
+                                                rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                rdfs:label "Full Inspection" ;
+                                                <https://schema.org/identifier> "EAID_9CB24216_A291_409c_9CA6_7F7BB7CE335C"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/GriddedDataPositionalAccuracy
+isoClass:GriddedDataPositionalAccuracy rdf:type owl:Class ;
+                                                               rdfs:subClassOf isoClass:PositionalAccuracy ;
+                                                               <http://schema.org/description> "closeness of gridded data position values to values accepted as or being true" ;
+                                                               rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                               rdfs:label "Gridded Data Positional Accuracy" ;
+                                                               <https://schema.org/identifier> "EAID_1D616582_E164_4c66_A48B_51F5546E8CF8"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/Homogeneity
+isoClass:Homogeneity rdf:type owl:Class ;
+                                             rdfs:subClassOf isoClass:Metaquality ;
+                                             <http://schema.org/description> "expected or tested uniformity of the results obtained for a data quality evaluation" ;
+                                             rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                             rdfs:label "Homogeneity" ;
+                                             <https://schema.org/identifier> "EAID_92A38AC5_7D90_40ab_8C18_EA56489F7E01"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/IndirectEvaluation
+isoClass:IndirectEvaluation rdf:type owl:Class ;
+                                                    rdfs:subClassOf isoClass:DataEvaluation ;
+                                                    <http://schema.org/description> "indirect evaluation" ;
+                                                    rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                    rdfs:label "Indirect Evaluation" ;
+                                                    <https://schema.org/identifier> "EAID_CF1FCA78_CB7D_4b9d_A19F_4ADB74565B0F"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/LogicalConsistency
+isoClass:LogicalConsistency rdf:type owl:Class ;
+                                                    rdfs:subClassOf isoClass:QualityElement ;
+                                                    <http://schema.org/description> "degree of adherence to logical rules of data structure, attribution and relationships (data structure can be conceptual, logical or physical)" ;
+                                                    rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                    rdfs:label "Logical Consistency" ;
+                                                    <https://schema.org/identifier> "EAID_76642BF6_6C86_4038_B430_1D0A6ED0EB68"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/MD_BrowseGraphic
+isoClass:MD_BrowseGraphic rdfs:subClassOf :Entity .
+
+
+###  https://def.isotc211.org/class/MD_Identifier
+isoClass:MD_Identifier rdfs:subClassOf :Entity .
+
+
+###  https://def.isotc211.org/class/MD_Scope
+isoClass:MD_Scope rdfs:subClassOf :Entity .
+
+
+###  https://def.isotc211.org/class/MD_SpatialRepresentationTypeCode
+isoClass:MD_SpatialRepresentationTypeCode rdfs:subClassOf :Entity .
+
+
+###  https://def.isotc211.org/class/MX_DataFile
+isoClass:MX_DataFile rdf:type owl:Class ;
+                                             rdfs:subClassOf :Entity ;
+                                             rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                             rdfs:label "Mx_Data File" ;
+                                             <https://schema.org/identifier> "EAID_9F023E94_8A09_480e_8808_AD337B76BE71"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/MeasureCatalogue
+isoClass:MeasureCatalogue rdf:type owl:Class ;
+                                                  rdfs:subClassOf :Collection ,
+                                                                  :Entity ;
+                                                  rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                  rdfs:label "Measure Catalogue" ;
+                                                  <https://schema.org/identifier> "EAID_C4F0F54A_AE89_43de_9705_83504244D3C7"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/MeasureDescription
+isoClass:MeasureDescription rdf:type owl:Class ;
+                                                    rdfs:subClassOf :Entity ;
+                                                    <http://schema.org/description> "data quality measure description" ;
+                                                    rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                    rdfs:label "Measure Description" ;
+                                                    <https://schema.org/identifier> "EAID_B7A3151A_08E6_4d30_924A_EF75DEB16AF6"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/MeasureParameter
+isoClass:MeasureParameter rdf:type owl:Class ;
+                                                  rdfs:subClassOf :Entity ;
+                                                  <http://schema.org/description> "data quality parameter" ;
+                                                  rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                  rdfs:label "Measure Parameter" ;
+                                                  <https://schema.org/identifier> "EAID_FD87D8D5_06BC_4a8d_A656_8A5C2C176749"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/MeasureReference
+isoClass:MeasureReference rdf:type owl:Class ;
+                                                  rdfs:subClassOf :Entity ;
+                                                  <http://schema.org/description> "reference to the measure used" ;
+                                                  rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                  rdfs:label "Measure Reference" ;
+                                                  <https://schema.org/identifier> "EAID_C05F2F82_18CA_4470_98E5_68C16F98D5D5"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/MetadataISO19115
+isoClass:MetadataISO19115 rdf:type owl:Class ;
+                                                  rdfs:subClassOf :Entity ;
+                                                  rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                  rdfs:label "Metadata Iso19115" ;
+                                                  <https://schema.org/identifier> "EAID_83D93073_FC6E_4aff_B860_0CF4E94ED7AB"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/MetadataISO19115-1
+isoClass:MetadataISO191151 rdf:type owl:Class ;
+                                                    rdfs:subClassOf :Entity ;
+                                                    <http://schema.org/description> "Metadata as defined in ISO 19115-1:2014 Geographic information ï¿½ Metadata ï¿½ Part 1: Fundamentals" ;
+                                                    rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                    rdfs:label "Metadata Iso 19115-1" ;
+                                                    <https://schema.org/identifier> "EAID_CCEEF5E8_5EE7_4adf_9E79_1E7F8651BEEF"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/Metaquality
+isoClass:Metaquality rdf:type owl:Class ;
+                                             rdfs:subClassOf isoClass:QualityElement ;
+                                             <http://schema.org/description> "a set of quantitative and qualitative statements about a quality evaluation and its result" ,
+                                                                             "information about the reliability of data quality results" ;
+                                             rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                             rdfs:label "Metaquality" ;
+                                             <https://schema.org/identifier> "EAID_391E78BD_5151_45b6_898F_FB62B34B23B8"^^<https://def.isotc211.org/def/ho/xmiId> ,
+                                                                             "EAID_56664D7E_FCE3_4b56_BE80_8E1CF6936710"^^<https://def.isotc211.org/def/ho/xmiId> ,
+                                                                             "EAID_BDA89B94_3657_4635_A342_7815B660D5D8"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/NonQuantitativeAttributeCorrectness
+isoClass:NonQuantitativeAttributeCorrectness rdf:type owl:Class ;
+                                                                     rdfs:subClassOf isoClass:ThematicQuality ;
+                                                                     <http://schema.org/description> "correctness of non-quantitative attributes" ;
+                                                                     rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                                     rdfs:label "Non Quantitative Attribute Correctness" ;
+                                                                     <https://schema.org/identifier> "EAID_AA505933_87B2_425a_8298_831A61FC8072"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/Omission
+isoClass:Omission rdf:type owl:Class ;
+                                          rdfs:subClassOf isoClass:Completeness ;
+                                          <http://schema.org/description> "data absent from the dataset, as described by the scope" ;
+                                          rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                          rdfs:label "Omission" ;
+                                          <https://schema.org/identifier> "EAID_309EE2B4_23EB_46da_A7FC_79AA6BA9C63B"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/PositionalAccuracy
+isoClass:PositionalAccuracy rdf:type owl:Class ;
+                                                    rdfs:subClassOf isoClass:QualityElement ;
+                                                    <http://schema.org/description> "accuracy of the position of features" ;
+                                                    rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                    rdfs:label "Positional Accuracy" ;
+                                                    <https://schema.org/identifier> "EAID_57B11C2D_810B_483f_9919_DA2F557DE6AA"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/ProductSpecification
+isoClass:ProductSpecification rdfs:subClassOf :Entity .
+
+
+###  https://def.isotc211.org/class/ProductSpecificationOrUserRequirements
+isoClass:ProductSpecificationOrUserRequirements rdf:type owl:Class ;
+                                                                        rdfs:subClassOf :Entity ;
+                                                                        rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                                        rdfs:label "Product Specification Or User Requirements" ;
+                                                                        <https://schema.org/identifier> "EAID_009AE96C_397F_46bc_A81E_463268AA7EC1"^^<https://def.isotc211.org/def/ho/xmiId> ,
+                                                                                                        "EAID_83770ED1_6648_4043_9B37_3746D43D64C2"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/Productspecificationoruserrequirements
+isoClass:Productspecificationoruserrequirements rdfs:subClassOf :Entity .
+
+
+###  https://def.isotc211.org/class/QualityElement
+isoClass:QualityElement rdf:type owl:Class ;
+                                                rdfs:subClassOf :Entity ;
+                                                <http://schema.org/description> "aspect of quantitative quality information" ;
+                                                rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                rdfs:label "Quality Element" ;
+                                                <https://schema.org/identifier> "EAID_E4EBCB08_C34D_4675_AA2B_65AF4F801ABD"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/QualityEvaluationReport
+isoClass:QualityEvaluationReport rdf:type owl:Class ;
+                                                         rdfs:subClassOf :Entity ;
+                                                         <http://schema.org/description> "free text document providing fully detailed information about data quality evaluations, results and measures used" ;
+                                                         rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                         rdfs:label "Quality Evaluation Report" ;
+                                                         <https://schema.org/identifier> "EAID_FBC4A1D1_0D67_496d_8293_6792675729FE"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/QualityEvaluationReportInformation
+isoClass:QualityEvaluationReportInformation rdf:type owl:Class ;
+                                                                    rdfs:subClassOf :Collection ;
+                                                                    <http://schema.org/description> "reference to an external quality evaluation report" ;
+                                                                    rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                                    rdfs:label "Quality Evaluation Report Information" ;
+                                                                    <https://schema.org/identifier> "EAID_637B1BD2_73FA_4d5a_8DAA_3D9E7FD83AC2"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/QualityMeasure
+isoClass:QualityMeasure rdf:type owl:Class ;
+                                                rdfs:subClassOf :Entity ;
+                                                <http://schema.org/description> "Data quality measure" ;
+                                                rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                rdfs:label "Quality Measure" ;
+                                                <https://schema.org/identifier> "EAID_E0A6236D_9D16_4642_813D_C423AA73460A"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/QualityResult
+isoClass:QualityResult rdf:type owl:Class ;
+                                               rdfs:subClassOf :Entity ;
+                                               <http://schema.org/description> "generalization of more specific result classes" ;
+                                               rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                               rdfs:label "Quality Result" ;
+                                               <https://schema.org/identifier> "EAID_7EC70A46_6BB4_4729_9DA9_B25A8DA80C53"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/Qualityevaluation
+isoClass:Qualityevaluation rdfs:subClassOf :Activity .
+
+
+###  https://def.isotc211.org/class/QuantitativeAttributeAccuracy
+isoClass:QuantitativeAttributeAccuracy rdf:type owl:Class ;
+                                                               rdfs:subClassOf isoClass:ThematicQuality ;
+                                                               <http://schema.org/description> "accuracy of quantitative attributes" ;
+                                                               rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                               rdfs:label "Quantitative Attribute Accuracy" ;
+                                                               <https://schema.org/identifier> "EAID_F89181FD_DE0D_4fa0_89EA_8E0B48970CBF"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/QuantitativeResult
+isoClass:QuantitativeResult rdf:type owl:Class ;
+                                                    rdfs:subClassOf :Entity ,
+                                                                    isoClass:QualityResult ;
+                                                    <http://schema.org/description> "the values or information about the value(s) (or set of values) obtained from applying a data quality measure" ;
+                                                    rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                    rdfs:label "Quantitative Result" ;
+                                                    <https://schema.org/identifier> "EAID_A08CC2F2_5191_47bc_8E38_A586BBD25D6B"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/Record
+isoClass:Record rdfs:subClassOf :Entity .
+
+
+###  https://def.isotc211.org/class/RecordType
+isoClass:RecordType rdfs:subClassOf :Entity .
+
+
+###  https://def.isotc211.org/class/RegisteredBasicMeasure
+isoClass:RegisteredBasicMeasure rdf:type owl:Class ;
+                                                        rdfs:subClassOf :Entity ;
+                                                        rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                        rdfs:label "Registered Basic Measure" ;
+                                                        <https://schema.org/identifier> "EAID_6C38B900_8AAF_445c_A848_78723BC4E1B7"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/RegisteredMeasureParameter
+isoClass:RegisteredMeasureParameter rdf:type owl:Class ;
+                                                            rdfs:subClassOf :Entity ;
+                                                            rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                            rdfs:label "Registered Measure Parameter" ;
+                                                            <https://schema.org/identifier> "EAID_54C14FC2_8BE1_4fba_B78A_F937713D741A"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/RegisteredQualityMeasure
+isoClass:RegisteredQualityMeasure rdf:type owl:Class ;
+                                                          rdfs:subClassOf :Entity ;
+                                                          rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                          rdfs:label "Registered Quality Measure" ;
+                                                          <https://schema.org/identifier> "EAID_7687937B_4E28_41c7_B70A_EEF185CEA353"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/RelativePositionalAccuracy
+isoClass:RelativePositionalAccuracy rdf:type owl:Class ;
+                                                            rdfs:subClassOf isoClass:PositionalAccuracy ;
+                                                            <http://schema.org/description> "closeness of the relative positions of features in the scope to their respective relative positions accepted as or being true" ;
+                                                            rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                            rdfs:label "Relative Positional Accuracy" ;
+                                                            <https://schema.org/identifier> "EAID_340D4D8A_97C7_4465_8E73_189C7B02BB7C"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/Representativity
+isoClass:Representativity rdf:type owl:Class ;
+                                                  rdfs:subClassOf isoClass:Metaquality ;
+                                                  <http://schema.org/description> "degree to which the sample used has produced a result which is representative of the data within the data quality scope" ;
+                                                  rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                  rdfs:label "Representativity" ;
+                                                  <https://schema.org/identifier> "EAID_A94D4112_550F_4075_96E2_3FA67A5577EB"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/ResultScope
+isoClass:ResultScope rdf:type owl:Class ;
+                                             rdfs:subClassOf :Entity ;
+                                             <http://schema.org/description> "extent to which a result of quality evaluation applies" ;
+                                             rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                             rdfs:label "Result Scope" ;
+                                             <https://schema.org/identifier> "EAID_788F5A4C_71AA_4601_86DD_E43A6306C713"^^<https://def.isotc211.org/def/ho/xmiId> ,
+                                                                             "EAID_821AB0AC_A11F_42f0_9B84_737233902B3F"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/SampleBasedInspection
+isoClass:SampleBasedInspection rdf:type owl:Class ;
+                                                       rdfs:subClassOf isoClass:DataEvaluation ;
+                                                       <http://schema.org/description> "sample based inspection" ;
+                                                       rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                       rdfs:label "Sample Based Inspection" ;
+                                                       <https://schema.org/identifier> "EAID_09C09E68_0173_4077_BCD9_32C18D3C6F64"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/SourceReference
+isoClass:SourceReference rdf:type owl:Class ;
+                                                 rdfs:subClassOf :Entity ;
+                                                 <http://schema.org/description> "reference to the source of the data quality measure" ;
+                                                 rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                 rdfs:label "Source Reference" ;
+                                                 <https://schema.org/identifier> "EAID_DF13D54D_981B_4774_919D_8181F4523224"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/StandaloneQualityReport
+isoClass:StandaloneQualityReport rdf:type owl:Class ;
+                                                         rdfs:subClassOf :Collection ;
+                                                         rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                         rdfs:label "Standalone Quality Report" ;
+                                                         <https://schema.org/identifier> "EAID_48A923E8_E802_4d29_90C2_97578F8CB6AF"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/TemporalConsistency
+isoClass:TemporalConsistency rdf:type owl:Class ;
+                                                     rdfs:subClassOf isoClass:TemporalQuality ;
+                                                     <http://schema.org/description> "correctness of ordered events or sequences, if reported" ;
+                                                     rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                     rdfs:label "Temporal Consistency" ;
+                                                     <https://schema.org/identifier> "EAID_499EE61D_D6B4_4a89_AC9A_6AA9C797D50E"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/TemporalQuality
+isoClass:TemporalQuality rdf:type owl:Class ;
+                                                 rdfs:subClassOf isoClass:QualityElement ;
+                                                 <http://schema.org/description> "accuracy of the temporal attributes and temporal relationships of features" ;
+                                                 rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                 rdfs:label "Temporal Quality" ;
+                                                 <https://schema.org/identifier> "EAID_2CA2ED4F_B9F2_434d_A879_69F7E5CDE2C7"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/TemporalValidity
+isoClass:TemporalValidity rdf:type owl:Class ;
+                                                  rdfs:subClassOf isoClass:TemporalQuality ;
+                                                  <http://schema.org/description> "validity of data specified by the scope with respect to time" ;
+                                                  rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                  rdfs:label "Temporal Validity" ;
+                                                  <https://schema.org/identifier> "EAID_E723C0B8_2525_4537_B72D_8EB255BCC116"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/ThematicClassificationCorrectness
+isoClass:ThematicClassificationCorrectness rdf:type owl:Class ;
+                                                                   rdfs:subClassOf isoClass:ThematicQuality ;
+                                                                   <http://schema.org/description> "comparison of the classes assigned to features or their attributes to a universe of discourse" ;
+                                                                   rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                                   rdfs:label "Thematic Classification Correctness" ;
+                                                                   <https://schema.org/identifier> "EAID_9B4DB9B6_7773_48c1_AEEC_65D08A23BAA1"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/ThematicQuality
+isoClass:ThematicQuality rdf:type owl:Class ;
+                                                 rdfs:subClassOf isoClass:QualityElement ;
+                                                 <http://schema.org/description> "accuracy of quantitative attributes and the correctness of non-quantitative attributes and of the classifications of features and their relationships" ;
+                                                 rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                 rdfs:label "Thematic Quality" ;
+                                                 <https://schema.org/identifier> "EAID_A9CF7B47_A8F5_44cb_AB90_5CB8BEC5F730"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/TopologicalConsistency
+isoClass:TopologicalConsistency rdf:type owl:Class ;
+                                                        rdfs:subClassOf isoClass:LogicalConsistency ;
+                                                        <http://schema.org/description> "correctness of the explicitly encoded topological characteristics of the dataset as described by the scope" ;
+                                                        rdfs:isDefinedBy isoStandard:ISO19157-1.xml ;
+                                                        rdfs:label "Topological Consistency" ;
+                                                        <https://schema.org/identifier> "EAID_933EB2B0_8CB8_4dad_838A_E3EBDA7EBAA5"^^<https://def.isotc211.org/def/ho/xmiId> .
+
+
+###  https://def.isotc211.org/class/TypeName
+isoClass:TypeName rdfs:subClassOf :Entity .
+
+
+###  https://def.isotc211.org/class/UnitOfMeasure
+isoClass:UnitOfMeasure rdfs:subClassOf :Entity .
+
+
+###  https://def.isotc211.org/class/ValueStructure
+isoClass:ValueStructure rdfs:subClassOf :Entity .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.w3.org/ns/prov-o
+<http://www.w3.org/ns/prov-o> rdf:type owl:NamedIndividual .
+
+
+###  http://www.w3.org/ns/prov-o-20130312
+<http://www.w3.org/ns/prov-o-20130312> rdf:type owl:NamedIndividual .
+
+
+###  http://www.w3.org/ns/prov#EmptyCollection
+:EmptyCollection rdf:type owl:NamedIndividual .
+
+
+###  http://www.w3.org/ns/prov-o#
+<http://www.w3.org/ns/prov-o#> rdf:type owl:NamedIndividual ;
+                               :specializationOf <http://www.w3.org/ns/prov-o> ;
+                               :wasRevisionOf <http://www.w3.org/ns/prov-o-20130312> .
+
+
+#################################################################
+#    Annotations
+#################################################################
+
+:EmptyCollection rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                 rdfs:label "EmptyCollection"@en ;
+                 :category "expanded" ;
+                 :component "collections" ;
+                 :definition "An empty collection is a collection without members."@en .
+
+
+:specializationOf rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                  rdfs:label "specializationOf" ;
+                  rdfs:seeAlso :alternateOf ;
+                  :category "expanded" ;
+                  :component "alternate" ;
+                  :constraints "http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#prov-dm-constraints-fig"^^xsd:anyURI ;
+                  :definition "An entity that is a specialization of another shares all aspects of the latter, and additionally presents more specific aspects of the same thing as the latter. In particular, the lifetime of the entity being specialized contains that of any specialization. Examples of aspects include a time period, an abstraction, and a context associated with the entity."@en ;
+                  :dm "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-specialization"^^xsd:anyURI ;
+                  :inverse "generalizationOf" ;
+                  :n "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-specialization"^^xsd:anyURI .
+
+
+:wasRevisionOf rdfs:comment "A revision is a derivation that revises an entity into a revised version."@en ;
+               rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+               rdfs:label "wasRevisionOf" ;
+               :category "expanded" ;
+               :component "derivations" ;
+               :inverse "hadRevision" ;
+               :qualifiedForm :Revision ,
+                              :qualifiedRevision .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
