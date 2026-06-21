@@ -4,15 +4,17 @@ from pathlib import Path
 
 from lxml import etree
 from lxml.etree import _ElementTree
-from rdflib import Graph, Literal, URIRef, SDO
-from rdflib.namespace import RDF, RDFS
+from rdflib import Graph, Literal, URIRef, SDO, Namespace
+from rdflib.namespace import OWL, RDF, RDFS
 
 if __package__:
     from .utils import element_name, make_iri, bind_iso_prefixes, ISO_PREFIXES, replace_iris_in_graph, \
-        NS, make_outputs_folder, HO
+        NS, make_outputs_folder, HO, extract_description
 else:
     from utils import element_name, make_iri, bind_iso_prefixes, ISO_PREFIXES, NS, make_outputs_folder, \
-        replace_iris_in_graph, HO
+        replace_iris_in_graph, HO, extract_description
+
+SCHEMA = Namespace(ISO_PREFIXES["schema"])
 
 
 def print_package_hierarchy(tree: _ElementTree):
@@ -60,6 +62,9 @@ def extract_packages(tree, s_iri, d) -> None:
     """Extracts objects of type UML:Package from an ElementTree and creates RDFS Property instances of ho:ModelPackage from them"""
     g = Graph()
     bind_iso_prefixes(g)
+    
+    # Declare schema:description as an annotation property
+    g.add((SCHEMA.description, RDF.type, OWL.AnnotationProperty))
 
     package_iris = []
 
@@ -71,6 +76,12 @@ def extract_packages(tree, s_iri, d) -> None:
         g.add((p_iri, SDO.identifier, Literal(pkg.get("xmi.id"), datatype=HO.xmiId)))
         g.add((p_iri, RDFS.isDefinedBy, s_iri))
         g.add((p_iri, RDFS.label, Literal(p_name)))
+        
+        # description from UML model
+        description = extract_description(pkg)
+        if description:
+            g.add((p_iri, SCHEMA.description, Literal(description)))
+        
         g.add((s_iri, RDFS.member, p_iri))
 
         parents = pkg.xpath(

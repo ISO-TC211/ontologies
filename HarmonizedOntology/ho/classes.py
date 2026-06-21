@@ -4,16 +4,18 @@ from pathlib import Path
 
 from lxml import etree
 from lxml.etree import _ElementTree
-from rdflib import Graph, Literal
+from rdflib import Graph, Literal, Namespace
 from rdflib.namespace import OWL, RDF, RDFS, SDO
 
 if __package__:
     from .utils import element_name, make_iri, bind_iso_prefixes, ISO_PREFIXES, make_outputs_folder, HO, \
         NS, \
-        make_identifiers_map, EXCLUDED_CLASS_STEREOTYPES
+        make_identifiers_map, EXCLUDED_CLASS_STEREOTYPES, extract_description
 else:
     from utils import element_name, make_iri, bind_iso_prefixes, ISO_PREFIXES, make_outputs_folder, HO, \
-        NS, make_identifiers_map, EXCLUDED_CLASS_STEREOTYPES
+        NS, make_identifiers_map, EXCLUDED_CLASS_STEREOTYPES, extract_description
+
+SCHEMA = Namespace(ISO_PREFIXES["schema"])
 
 
 def has_excluded_stereotype(uml_class: etree._Element) -> bool:
@@ -108,6 +110,9 @@ def extract_classes(tree, s_iri, d):
     """Extracts objects of type UML:Class from an ElementTree and creates OWL Class instances from them"""
     g = Graph()
     bind_iso_prefixes(g)
+    
+    # Declare schema:description as an annotation property
+    g.add((SCHEMA.description, RDF.type, OWL.AnnotationProperty))
 
     package_identifiers = make_identifiers_map(tree, "mpkg")
     class_identifiers = make_identifiers_map(tree, "cls")
@@ -123,6 +128,11 @@ def extract_classes(tree, s_iri, d):
         g.add((c, SDO.identifier, Literal(cls.get("xmi.id"), datatype=HO.xmiId)))
         g.add((c, RDFS.isDefinedBy, s_iri))
         g.add((c, RDFS.label, Literal(element_name(cls, "cls"))))
+
+        # description from UML model
+        description = extract_description(cls)
+        if description:
+            g.add((c, SCHEMA.description, Literal(description)))
 
         # package
         parents = cls.xpath(

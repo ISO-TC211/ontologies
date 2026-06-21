@@ -1,4 +1,5 @@
 import re
+import html
 from pathlib import Path
 from typing import Literal as TypingLiteral
 from urllib.parse import quote
@@ -21,6 +22,7 @@ ISO_PREFIXES = {
     "mpkg": "https://def.isotc211.org/package/",
     "pred": "https://def.isotc211.org/pred/",
     "std": "https://def.isotc211.org/standard/",
+    "schema": "http://schema.org/",
 }
 
 
@@ -29,6 +31,38 @@ def bind_iso_prefixes(g: Graph):
     for k, v in ISO_PREFIXES.items():
         g.bind(k, v)
 
+def extract_description(uml_element: etree._Element) -> str | None:
+    """Extract description from UML element.
+    
+    Looks for documentation in tag="documentation" and:
+    1. Decodes HTML entities (e.g., &lt;b&gt; -> <b>)
+    2. Strips all HTML tags
+    3. Returns clean text
+    
+    Returns the description text if found, None otherwise.
+    """
+    # Look for tag="documentation"
+    descriptions = uml_element.xpath(
+        "UML:ModelElement.taggedValue/UML:TaggedValue[@tag='documentation']/@value",
+        namespaces=NS,
+    )
+    
+    if not descriptions:
+        return None
+    
+    description = descriptions[0]
+    
+    # Decode HTML entities (e.g., &lt;b&gt; -> <b>)
+    description = html.unescape(description)
+    
+    # Strip HTML tags using regex
+    description = re.sub(r'<[^>]+>', '', description)
+    
+    # Clean up whitespace
+    description = ' '.join(description.split())
+    
+    return description if description else None
+
 
 def element_name(element: etree._Element, element_type: TypingLiteral["mpkg", "cls", "pred", "std"]) -> str:
     """Finds a string literal name for an element or from a string"""
@@ -36,6 +70,7 @@ def element_name(element: etree._Element, element_type: TypingLiteral["mpkg", "c
         name = element.get("name", "(unnamed element)")
     else:
         name = element
+
     name = re.sub(r"(?<=[A-Z])(?=[A-Z][a-z])", " ", name)
     name = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", name)
 

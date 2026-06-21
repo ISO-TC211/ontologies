@@ -4,15 +4,17 @@ from pathlib import Path
 
 from lxml import etree
 from lxml.etree import _ElementTree
-from rdflib import Graph, Literal, URIRef
-from rdflib.namespace import RDF, RDFS, SDO
+from rdflib import Graph, Literal, URIRef, Namespace
+from rdflib.namespace import OWL, RDF, RDFS, SDO
 
 if __package__:
     from .utils import element_name, make_iri, bind_iso_prefixes, ISO_PREFIXES, make_outputs_folder, HO, \
-        NS, make_identifiers_map, EXCLUDED_CLASS_STEREOTYPES
+        NS, make_identifiers_map, EXCLUDED_CLASS_STEREOTYPES, extract_description
 else:
     from utils import element_name, make_iri, bind_iso_prefixes, ISO_PREFIXES, make_outputs_folder, HO, \
-        NS, make_identifiers_map, EXCLUDED_CLASS_STEREOTYPES
+        NS, make_identifiers_map, EXCLUDED_CLASS_STEREOTYPES, extract_description
+
+SCHEMA = Namespace(ISO_PREFIXES["schema"])
 
 
 def print_predicate_list(tree: _ElementTree):
@@ -90,6 +92,9 @@ def extract_predicates(tree, s_iri, d):
     """Extracts objects of type UML:Association and UML:Attribute from an ElementTree and creates RDFS Property instances from them"""
     g = Graph()
     bind_iso_prefixes(g)
+    
+    # Declare schema:description as an annotation property
+    g.add((SCHEMA.description, RDF.type, OWL.AnnotationProperty))
 
     package_identifiers = make_identifiers_map(tree, "mpkg")
     class_identifiers = make_identifiers_map(tree, "cls")
@@ -107,6 +112,11 @@ def extract_predicates(tree, s_iri, d):
             g.add((p, SDO.identifier, Literal(pred.get("xmi.id"), datatype=HO.xmiId)))
             g.add((p, RDFS.isDefinedBy, s_iri))
             g.add((p, RDFS.label, Literal(element_name(pred, "pred"))))
+
+            # description from UML model
+            description = extract_description(pred)
+            if description:
+                g.add((p, SCHEMA.description, Literal(description)))
 
             domain = pred.xpath(
                 "UML:ModelElement.taggedValue/UML:TaggedValue[@tag='ea_sourceName']/@value",
@@ -141,6 +151,11 @@ def extract_predicates(tree, s_iri, d):
             g.add((p, SDO.identifier, Literal(id, datatype=HO.xmiId)))
             g.add((p, RDFS.isDefinedBy, s_iri))
             g.add((p, RDFS.label, Literal(element_name(pred, "pred"))))
+
+            # description from UML model
+            description = extract_description(pred)
+            if description:
+                g.add((p, SCHEMA.description, Literal(description)))
 
             domain = pred.xpath("ancestor::UML:Class[1]/@name", namespaces=NS)
             if len(domain) > 0:
