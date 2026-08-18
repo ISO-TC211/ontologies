@@ -10,8 +10,8 @@ from lxml import etree
 from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.namespace import OWL, RDF, RDFS, SDO
 
-from transformation_rule import TransformationRule
-from transformation_ruleset import TransformationRuleset
+from ..rule import TransformationRule
+from ..ruleset import TransformationRuleset
 
 NS = {"UML": "omg.org/UML1.3"}
 HO = Namespace("https://def.isotc211.org/def/ho/")

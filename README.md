@@ -4,7 +4,7 @@ This repository contains the point-of-truth source data of the [International St
 
 The ontology content here is stored here in [RDF](https://www.w3.org/TR/rdf12-concepts/) data files in the [Turtle format](https://www.w3.org/TR/rdf12-turtle/) as [Semantic Web](https://en.wikipedia.org/wiki/Semantic_Web) ontologies according to the [Ontology Publication Profile of OWL](https://linked.data.gov.au/def/ontpub/spec), with OWL being the [OWL 2 Web Ontology Language](https://www.w3.org/TR/owl2-overview/).
 
-The repository also contains the software that produces the ontologies from the TC's "Harmonized Model", within the `HarmonizedOntology/ho/` folder. See the README in that folder for details.
+The repository also contains the software that produces the ontologies from the TC's "Harmonized Model". This software is located in the `HarmonizedOntology/` folder, with the core transformation engine in the `transformations/` library. See the README in that folder for details on running transformations and ablations.
 
 ## Status
 

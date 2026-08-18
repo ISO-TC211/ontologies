@@ -1,3 +1,4 @@
+"""Module entry point for the transformation package."""
 from __future__ import annotations
 
 import argparse
@@ -6,7 +7,7 @@ from pathlib import Path
 from lxml import etree
 from rdflib import Graph, URIRef
 
-from transformations import make_iri, BaseRuleSet
+from .implementations.BaseTransformation import BaseRuleSet, make_iri
 
 
 class TransformationContext:

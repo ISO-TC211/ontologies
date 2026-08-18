@@ -1,6 +1,6 @@
 from __future__ import annotations
 from collections.abc import Iterable
-from transformation_rule import TransformationRule, NonInvertibleTransformationError
+from .rule import NonInvertibleTransformationError, TransformationRule
 
 
 class TransformationRuleset:
