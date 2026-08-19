@@ -117,6 +117,31 @@ graph = transform_xmi("path/to/xmi/file.xml")
 print(graph.serialize(format="turtle"))
 ```
 
+Explicit paper profiles can select or override decision-point strategies. Omitted
+choices use the profile baseline:
+
+```python
+from transformations import TransformationConfig, transform_xmi
+
+config = TransformationConfig(
+        paper="jetlund",
+        strategies={"abstract_class": "annotation", "inheritance": "direct_subclass"},
+)
+graph = transform_xmi("path/to/xmi/file.xml", config=config)
+```
+
+The command-line entry point accepts the same explicit choices:
+
+```bash
+python main.py input.xml --paper jetlund \
+    --strategy abstract_class=annotation \
+    --strategy inheritance=direct_subclass
+```
+
+Available profiles and strategies are validated when the configuration is
+created. The original invocation without `--paper` or `config` remains the
+backward-compatible transformation.
+
 ## Status
 
 As of May 2026, the transformation software is at an early stage of development, with an MVP version expected by August 2026.

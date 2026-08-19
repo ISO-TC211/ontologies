@@ -7,11 +7,13 @@ from typing import Literal as TypingLiteral
 from urllib.parse import quote
 
 from lxml import etree
-from rdflib import Graph, Literal, Namespace, URIRef
+from rdflib import BNode, Graph, Literal, Namespace, URIRef
 from rdflib.namespace import OWL, RDF, RDFS, SDO
 
 from ..rule import TransformationRule
 from ..ruleset import TransformationRuleset
+from ..strategies.abstract_class import AnnotationStrategy, DisjointUnionStrategy
+from ..strategies.inheritance import DirectSubclassStrategy, IntersectionStrategy
 
 NS = {"UML": "omg.org/UML1.3"}
 HO = Namespace("https://def.isotc211.org/def/ho/")
@@ -26,6 +28,14 @@ ISO_PREFIXES = {
 }
 SCHEMA = Namespace(ISO_PREFIXES["schema"])
 EXCLUDED_CLASS_STEREOTYPES = {"dataType", "codeList", "CodeList"}
+
+
+def is_self_describing_enumeration(values):
+    """Return whether enumeration members are readable words rather than codes. TODO see how we can formalise this."""
+    return bool(values) and all(
+        value.replace(" ", "").replace("-", "").replace("_", "").isalpha()
+        for value in values
+    )
 
 
 def bind_iso_prefixes(g: Graph):
@@ -207,6 +217,16 @@ class BaseExtractClasses(TransformationRule):
                 for parent in parents:
                     graph.add((package_identifiers[parent], RDFS.member, c))
 
+            strategy = context.strategies.get("abstract_class")
+            if strategy is not None:
+                is_abstract = cls.get("isAbstract", "false").lower() == "true"
+                children = [
+                    class_identifiers[gen.get("subtype")]
+                    for gen in context.tree.findall(".//UML:Generalization", namespaces=NS)
+                    if gen.get("supertype") == cls.get("xmi.id") and gen.get("subtype") in class_identifiers
+                ]
+                strategy.apply(context, class_iri=c, is_abstract=is_abstract, children=children)
+
         context.metadata["class_identifiers"] = class_identifiers
         return context
 
@@ -214,12 +234,28 @@ class BaseExtractClasses(TransformationRule):
 class BaseExtractSubclassRelations(TransformationRule):
     def transform(self, context):
         class_identifiers = make_identifiers_map(context.tree, "cls")
+        relations = {}
         for gen in context.tree.findall(".//UML:Generalization", namespaces=NS):
             sub = gen.get("subtype")
             sup = gen.get("supertype")
             if sub and sup:
                 if sub in class_identifiers and sup in class_identifiers:
-                    context.graph.add((class_identifiers[sub], RDFS.subClassOf, class_identifiers[sup]))
+                    relations.setdefault(sub, []).append(class_identifiers[sup])
+        strategy = context.strategies.get("inheritance")
+        for sub, supers in relations.items():
+            for superclass in supers:
+                if strategy is None:
+                    context.graph.add((class_identifiers[sub], RDFS.subClassOf, superclass))
+                elif isinstance(strategy, IntersectionStrategy):
+                    if superclass is supers[0]:
+                        strategy.apply(
+                            context,
+                            subclass=class_identifiers[sub],
+                            superclass=superclass,
+                            superclasses=supers,
+                        )
+                else:
+                    strategy.apply(context, subclass=class_identifiers[sub], superclass=superclass)
         return context
 
 
@@ -292,10 +328,51 @@ class BaseExtractAttributes(TransformationRule):
                     graph.add((p, RDFS.range, make_iri("cls", str(range_names[0]))))
         return context
 
+
+class BaseExtractEnumerations(TransformationRule):
+    def transform(self, context):
+        strategy = context.strategies.get("enumeration")
+        if strategy is None:
+            return context
+        for cls in context.tree.findall(".//UML:Class", namespaces=NS):
+            stereotypes = cls.findall("UML:ModelElement.stereotype/UML:Stereotype", namespaces=NS)
+            if not any(st.get("name") == "enumeration" for st in stereotypes):
+                continue
+            class_iri = make_iri("cls", cls)
+            values = []
+            attribute_iris = []
+            for attr in cls.findall("UML:Attribute", namespaces=NS):
+                value = attr.get("name")
+                if value:
+                    values.append(value)
+            self_describing = is_self_describing_enumeration(values)
+            for attr in context.tree.findall(".//UML:Attribute", namespaces=NS):
+                range_names = attr.xpath(
+                    "UML:ModelElement.taggedValue/UML:TaggedValue[@tag='type']/@value",
+                    namespaces=NS,
+                )
+                if cls.get("xmi.id") not in range_names and cls.get("name") not in range_names:
+                    continue
+                ids = attr.xpath(
+                    "UML:ModelElement.taggedValue/UML:TaggedValue[@tag='ea_guid']/@value",
+                    namespaces=NS,
+                )
+                if ids:
+                    attribute_iris.append(make_iri("pred", ids[0].strip("{}")))
+            strategy.apply(
+                context,
+                class_iri=class_iri,
+                values=values,
+                self_describing=self_describing,
+                attributes=attribute_iris,
+            )
+        return context
+
 class BaseRuleSet(TransformationRuleset):
     """Default XMI-to-RDF transformation ruleset for ho extraction."""
 
-    def __init__(self, rule_names=None):
+    def __init__(self, rule_names=None, config=None):
+        self.config = config
         rules = [
             BaseAddSchemaDescriptionProperty(),
             BaseExtractPackages(),
@@ -304,7 +381,17 @@ class BaseRuleSet(TransformationRuleset):
             BaseExtractSubclassRelations(),
             BaseExtractAssociations(),
             BaseExtractAttributes(),
+            BaseExtractEnumerations(),
         ]
+        if config is not None:
+            strategies = config.profile.strategies
+            self.strategies = {
+                point: strategies[point][config.strategies[point]]()
+                for point in config.strategies
+            }
+        else:
+            self.strategies = {}
+        self._strategy_context = self.strategies
         if rule_names is not None:
             if isinstance(rule_names, str):
                 rule_names = [rule_names]

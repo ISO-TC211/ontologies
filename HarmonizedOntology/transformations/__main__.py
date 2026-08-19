@@ -8,14 +8,16 @@ from lxml import etree
 from rdflib import Graph, URIRef
 
 from .implementations.BaseTransformation import BaseRuleSet, make_iri
+from .config import TransformationConfig
 
 
 class TransformationContext:
-    def __init__(self, tree, source_iri, graph=None):
+    def __init__(self, tree, source_iri, graph=None, strategies=None):
         self.tree = tree
         self.source_iri = source_iri
         self.graph = graph or Graph()
         self.metadata = {}
+        self.strategies = strategies or {}
 
 
 def load_xmi(xmi_path):
@@ -27,9 +29,10 @@ def load_xmi(xmi_path):
     return TransformationContext(tree, source_iri)
 
 
-def transform_xmi(xmi_path, rule_names=None):
+def transform_xmi(xmi_path, rule_names=None, config=None) -> Graph:
     context = load_xmi(xmi_path)
-    ruleset = BaseRuleSet(rule_names=rule_names)
+    ruleset = BaseRuleSet(rule_names=rule_names, config=config)
+    context.strategies = ruleset.strategies
     graph = ruleset.transform(context)
     return graph
 
@@ -44,9 +47,13 @@ def main(argv=None):
         help="Optional subset of rule names to run, e.g. BaseExtractPackages BaseExtractClasses",
     )
     parser.add_argument("--format", default="turtle", help="RDF serialization format to emit")
+    parser.add_argument("--paper", help="Paper profile identifier")
+    parser.add_argument("--strategy", action="append", default=[], metavar="DECISION_POINT=STRATEGY")
     args = parser.parse_args(argv)
 
-    graph = transform_xmi(args.xmi_path, rule_names=args.rules)
+    selected = dict(item.split("=", 1) for item in args.strategy)
+    config = TransformationConfig(args.paper, selected) if args.paper else None
+    graph = transform_xmi(args.xmi_path, rule_names=args.rules, config=config)
     print(graph.serialize(format=args.format))
     return graph
 
