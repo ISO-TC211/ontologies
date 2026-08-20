@@ -7,15 +7,15 @@ from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.namespace import OWL, RDF, RDFS, SKOS
 
 from transformations import (
-    BaseRuleSet,
+    DefaultTransformationPipeline,
     ConfigurationError,
     TransformationConfig,
     load_xmi,
     transform_xmi,
 )
 from transformations.implementations.BaseTransformation import is_self_describing_enumeration
-from transformations.rule import NonInvertibleTransformationError, TransformationRule
-from transformations.ruleset import TransformationRuleset
+from transformations.rule import NonInvertibleTransformationError, TransformationStep
+from transformations.ruleset import TransformationPipeline
 from transformations.strategies.enumeration import InspireEnumerationStrategy, IsoEnumerationStrategy
 
 
@@ -31,7 +31,7 @@ HO = Namespace("https://def.isotc211.org/def/ho/")
 ISO191502 = Namespace("http://def.isotc211.org/iso19150/-2/2012/base#")
 
 
-class DummyRule(TransformationRule):
+class DummyRule(TransformationStep):
     def transform(self, context):
         context.graph.add((Namespace("https://example.org/").thing, RDF.type, RDF.Property))
         return context
@@ -43,7 +43,7 @@ def test_transformation_rule_default_fit_returns_self():
 
 
 def test_ruleset_applies_rules_in_order():
-    ruleset = TransformationRuleset([DummyRule(), DummyRule()])
+    ruleset = TransformationPipeline([DummyRule(), DummyRule()])
     graph = Graph()
     context = type("Context", (), {"graph": graph})()
     result = ruleset.transform(context)
@@ -60,7 +60,7 @@ def test_default_ruleset_runs_against_repository_xmi():
 
 
 def test_ruleset_can_select_subset():
-    ruleset = BaseRuleSet()
+    ruleset = DefaultTransformationPipeline()
     subset = ruleset.select(["BaseExtractPackages", "BaseExtractClasses"])
     assert [rule.name for rule in subset.rules] == ["BaseExtractPackages", "BaseExtractClasses"]
 
@@ -100,7 +100,7 @@ def test_package_import_smoke():
     assert result.returncode == 0, result.stderr
 
 
-def test_config_validates_names_and_fills_profile_baselines():
+def test_config_validates_names_and_fills_profile_defaults():
     config = TransformationConfig("jetlund", {"abstract_class": "annotation"})
     assert config.strategies["inheritance"] == "direct_subclass"
     assert "composition" not in config.strategies

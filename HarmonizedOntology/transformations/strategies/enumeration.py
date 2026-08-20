@@ -2,7 +2,7 @@ from rdflib import BNode, Literal, URIRef
 from rdflib.collection import Collection
 from rdflib.namespace import OWL, RDF, RDFS, SKOS
 
-from .base import DecisionStrategy
+from .base import RuleStrategy
 
 
 def _datatype_range(graph, values):
@@ -20,7 +20,7 @@ def _mark_datatype_attributes(graph, attributes, data_range):
         graph.add((attribute, RDFS.range, data_range))
 
 
-class IsoEnumerationStrategy(DecisionStrategy):
+class IsoEnumerationStrategy(RuleStrategy):
     name = "iso"
     source = "ISO/TC 211 enumeration to DatatypeProperty with owl:oneOf"
 
@@ -32,7 +32,7 @@ class IsoEnumerationStrategy(DecisionStrategy):
         return context
 
 
-class InspireEnumerationStrategy(DecisionStrategy):
+class InspireEnumerationStrategy(RuleStrategy):
     name = "inspire"
     source = "INSPIRE Guidelines enumeration encoding"
 

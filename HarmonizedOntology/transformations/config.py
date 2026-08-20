@@ -24,13 +24,13 @@ class TransformationConfig:
             )
         selected = dict(self.strategies)
         profile = profiles[self.paper]
-        unknown_points = set(selected) - set(profile.baselines)
+        unknown_points = set(selected) - set(profile.defaults)
         if unknown_points:
             raise ConfigurationError(
                 f"Unknown decision point(s): {sorted(unknown_points)}. "
-                f"Available: {sorted(profile.baselines)}"
+                f"Available: {sorted(profile.defaults)}"
             )
-        resolved = dict(profile.baselines)
+        resolved = dict(profile.defaults)
         for point, strategy in selected.items():
             if strategy not in profile.strategies[point]:
                 raise ConfigurationError(

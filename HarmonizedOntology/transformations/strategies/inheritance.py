@@ -2,10 +2,10 @@ from rdflib import BNode
 from rdflib.collection import Collection
 from rdflib.namespace import OWL, RDF, RDFS
 
-from .base import DecisionStrategy
+from .base import RuleStrategy
 
 
-class DirectSubclassStrategy(DecisionStrategy):
+class DirectSubclassStrategy(RuleStrategy):
     name = "direct_subclass"
     source = "INSPIRE and ISO/TC 211"
 
@@ -14,7 +14,7 @@ class DirectSubclassStrategy(DecisionStrategy):
         return context
 
 
-class IntersectionStrategy(DecisionStrategy):
+class IntersectionStrategy(RuleStrategy):
     name = "intersection"
     source = "Hajjamy et al., 2016"
 

@@ -10,8 +10,8 @@ from lxml import etree
 from rdflib import BNode, Graph, Literal, Namespace, URIRef
 from rdflib.namespace import OWL, RDF, RDFS, SDO
 
-from ..rule import TransformationRule
-from ..ruleset import TransformationRuleset
+from ..rule import TransformationStep
+from ..ruleset import TransformationPipeline
 from ..strategies.abstract_class import AnnotationStrategy, DisjointUnionStrategy
 from ..strategies.inheritance import DirectSubclassStrategy, IntersectionStrategy
 
@@ -133,14 +133,14 @@ def make_identifiers_map(tree, prefix: TypingLiteral["std", "mpkg", "cls", "pred
     return ids
 
 
-class BaseAddSchemaDescriptionProperty(TransformationRule):
+class BaseAddSchemaDescriptionProperty(TransformationStep):
     def transform(self, context):
         bind_iso_prefixes(context.graph)
         context.graph.add((SCHEMA.description, RDF.type, OWL.AnnotationProperty)) # seems off to me. Why not "add annotation property"?
         return context
 
 
-class BaseExtractPackages(TransformationRule):
+class BaseExtractPackages(TransformationStep):
     def transform(self, context):
         graph = context.graph
         bind_iso_prefixes(graph)
@@ -173,7 +173,7 @@ class BaseExtractPackages(TransformationRule):
         return context
 
 
-class BaseExtractPackageHierarchy(TransformationRule):
+class BaseExtractPackageHierarchy(TransformationStep):
     def transform(self, context):
         package_elements = context.tree.findall(".//UML:Package", namespaces=NS)
         children_by_parent = {}
@@ -188,7 +188,7 @@ class BaseExtractPackageHierarchy(TransformationRule):
         return context
 
 
-class BaseExtractClasses(TransformationRule):
+class BaseExtractClasses(TransformationStep):
     def transform(self, context):
         graph = context.graph
         bind_iso_prefixes(graph)
@@ -231,7 +231,7 @@ class BaseExtractClasses(TransformationRule):
         return context
 
 
-class BaseExtractSubclassRelations(TransformationRule):
+class BaseExtractSubclassRelations(TransformationStep):
     def transform(self, context):
         class_identifiers = make_identifiers_map(context.tree, "cls")
         relations = {}
@@ -259,7 +259,7 @@ class BaseExtractSubclassRelations(TransformationRule):
         return context
 
 
-class BaseExtractAssociations(TransformationRule):
+class BaseExtractAssociations(TransformationStep):
     def transform(self, context):
         graph = context.graph
         predicate_identifiers = make_identifiers_map(context.tree, "pred")
@@ -291,7 +291,7 @@ class BaseExtractAssociations(TransformationRule):
         return context
 
 
-class BaseExtractAttributes(TransformationRule):
+class BaseExtractAttributes(TransformationStep):
     def transform(self, context):
         graph = context.graph
         predicate_identifiers = make_identifiers_map(context.tree, "pred")
@@ -329,7 +329,7 @@ class BaseExtractAttributes(TransformationRule):
         return context
 
 
-class BaseExtractEnumerations(TransformationRule):
+class BaseExtractEnumerations(TransformationStep):
     def transform(self, context):
         strategy = context.strategies.get("enumeration")
         if strategy is None:
@@ -368,7 +368,7 @@ class BaseExtractEnumerations(TransformationRule):
             )
         return context
 
-class BaseRuleSet(TransformationRuleset):
+class DefaultTransformationPipeline(TransformationPipeline):
     """Default XMI-to-RDF transformation ruleset for ho extraction."""
 
     def __init__(self, rule_names=None, config=None):

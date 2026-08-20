@@ -1,39 +1,74 @@
 # ISO/TC-211 Harmonized Ontology
 
-This directory contains the software and tools for generating OWL ontologies from the ISO/TC-211's Harmonized Model XMI files, with support for transformations and ablation studies.
+This directory contains the software for generating OWL/RDF ontologies from ISO/TC-211 Harmonized Model XMI files. Transformations are implemented as ordered rules, with optional paper or implementation profiles for decisions such as abstract classes, inheritance, and enumerations.
 
 ## Overview
 
 The Harmonized Ontology project transforms ISO/TC-211 conceptual models (represented as XMI files) into Semantic Web ontologies (OWL/RDF). The software is organized into a `transformations/` library containing the core transformation engine, rules, and tests.
 
+The project parses an XMI document into a transformation context and applies a ruleset to build and serialize an `rdflib.Graph`. The repository-level `main.py` is a compatibility wrapper around the package CLI, intended to connect with future ontology quality metrics.
+
+The transformation has four related concepts:
+
+- A **transformation step** performs one focused extraction or graph update, such as extracting UML classes or associations.
+- A **transformation pipeline** is an ordered collection of steps. It controls which rules run and the order in which they update the transformation context and RDF graph.
+- A **rule strategy** implements one modeling choice within a step, such as representing inheritance with direct `rdfs:subClassOf` statements or an OWL intersection.
+- A **modeling profile** groups the strategies and alternatives associated with an implementation approach or publication. The default strategy is currently arbitrarily chosen. A profile is selected through `TransformationConfig` and individual strategy choices can be overridden.
+
 ## Quick Start
 
 ### Installation
 
-Install dependencies from the root requirements.txt:
+Install dependencies from `requirements.txt`:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### Running Transformations
+### CLI
 
-Use the root-level `main.py` as your entry point for all transformation and ablation work:
+Both entrypoints accept the same arguments. The XMI path is positional and the serialized graph is written to standard output.
 
-**Run full transformation:**
+Run the repository entrypoint:
 ```bash
-python main.py transform path/to/xmi/file.xml
+python main.py path/to/xmi/file.xml > output.ttl
 ```
 
-**Run transformation with specific rules:**
+The package entrypoint is currently equivalent:
 ```bash
-python main.py transform path/to/xmi/file.xml --rules BaseExtractPackages BaseExtractClasses
+python -m transformations path/to/xmi/file.xml > output.ttl
 ```
 
-**Run ablation study (remove specific rules to study their impact):**
+Select an RDF serialization format with `--format`:
 ```bash
-python main.py ablate path/to/xmi/file.xml --ablate BaseExtractClasses
+python main.py path/to/xmi/file.xml --format json-ld > output.json
 ```
+
+Run only selected rules with `--rules`:
+```bash
+python main.py path/to/xmi/file.xml \
+    --rules BaseExtractPackages BaseExtractClasses
+```
+
+`--rules` is also the mechanism for ablation-style experiments: provide the rules to retain in the run. A list of rules and strategies are provided below. 
+
+Select a profile and override one or more decision points with repeatable `--strategy` options:
+```bash
+python main.py path/to/xmi/file.xml \
+    --paper jetlund \
+    --strategy abstract_class=annotation \
+    --strategy inheritance=direct_subclass
+```
+
+The available options are:
+
+| Option | Meaning |
+| --- | --- |
+| `xmi_path` | Input XMI/XML file. The command fails if it does not exist. |
+| `--rules RULE ...` | Optional names of rules to run. Without it, all default rules run. |
+| `--format FORMAT` | RDFLib serialization format; defaults to `turtle`. |
+| `--paper PROFILE` | Profile identifier, such as `iso` or `inspire`. |
+| `--strategy DECISION_POINT=STRATEGY` | Override a profile default. May be supplied more than once. |
 
 ### Running Tests
 
@@ -43,104 +78,118 @@ Execute the test suite from the `HarmonizedOntology` directory:
 pytest transformations/tests
 ```
 
-## Directory Structure
+## File Structure
 
 ```
 HarmonizedOntology/
-├── main.py                   # Entry point for transformations and ablations
-├── requirements.txt          # Python dependencies
-├── README.md                 # This file
-└── transformations/          # Core transformation library
-    ├── __init__.py
-    ├── __main__.py           # Batch transformation runner
-    ├── main.py               # Transformation execution engine
-    ├── transformation_rule.py # Base transformation rule class
-    ├── transformation_ruleset.py # Rule set management
-    ├── transformations.py    # Core transformation logic
-    └── tests/                # Test suite
-        ├── __init__.py
-        └── test_standards.py
+├── main.py                         # Repository CLI wrapper
+├── requirements.txt                # Runtime and test dependencies
+├── README.md                       # This documentation
+├── tests/
+│   └── test_transformations.py     # Unit, integration, and CLI smoke tests
+└── transformations/
+    ├── __init__.py                 # Public package exports
+    ├── __main__.py                 # Package CLI and transform_xmi/load_xmi
+    ├── config.py                   # Immutable profile configuration and validation
+    ├── factory.py                  # ProfileAwareRulesetFactory and make_ruleset
+    ├── profiles.py                 # ModelingProfile definitions and default strategies
+    ├── rule.py                     # TransformationStep abstract class
+    ├── ruleset.py                  # TransformationPipeline class
+    ├── implementations/
+    │   └── BaseTransformation.py   # DefaultTransformationPipeline
+    └── strategies/
+        ├── base.py                 # RuleStrategy interface
+        ├── abstract_class.py
+        ├── inheritance.py
+        └── enumeration.py
 ```
 
-## Transformations Library
+## Transformation Model
 
-The `transformations/` directory contains the core transformation engine for converting ISO/TC-211 XMI conceptual model files into OWL/RDF ontologies.
+### Context
 
-### Core Components
+`load_xmi()` returns a context containing the parsed XML tree, the source IRI, an RDFLib graph, and transformation metadata. Rules read and update this context. `transform_xmi()` creates the context, constructs `DefaultTransformationPipeline`, applies it, and returns the resulting `Graph`.
 
-- **`main.py`** — The transformation execution engine. Loads XMI files and applies transformation rules.
-- **`transformation_rule.py`** — Base class for all transformation rules.
-- **`transformation_ruleset.py`** — Manages and executes an ordered sequence of transformation rules.
-- **`transformations.py`** — Core transformation logic and utilities.
-- **`__init__.py`** — Package initialization; exports public API.
-- **`__main__.py`** — CLI entry point for batch transformations.
+### Rules
 
-### Architecture
+A rule is a class derived from `TransformationStep`. It has a `transform(context)` method and may optionally implement `fit()` or `inverse_transform()`. Rules are stateless by default, and their name is the class name. The default rules, applied in this order, are:
 
-The transformation system is built on three core concepts:
+1. `BaseAddSchemaDescriptionProperty` — registers `schema:description` as an OWL annotation property.
+2. `BaseExtractPackages` — extracts model packages and their metadata.
+3. `BaseExtractPackageHierarchy` — records package-parent relationships in context metadata.
+4. `BaseExtractClasses` — extracts UML classes, labels, descriptions, and package membership.
+5. `BaseExtractSubclassRelations` — converts UML generalizations to subclass relations using the configured inheritance strategy.
+6. `BaseExtractAssociations` — extracts UML associations as RDF properties with domain and range.
+7. `BaseExtractAttributes` — extracts UML attributes as RDF properties with domain and range.
+8. `BaseExtractEnumerations` — applies the configured enumeration strategy to enumeration classes.
 
-1. **Transformation Context** — Holds the XMI tree, source IRI, and RDF graph during processing
-2. **Transformation Rules** — Individual rules that extract specific model elements
-3. **Rule Sets** — Ordered collections of rules applied sequentially to a context
+### Rulesets
 
-This architecture allows for composable, testable, and reusable transformation logic.
+`TransformationPipeline` is an ordered collection of `TransformationStep` instances. It supports `add_rule()`, `fit()`, `transform()`, `fit_transform()`, iteration, indexing, `len()`, and `select(names)`. `DefaultTransformationPipeline` is the default implementation and can be created with `rule_names` and an optional `TransformationConfig`.
+
+Selecting a subset from Python:
+
+```python
+from transformations import DefaultTransformationPipeline
+
+ruleset = DefaultTransformationPipeline().select([
+    "BaseExtractPackages",
+    "BaseExtractClasses",
+])
+```
+
+### Strategies
+
+A strategy is a `RuleStrategy` implementation that encodes one modeling choice. A `TransformationConfig` validates the selected profile and fills omitted decision points with that profile's default. 
+
+| Decision point | Strategies | Effect |
+| --- | --- | --- |
+| `abstract_class` | `annotation`, `disjoint_union` | Mark abstract classes with `iso19150:isAbstract`, or encode their children with `owl:disjointUnionOf`. |
+| `inheritance` | `direct_subclass`, `intersection` | Emit direct `rdfs:subClassOf` triples, or use an OWL class intersection for multiple superclasses. |
+| `enumeration` | `iso`, `inspire` | Encode values as an OWL datatype range, or use INSPIRE SKOS concepts for non-self-describing values. |
+
+Supported profiles and their default strategies:
+
+| Profile | Defaults |
+| --- | --- |
+| `jetlund` | `abstract_class=annotation`, `inheritance=direct_subclass`, `enumeration=iso` |
+| `zedlitz_luttenberger_2012` | `abstract_class=disjoint_union` |
+| `hajjamy_2016` | `inheritance=intersection` |
+| `iso` | `abstract_class=annotation`, `inheritance=direct_subclass`, `enumeration=iso` |
+| `inspire` | `inheritance=direct_subclass`, `enumeration=inspire` |
+
+Configuration is immutable and exposes a deterministic `configuration_id`:
+
+```python
+from transformations import TransformationConfig
+
+config = TransformationConfig(
+    "inspire",
+    {"enumeration": "inspire"},
+)
+```
+
+Invalid profile, decision-point, or strategy names raise `ConfigurationError`.
 
 ## Entry Points
 
-### Main CLI (`main.py`)
+### `python main.py`
 
-The root-level `main.py` provides a unified command-line interface for:
+Compatibility wrapper that imports and calls `transformations.__main__.main()`. Made for future integration with a quality metrics package.
 
-- **Transformations**: Convert XMI files to RDF/OWL ontologies
-- **Ablations**: Study the impact of specific transformation rules by removing them
+### `python -m transformations`
 
-Supports multiple output formats and rule selection.
+Canonical package entrypoint. It parses CLI arguments, creates an optional `TransformationConfig`, runs `transform_xmi()`, and prints the serialized graph.
 
-### Batch Transformation (`python -m transformations`)
+## Tests
 
-For batch processing entire directories or files using the transformation engine, use:
-
-```bash
-python -m transformations {XMI_FILE_PATH}
-```
-
-This delegates to the transformation engine in `transformations/main.py`.
-
-### Invoking from Python
-
-You can also invoke transformations programmatically from Python:
-
-```python
-from transformations import transform_xmi
-
-graph = transform_xmi("path/to/xmi/file.xml")
-print(graph.serialize(format="turtle"))
-```
-
-Explicit paper profiles can select or override decision-point strategies. Omitted
-choices use the profile baseline:
-
-```python
-from transformations import TransformationConfig, transform_xmi
-
-config = TransformationConfig(
-        paper="jetlund",
-        strategies={"abstract_class": "annotation", "inheritance": "direct_subclass"},
-)
-graph = transform_xmi("path/to/xmi/file.xml", config=config)
-```
-
-The command-line entry point accepts the same explicit choices:
+Run the test suite from this directory:
 
 ```bash
-python main.py input.xml --paper jetlund \
-    --strategy abstract_class=annotation \
-    --strategy inheritance=direct_subclass
+pytest
 ```
 
-Available profiles and strategies are validated when the configuration is
-created. The original invocation without `--paper` or `config` remains the
-backward-compatible transformation.
+The tests cover rule and ruleset composition, repository XMI transformation, CLI and package import smoke tests, configuration validation, and profile-specific RDF output.
 
 ## Status
 

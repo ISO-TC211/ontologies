@@ -7,7 +7,7 @@ class NonInvertibleTransformationError(ValueError):
     """Raised when a transformation rule cannot safely invert its own extraction."""
 
 
-class TransformationRule(ABC):
+class TransformationStep(ABC):
     """Base class for stateless or stateful XMI-to-RDF transformation rules."""
 
     @property

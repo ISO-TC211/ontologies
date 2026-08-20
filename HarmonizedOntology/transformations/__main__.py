@@ -7,7 +7,7 @@ from pathlib import Path
 from lxml import etree
 from rdflib import Graph, URIRef
 
-from .implementations.BaseTransformation import BaseRuleSet, make_iri
+from .implementations.BaseTransformation import DefaultTransformationPipeline, make_iri
 from .config import TransformationConfig
 
 
@@ -31,7 +31,7 @@ def load_xmi(xmi_path):
 
 def transform_xmi(xmi_path, rule_names=None, config=None) -> Graph:
     context = load_xmi(xmi_path)
-    ruleset = BaseRuleSet(rule_names=rule_names, config=config)
+    ruleset = DefaultTransformationPipeline(rule_names=rule_names, config=config)
     context.strategies = ruleset.strategies
     graph = ruleset.transform(context)
     return graph

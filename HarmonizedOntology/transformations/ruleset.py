@@ -1,9 +1,9 @@
 from __future__ import annotations
 from collections.abc import Iterable
-from .rule import NonInvertibleTransformationError, TransformationRule
+from .rule import NonInvertibleTransformationError, TransformationStep
 
 
-class TransformationRuleset:
+class TransformationPipeline:
     """An ordered sequence of transformation rules applied to one extraction context."""
 
     def __init__(self, rules=None):
@@ -13,8 +13,8 @@ class TransformationRuleset:
                 self.add_rule(rule)
 
     def add_rule(self, rule):
-        if not isinstance(rule, TransformationRule):
-            raise TypeError(f"Rule '{rule}' is not a TransformationRule instance.")
+        if not isinstance(rule, TransformationStep):
+            raise TypeError(f"Rule '{rule}' is not a TransformationStep instance.")
         self.rules.append(rule)
         return self
 
@@ -25,7 +25,7 @@ class TransformationRuleset:
 
     def transform(self, context):
         for idx, rule in enumerate(self.rules):
-            if not isinstance(rule, TransformationRule):
+            if not isinstance(rule, TransformationStep):
                 raise TypeError(
                     f"Rule at position {idx} is not a valid transformation rule: {rule!r}"
                 )
@@ -72,7 +72,7 @@ class TransformationRuleset:
             if name not in allowed:
                 raise ValueError(f"Unknown rule '{name}'. Available rules: {sorted(allowed)}")
             selected.append(next(rule for rule in self.rules if rule.name == name))
-        return TransformationRuleset(selected)
+        return TransformationPipeline(selected)
 
     def __repr__(self):
-        return f"TransformationRuleset(rules={[rule.name for rule in self.rules]!r})"
+        return f"TransformationPipeline(rules={[rule.name for rule in self.rules]!r})"

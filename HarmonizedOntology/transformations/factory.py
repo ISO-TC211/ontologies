@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-from .implementations.BaseTransformation import BaseRuleSet
+from .implementations.BaseTransformation import DefaultTransformationPipeline
 
 
 class ProfileAwareRulesetFactory:
     """Resolve an immutable transformation configuration into a ruleset."""
 
     def create(self, config):
-        return BaseRuleSet(config=config)
+        return DefaultTransformationPipeline(config=config)
 
 
 def make_ruleset(config):

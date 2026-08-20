@@ -2,11 +2,11 @@ from rdflib import BNode, Literal, Namespace
 from rdflib.collection import Collection
 from rdflib.namespace import OWL, RDF
 
-from .base import DecisionStrategy
+from .base import RuleStrategy
 ISO191502 = Namespace("http://def.isotc211.org/iso19150/-2/2012/base#")
 
 
-class AnnotationStrategy(DecisionStrategy):
+class AnnotationStrategy(RuleStrategy):
     name = "annotation"
     source = "ISO/TC 211 isAbstract annotation"
 
@@ -16,7 +16,7 @@ class AnnotationStrategy(DecisionStrategy):
         return context
 
 
-class DisjointUnionStrategy(DecisionStrategy):
+class DisjointUnionStrategy(RuleStrategy):
     name = "disjoint_union"
     source = "Zedlitz & Luttenberger, 2012"
 
