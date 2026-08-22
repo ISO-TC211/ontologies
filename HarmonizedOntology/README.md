@@ -97,7 +97,6 @@ HarmonizedOntology/
     ├── __init__.py                 # Public package exports
     ├── __main__.py                 # Package CLI and transform_xmi/load_xmi
     ├── config.py                   # Immutable profile configuration and validation
-    ├── factory.py                  # ProfileAwareRulesetFactory and make_ruleset
     ├── profiles.py                 # ModelingProfile definitions and default strategies
     ├── rule.py                     # TransformationStep abstract class
     ├── ruleset.py                  # TransformationPipeline class
