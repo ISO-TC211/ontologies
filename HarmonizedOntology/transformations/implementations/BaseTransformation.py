@@ -133,6 +133,17 @@ def make_identifiers_map(tree, prefix: TypingLiteral["std", "mpkg", "cls", "pred
     return ids
 
 
+class ExtractionIndex:
+    def __init__(self, tree):
+        self.identifiers = {
+            prefix: make_identifiers_map(tree, prefix)
+            for prefix in ("mpkg", "cls", "pred")
+        }
+
+    def identifiers_for(self, prefix: TypingLiteral["std", "mpkg", "cls", "pred"]):
+        return self.identifiers[prefix]
+
+
 class BaseAddSchemaDescriptionProperty(TransformationStep):
     def transform(self, context):
         bind_iso_prefixes(context.graph)
@@ -192,8 +203,8 @@ class BaseExtractClasses(TransformationStep):
     def transform(self, context):
         graph = context.graph
         bind_iso_prefixes(graph)
-        package_identifiers = make_identifiers_map(context.tree, "mpkg")
-        class_identifiers = make_identifiers_map(context.tree, "cls")
+        package_identifiers = context.extraction_index.identifiers_for("mpkg")
+        class_identifiers = context.extraction_index.identifiers_for("cls")
 
         for cls in context.tree.findall(".//UML:Class", namespaces=NS):
             if has_excluded_stereotype(cls):
@@ -233,7 +244,7 @@ class BaseExtractClasses(TransformationStep):
 
 class BaseExtractSubclassRelations(TransformationStep):
     def transform(self, context):
-        class_identifiers = make_identifiers_map(context.tree, "cls")
+        class_identifiers = context.extraction_index.identifiers_for("cls")
         relations = {}
         for gen in context.tree.findall(".//UML:Generalization", namespaces=NS):
             sub = gen.get("subtype")
@@ -262,7 +273,7 @@ class BaseExtractSubclassRelations(TransformationStep):
 class BaseExtractAssociations(TransformationStep):
     def transform(self, context):
         graph = context.graph
-        predicate_identifiers = make_identifiers_map(context.tree, "pred")
+        predicate_identifiers = context.extraction_index.identifiers_for("pred")
         for pred in context.tree.findall(".//UML:Association", namespaces=NS):
             if pred.get("name") is not None:
                 p = predicate_identifiers[pred.get("xmi.id")]
@@ -294,7 +305,7 @@ class BaseExtractAssociations(TransformationStep):
 class BaseExtractAttributes(TransformationStep):
     def transform(self, context):
         graph = context.graph
-        predicate_identifiers = make_identifiers_map(context.tree, "pred")
+        predicate_identifiers = context.extraction_index.identifiers_for("pred")
         for pred in context.tree.findall(".//UML:Attribute", namespaces=NS):
             cl = pred.xpath("ancestor::UML:Class[1]/UML:ModelElement.stereotype/UML:Stereotype/@name", namespaces=NS)
             if len(cl) > 0 and cl[0] in EXCLUDED_CLASS_STEREOTYPES:

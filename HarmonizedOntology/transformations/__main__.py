@@ -7,17 +7,18 @@ from pathlib import Path
 from lxml import etree
 from rdflib import Graph, URIRef
 
-from .implementations.BaseTransformation import DefaultTransformationPipeline, make_iri
+from .implementations.BaseTransformation import DefaultTransformationPipeline, ExtractionIndex, make_iri
 from .config import TransformationConfig
 
 
 class TransformationContext:
-    def __init__(self, tree, source_iri, graph=None, strategies=None):
+    def __init__(self, tree, source_iri, graph=None, strategies=None, extraction_index=None):
         self.tree = tree
         self.source_iri = source_iri
         self.graph = graph if graph is not None else Graph()
         self.metadata = {}
         self.strategies = strategies or {}
+        self.extraction_index = extraction_index or ExtractionIndex(tree)
 
 
 def load_xmi(xmi_path, graph=None):
@@ -26,7 +27,7 @@ def load_xmi(xmi_path, graph=None):
         raise FileNotFoundError(f"XMI file not found: {xml_path}")
     tree = etree.parse(str(xml_path))
     source_iri = URIRef(make_iri("std", xml_path))
-    return TransformationContext(tree, source_iri, graph=graph)
+    return TransformationContext(tree, source_iri, graph=graph, extraction_index=ExtractionIndex(tree))
 
 
 def transform_xmi(xmi_path, rule_names=None, config=None, graph=None) -> Graph:
