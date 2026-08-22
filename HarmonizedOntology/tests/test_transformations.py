@@ -11,6 +11,7 @@ from transformations import (
     ConfigurationError,
     TransformationConfig,
     load_xmi,
+    transform_directory,
     transform_xmi,
 )
 from transformations.implementations.BaseTransformation import is_self_describing_enumeration
@@ -70,6 +71,20 @@ def test_transform_xmi_can_select_subset():
     assert any(obj == HO.ModelPackage for _, _, obj in graph.triples((None, RDF.type, None)))
     assert any(obj == OWL.Class for _, _, obj in graph.triples((None, RDF.type, None)))
     assert not any(obj == RDF.Property for _, _, obj in graph.triples((None, RDF.type, None)))
+
+
+def test_transform_directory_recursively_combines_xml_files(tmp_path):
+    first = tmp_path / "first.xml"
+    nested = tmp_path / "nested" / "second.xml"
+    nested.parent.mkdir()
+    first.write_bytes(SAMPLE_XMI.read_bytes())
+    nested.write_bytes(SAMPLE_XMI.read_bytes())
+
+    graph = transform_directory(tmp_path, rule_names=["BaseExtractPackages"])
+
+    assert isinstance(graph, Graph)
+    assert len(graph) > 0
+    assert len(list(graph.triples((None, RDFS.isDefinedBy, None)))) >= 2
 
 
 def test_inverse_transform_raises_for_non_invertible_rule():

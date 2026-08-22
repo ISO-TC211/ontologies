@@ -15,31 +15,43 @@ class TransformationContext:
     def __init__(self, tree, source_iri, graph=None, strategies=None):
         self.tree = tree
         self.source_iri = source_iri
-        self.graph = graph or Graph()
+        self.graph = graph if graph is not None else Graph()
         self.metadata = {}
         self.strategies = strategies or {}
 
 
-def load_xmi(xmi_path):
+def load_xmi(xmi_path, graph=None):
     xml_path = Path(xmi_path)
     if not xml_path.exists():
         raise FileNotFoundError(f"XMI file not found: {xml_path}")
     tree = etree.parse(str(xml_path))
     source_iri = URIRef(make_iri("std", xml_path))
-    return TransformationContext(tree, source_iri)
+    return TransformationContext(tree, source_iri, graph=graph)
 
 
-def transform_xmi(xmi_path, rule_names=None, config=None) -> Graph:
-    context = load_xmi(xmi_path)
+def transform_xmi(xmi_path, rule_names=None, config=None, graph=None) -> Graph:
+    context = load_xmi(xmi_path, graph=graph)
     ruleset = DefaultTransformationPipeline(rule_names=rule_names, config=config)
     context.strategies = ruleset.strategies
-    graph = ruleset.transform(context)
+    return ruleset.transform(context)
+
+
+def transform_directory(xmi_directory, rule_names=None, config=None) -> Graph:
+    directory = Path(xmi_directory)
+    if not directory.is_dir():
+        raise NotADirectoryError(f"XMI directory not found: {directory}")
+
+    graph = Graph()
+    for xml_path in sorted(
+        path for path in directory.rglob("*") if path.is_file() and path.suffix.lower() == ".xml"
+    ):
+        transform_xmi(xml_path, rule_names=rule_names, config=config, graph=graph)
     return graph
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description="Run ho transformation rules against an XMI file.")
-    parser.add_argument("xmi_path", help="Path to the XMI XML file")
+    parser = argparse.ArgumentParser(description="Run transformation rules against an XMI file or directory.")
+    parser.add_argument("xmi_path", help="Path to an XMI XML file or directory")
     parser.add_argument(
         "--rules",
         nargs="*",
@@ -53,8 +65,13 @@ def main(argv=None):
 
     selected = dict(item.split("=", 1) for item in args.strategy)
     config = TransformationConfig(args.paper, selected) if args.paper else None
-    graph = transform_xmi(args.xmi_path, rule_names=args.rules, config=config)
-    print(graph.serialize(format=args.format))
+    input_path = Path(args.xmi_path)
+    if input_path.is_dir():
+        graph = transform_directory(input_path, rule_names=args.rules, config=config)
+        graph.serialize(destination=str(input_path / "output.ttl"), format=args.format)
+    else:
+        graph = transform_xmi(input_path, rule_names=args.rules, config=config)
+        print(graph.serialize(format=args.format))
     return graph
 
 

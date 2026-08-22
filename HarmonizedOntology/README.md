@@ -39,6 +39,12 @@ The package entrypoint is currently equivalent:
 python -m transformations path/to/xmi/file.xml > output.ttl
 ```
 
+Pass a directory to transform every `.xml` file below it recursively. The combined graph is written to `output.ttl` inside that directory:
+
+```bash
+python main.py path/to/xmi/directory
+```
+
 Select an RDF serialization format with `--format`:
 ```bash
 python main.py path/to/xmi/file.xml --format json-ld > output.json
@@ -64,7 +70,7 @@ The available options are:
 
 | Option | Meaning |
 | --- | --- |
-| `xmi_path` | Input XMI/XML file. The command fails if it does not exist. |
+| `xmi_path` | Input XMI/XML file or directory. Directory mode recursively processes `.xml` files and writes `output.ttl` inside the directory. |
 | `--rules RULE ...` | Optional names of rules to run. Without it, all default rules run. |
 | `--format FORMAT` | RDFLib serialization format; defaults to `turtle`. |
 | `--paper PROFILE` | Profile identifier, such as `iso` or `inspire`. |
