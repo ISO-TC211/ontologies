@@ -3,13 +3,14 @@ from rdflib.collection import Collection
 from rdflib.namespace import OWL, RDF, RDFS
 
 from .base import RuleStrategy
+from ..context import TransformationContext
 
 
 class DirectSubclassStrategy(RuleStrategy):
     name = "direct_subclass"
     source = "INSPIRE and ISO/TC 211"
 
-    def apply(self, context, **kwargs):
+    def apply(self, context: TransformationContext, **kwargs: object) -> TransformationContext:
         context.graph.add((kwargs["subclass"], RDFS.subClassOf, kwargs["superclass"]))
         return context
 
@@ -18,7 +19,7 @@ class IntersectionStrategy(RuleStrategy):
     name = "intersection"
     source = "Hajjamy et al., 2016"
 
-    def apply(self, context, **kwargs):
+    def apply(self, context: TransformationContext, **kwargs: object) -> TransformationContext:
         expression = BNode()
         context.graph.add((kwargs["subclass"], RDFS.subClassOf, expression))
         context.graph.add((expression, RDF.type, OWL.Class))

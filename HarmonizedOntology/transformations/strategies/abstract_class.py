@@ -3,6 +3,7 @@ from rdflib.collection import Collection
 from rdflib.namespace import OWL, RDF
 
 from .base import RuleStrategy
+from ..context import TransformationContext
 ISO191502 = Namespace("http://def.isotc211.org/iso19150/-2/2012/base#")
 
 
@@ -10,7 +11,7 @@ class AnnotationStrategy(RuleStrategy):
     name = "annotation"
     source = "ISO/TC 211 isAbstract annotation"
 
-    def apply(self, context, **kwargs):
+    def apply(self, context: TransformationContext, **kwargs: object) -> TransformationContext:
         if kwargs.get("is_abstract"):
             context.graph.add((kwargs["class_iri"], ISO191502.isAbstract, Literal(True)))
         return context
@@ -20,7 +21,7 @@ class DisjointUnionStrategy(RuleStrategy):
     name = "disjoint_union"
     source = "Zedlitz & Luttenberger, 2012"
 
-    def apply(self, context, **kwargs):
+    def apply(self, context: TransformationContext, **kwargs: object) -> TransformationContext:
         children = kwargs.get("children", [])
         if kwargs.get("is_abstract") and children:
             node = BNode()

@@ -1,5 +1,8 @@
 from __future__ import annotations
 from collections.abc import Iterable
+from rdflib import Graph
+
+from .context import TransformationContext
 from .rule import NonInvertibleTransformationError, TransformationStep
 
 
@@ -23,7 +26,7 @@ class TransformationPipeline:
             rule.fit(context, y=y)
         return self
 
-    def transform(self, context):
+    def transform(self, context: TransformationContext) -> Graph:
         for idx, rule in enumerate(self.rules):
             if not isinstance(rule, TransformationStep):
                 raise TypeError(

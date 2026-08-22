@@ -3,6 +3,7 @@ from rdflib.collection import Collection
 from rdflib.namespace import OWL, RDF, RDFS, SKOS
 
 from .base import RuleStrategy
+from ..context import TransformationContext
 
 
 def _datatype_range(graph, values):
@@ -24,7 +25,7 @@ class IsoEnumerationStrategy(RuleStrategy):
     name = "iso"
     source = "ISO/TC 211 enumeration to DatatypeProperty with owl:oneOf"
 
-    def apply(self, context, **kwargs):
+    def apply(self, context: TransformationContext, **kwargs: object) -> TransformationContext:
         values = kwargs.get("values", [])
         if values:
             data_range = _datatype_range(context.graph, values)
@@ -36,7 +37,7 @@ class InspireEnumerationStrategy(RuleStrategy):
     name = "inspire"
     source = "INSPIRE Guidelines enumeration encoding"
 
-    def apply(self, context, **kwargs):
+    def apply(self, context: TransformationContext, **kwargs: object) -> TransformationContext:
         values = kwargs.get("values", [])
         if not values:
             return context

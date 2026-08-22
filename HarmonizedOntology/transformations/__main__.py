@@ -9,19 +9,10 @@ from rdflib import Graph, URIRef
 
 from .implementations.BaseTransformation import DefaultTransformationPipeline, ExtractionIndex, make_iri
 from .config import TransformationConfig
+from .context import TransformationContext
 
 
-class TransformationContext:
-    def __init__(self, tree, source_iri, graph=None, strategies=None, extraction_index=None):
-        self.tree = tree
-        self.source_iri = source_iri
-        self.graph = graph if graph is not None else Graph()
-        self.metadata = {}
-        self.strategies = strategies or {}
-        self.extraction_index = extraction_index or ExtractionIndex(tree)
-
-
-def load_xmi(xmi_path, graph=None):
+def load_xmi(xmi_path: str | Path, graph: Graph | None = None) -> TransformationContext:
     xml_path = Path(xmi_path)
     if not xml_path.exists():
         raise FileNotFoundError(f"XMI file not found: {xml_path}")

@@ -11,6 +11,7 @@ from rdflib import BNode, Graph, Literal, Namespace, URIRef
 from rdflib.namespace import OWL, RDF, RDFS, SDO
 
 from ..rule import TransformationStep
+from ..context import TransformationContext
 from ..ruleset import TransformationPipeline
 from ..strategies.abstract_class import AnnotationStrategy, DisjointUnionStrategy
 from ..strategies.inheritance import DirectSubclassStrategy, IntersectionStrategy
@@ -145,14 +146,14 @@ class ExtractionIndex:
 
 
 class BaseAddSchemaDescriptionProperty(TransformationStep):
-    def transform(self, context):
+    def transform(self, context: TransformationContext) -> TransformationContext:
         bind_iso_prefixes(context.graph)
         context.graph.add((SCHEMA.description, RDF.type, OWL.AnnotationProperty)) # seems off to me. Why not "add annotation property"?
         return context
 
 
 class BaseExtractPackages(TransformationStep):
-    def transform(self, context):
+    def transform(self, context: TransformationContext) -> TransformationContext:
         graph = context.graph
         bind_iso_prefixes(graph)
         package_iris = []
@@ -185,7 +186,7 @@ class BaseExtractPackages(TransformationStep):
 
 
 class BaseExtractPackageHierarchy(TransformationStep):
-    def transform(self, context):
+    def transform(self, context: TransformationContext) -> TransformationContext:
         package_elements = context.tree.findall(".//UML:Package", namespaces=NS)
         children_by_parent = {}
         for pkg in package_elements:
@@ -200,7 +201,7 @@ class BaseExtractPackageHierarchy(TransformationStep):
 
 
 class BaseExtractClasses(TransformationStep):
-    def transform(self, context):
+    def transform(self, context: TransformationContext) -> TransformationContext:
         graph = context.graph
         bind_iso_prefixes(graph)
         package_identifiers = context.extraction_index.identifiers_for("mpkg")
@@ -243,7 +244,7 @@ class BaseExtractClasses(TransformationStep):
 
 
 class BaseExtractSubclassRelations(TransformationStep):
-    def transform(self, context):
+    def transform(self, context: TransformationContext) -> TransformationContext:
         class_identifiers = context.extraction_index.identifiers_for("cls")
         relations = {}
         for gen in context.tree.findall(".//UML:Generalization", namespaces=NS):
@@ -271,7 +272,7 @@ class BaseExtractSubclassRelations(TransformationStep):
 
 
 class BaseExtractAssociations(TransformationStep):
-    def transform(self, context):
+    def transform(self, context: TransformationContext) -> TransformationContext:
         graph = context.graph
         predicate_identifiers = context.extraction_index.identifiers_for("pred")
         for pred in context.tree.findall(".//UML:Association", namespaces=NS):
@@ -303,7 +304,7 @@ class BaseExtractAssociations(TransformationStep):
 
 
 class BaseExtractAttributes(TransformationStep):
-    def transform(self, context):
+    def transform(self, context: TransformationContext) -> TransformationContext:
         graph = context.graph
         predicate_identifiers = context.extraction_index.identifiers_for("pred")
         for pred in context.tree.findall(".//UML:Attribute", namespaces=NS):
@@ -341,7 +342,7 @@ class BaseExtractAttributes(TransformationStep):
 
 
 class BaseExtractEnumerations(TransformationStep):
-    def transform(self, context):
+    def transform(self, context: TransformationContext) -> TransformationContext:
         strategy = context.strategies.get("enumeration")
         if strategy is None:
             return context
