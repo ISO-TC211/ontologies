@@ -7,7 +7,8 @@ from pathlib import Path
 from lxml import etree
 from rdflib import Graph, URIRef
 
-from .implementations.BaseTransformation import DefaultTransformationPipeline, ExtractionIndex, make_iri
+from .identifiers import ExtractionIndex, make_iri
+from .pipeline import DefaultTransformationPipeline
 from .config import TransformationConfig
 from .context import TransformationContext
 

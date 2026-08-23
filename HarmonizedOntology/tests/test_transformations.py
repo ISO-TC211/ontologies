@@ -14,9 +14,12 @@ from transformations import (
     transform_directory,
     transform_xmi,
 )
-from transformations.implementations.BaseTransformation import is_self_describing_enumeration
-from transformations.rule import NonInvertibleTransformationError, TransformationStep
-from transformations.ruleset import TransformationPipeline
+from transformations.context import is_self_describing_enumeration
+from transformations.pipeline.base import (
+    NonInvertibleTransformationError,
+    TransformationPipeline,
+    TransformationStep,
+)
 from transformations.strategies.enumeration import InspireEnumerationStrategy, IsoEnumerationStrategy
 
 

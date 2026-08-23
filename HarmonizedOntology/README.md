@@ -81,7 +81,7 @@ The available options are:
 Execute the test suite from the `HarmonizedOntology` directory:
 
 ```bash
-pytest transformations/tests
+pytest tests
 ```
 
 ## File Structure
@@ -98,10 +98,14 @@ HarmonizedOntology/
     ├── __main__.py                 # Package CLI and transform_xmi/load_xmi
     ├── config.py                   # Immutable profile configuration and validation
     ├── profiles.py                 # ModelingProfile definitions and default strategies
-    ├── rule.py                     # TransformationStep abstract class
-    ├── ruleset.py                  # TransformationPipeline class
-    ├── implementations/
-    │   └── BaseTransformation.py   # DefaultTransformationPipeline
+    ├── context.py                  # Transformation context and shared XML/RDF helpers
+    ├── identifiers.py              # IRI and extraction index helpers
+    ├── pipeline/                    # Pipeline abstractions, default pipeline, and rules
+    │   ├── __init__.py               # DefaultTransformationPipeline exports
+    │   ├── base.py                   # TransformationStep and TransformationPipeline
+    │   ├── packages.py               # Package extraction and hierarchy rules
+    │   ├── classes.py                # Class and subclass relation rules
+    │   └── properties.py             # Schema, association, attribute, and enumeration rules
     └── strategies/
         ├── base.py                 # RuleStrategy interface
         ├── abstract_class.py
