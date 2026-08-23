@@ -49,7 +49,7 @@ def main(argv=None):
         "--rules",
         nargs="*",
         default=None,
-        help="Optional subset of rule names to run, e.g. BaseExtractPackages BaseExtractClasses",
+        help="Optional subset of rule names to run",
     )
     parser.add_argument("--format", default="turtle", help="RDF serialization format to emit")
     parser.add_argument("--paper", help="Paper profile identifier")

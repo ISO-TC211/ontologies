@@ -53,7 +53,7 @@ python main.py path/to/xmi/file.xml --format json-ld > output.json
 Run only selected rules with `--rules`:
 ```bash
 python main.py path/to/xmi/file.xml \
-    --rules BaseExtractPackages BaseExtractClasses
+    --rules ExtractPackages ExtractClasses
 ```
 
 `--rules` is also the mechanism for ablation-style experiments: provide the rules to retain in the run. A list of rules and strategies are provided below. 
@@ -123,14 +123,14 @@ HarmonizedOntology/
 
 A rule is a class derived from `TransformationStep`. It has a `transform(context)` method and may optionally implement `fit()` or `inverse_transform()`. Rules are stateless by default, and their name is the class name. The default rules, applied in this order, are:
 
-1. `BaseAddSchemaDescriptionProperty` — registers `schema:description` as an OWL annotation property.
-2. `BaseExtractPackages` — extracts model packages and their metadata.
-3. `BaseExtractPackageHierarchy` — records package-parent relationships in context metadata.
-4. `BaseExtractClasses` — extracts UML classes, labels, descriptions, and package membership.
-5. `BaseExtractSubclassRelations` — converts UML generalizations to subclass relations using the configured inheritance strategy.
-6. `BaseExtractAssociations` — extracts UML associations as RDF properties with domain and range.
-7. `BaseExtractAttributes` — extracts UML attributes as RDF properties with domain and range.
-8. `BaseExtractEnumerations` — applies the configured enumeration strategy to enumeration classes.
+1. `AddSchemaDescriptionProperty` — registers `schema:description` as an OWL annotation property.
+2. `ExtractPackages` — extracts model packages and their metadata.
+3. `ExtractPackageHierarchy` — records package-parent relationships in context metadata.
+4. `ExtractClasses` — extracts UML classes, labels, descriptions, and package membership.
+5. `ExtractSubclassRelations` — converts UML generalizations to subclass relations using the configured inheritance strategy.
+6. `ExtractAssociations` — extracts UML associations as RDF properties with domain and range.
+7. `ExtractAttributes` — extracts UML attributes as RDF properties with domain and range.
+8. `ExtractEnumerations` — applies the configured enumeration strategy to enumeration classes.
 
 ### Rulesets
 
@@ -142,8 +142,8 @@ Selecting a subset from Python:
 from transformations import DefaultTransformationPipeline
 
 ruleset = DefaultTransformationPipeline().select([
-    "BaseExtractPackages",
-    "BaseExtractClasses",
+    "ExtractPackages",
+    "ExtractClasses",
 ])
 ```
 

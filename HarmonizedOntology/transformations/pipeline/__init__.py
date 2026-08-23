@@ -3,13 +3,13 @@ from .base import (
     TransformationPipeline,
     TransformationStep,
 )
-from .classes import BaseExtractClasses, BaseExtractSubclassRelations
-from .packages import BaseExtractPackageHierarchy, BaseExtractPackages
+from .classes import ExtractClasses, ExtractSubclassRelations
+from .packages import ExtractPackageHierarchy, ExtractPackages
 from .properties import (
-    BaseAddSchemaDescriptionProperty,
-    BaseExtractAssociations,
-    BaseExtractAttributes,
-    BaseExtractEnumerations,
+    AddSchemaDescriptionProperty,
+    ExtractAssociations,
+    ExtractAttributes,
+    ExtractEnumerations,
 )
 
 
@@ -19,14 +19,14 @@ class DefaultTransformationPipeline(TransformationPipeline):
     def __init__(self, rule_names=None, config=None):
         self.config = config
         rules = [
-            BaseAddSchemaDescriptionProperty(),
-            BaseExtractPackages(),
-            BaseExtractPackageHierarchy(),
-            BaseExtractClasses(),
-            BaseExtractSubclassRelations(),
-            BaseExtractAssociations(),
-            BaseExtractAttributes(),
-            BaseExtractEnumerations(),
+            AddSchemaDescriptionProperty(),
+            ExtractPackages(),
+            ExtractPackageHierarchy(),
+            ExtractClasses(),
+            ExtractSubclassRelations(),
+            ExtractAssociations(),
+            ExtractAttributes(),
+            ExtractEnumerations(),
         ]
         if config is not None:
             strategies = config.profile.strategies
@@ -49,12 +49,12 @@ __all__ = [
     "NonInvertibleTransformationError",
     "TransformationPipeline",
     "TransformationStep",
-    "BaseAddSchemaDescriptionProperty",
-    "BaseExtractPackages",
-    "BaseExtractPackageHierarchy",
-    "BaseExtractClasses",
-    "BaseExtractSubclassRelations",
-    "BaseExtractAssociations",
-    "BaseExtractAttributes",
-    "BaseExtractEnumerations",
+    "AddSchemaDescriptionProperty",
+    "ExtractPackages",
+    "ExtractPackageHierarchy",
+    "ExtractClasses",
+    "ExtractSubclassRelations",
+    "ExtractAssociations",
+    "ExtractAttributes",
+    "ExtractEnumerations",
 ]

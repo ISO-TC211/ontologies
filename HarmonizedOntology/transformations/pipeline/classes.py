@@ -1,19 +1,23 @@
-from ..context import HO, NS, SCHEMA, bind_iso_prefixes, extract_description, has_excluded_stereotype
+from ..context import HO, NS, SCHEMA, bind_iso_prefixes, extract_description, EXCLUDED_CLASS_STEREOTYPES
 from ..identifiers import element_name
 from .base import TransformationStep
 from ..strategies.inheritance import IntersectionStrategy
+from ..context import TransformationContext
 from rdflib import Literal, OWL, RDF, RDFS, SDO, URIRef
 
+class ExtractClasses(TransformationStep):
+    def _has_excluded_stereotype(self, uml_class) -> bool:
+        stereotypes = uml_class.findall("UML:ModelElement.stereotype/UML:Stereotype", namespaces=NS)
+        return any(stereotype.get("name") in EXCLUDED_CLASS_STEREOTYPES for stereotype in stereotypes)
 
-class BaseExtractClasses(TransformationStep):
-    def transform(self, context):
+    def transform(self, context: TransformationContext):
         graph = context.graph
         bind_iso_prefixes(graph)
         package_identifiers = context.extraction_index.identifiers_for("mpkg")
         class_identifiers = context.extraction_index.identifiers_for("cls")
 
         for cls in context.tree.findall(".//UML:Class", namespaces=NS):
-            if has_excluded_stereotype(cls):
+            if self._has_excluded_stereotype(cls):
                 continue
             class_iri = class_identifiers[cls.get("xmi.id")]
             graph.add((class_iri, RDF.type, OWL.Class))
@@ -41,8 +45,8 @@ class BaseExtractClasses(TransformationStep):
         return context
 
 
-class BaseExtractSubclassRelations(TransformationStep):
-    def transform(self, context):
+class ExtractSubclassRelations(TransformationStep):
+    def transform(self, context: TransformationContext):
         class_identifiers = context.extraction_index.identifiers_for("cls")
         relations = {}
         for gen in context.tree.findall(".//UML:Generalization", namespaces=NS):

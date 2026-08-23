@@ -20,14 +20,6 @@ SCHEMA = Namespace(ISO_PREFIXES["schema"])
 EXCLUDED_CLASS_STEREOTYPES = {"dataType", "codeList", "CodeList"}
 
 
-def is_self_describing_enumeration(values):
-    """Return whether enumeration members are readable words rather than codes."""
-    return bool(values) and all(
-        value.replace(" ", "").replace("-", "").replace("_", "").isalpha()
-        for value in values
-    )
-
-
 def bind_iso_prefixes(graph: Graph):
     for key, value in ISO_PREFIXES.items():
         graph.bind(key, value)
@@ -47,11 +39,6 @@ def extract_description(uml_element) -> str | None:
     description = re.sub(r"<[^>]+>", "", description)
     description = " ".join(description.split())
     return description if description else None
-
-
-def has_excluded_stereotype(uml_class) -> bool:
-    stereotypes = uml_class.findall("UML:ModelElement.stereotype/UML:Stereotype", namespaces=NS)
-    return any(stereotype.get("name") in EXCLUDED_CLASS_STEREOTYPES for stereotype in stereotypes)
 
 
 class XMLTreeProtocol(Protocol):

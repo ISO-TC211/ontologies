@@ -1,11 +1,11 @@
-from ..context import HO, NS, SCHEMA, bind_iso_prefixes, extract_description
+from ..context import HO, NS, SCHEMA, bind_iso_prefixes, extract_description, TransformationContext
 from ..identifiers import element_name, make_iri, replace_iris_in_graph
 from .base import TransformationStep
 from rdflib import Literal, RDFS, RDF, SDO, URIRef
 
 
-class BaseExtractPackages(TransformationStep):
-    def transform(self, context):
+class ExtractPackages(TransformationStep):
+    def transform(self, context: TransformationContext):
         graph = context.graph
         bind_iso_prefixes(graph)
         package_iris = []
@@ -35,8 +35,8 @@ class BaseExtractPackages(TransformationStep):
         return context
 
 
-class BaseExtractPackageHierarchy(TransformationStep):
-    def transform(self, context):
+class ExtractPackageHierarchy(TransformationStep):
+    def transform(self, context: TransformationContext):
         children_by_parent = {}
         for pkg in context.tree.findall(".//UML:Package", namespaces=NS):
             parents = pkg.xpath(

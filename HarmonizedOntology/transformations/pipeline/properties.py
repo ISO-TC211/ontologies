@@ -1,18 +1,19 @@
-from ..context import EXCLUDED_CLASS_STEREOTYPES, HO, NS, SCHEMA, bind_iso_prefixes, extract_description, is_self_describing_enumeration
+from ..context import EXCLUDED_CLASS_STEREOTYPES, HO, NS, SCHEMA, bind_iso_prefixes, extract_description
 from ..identifiers import element_name, make_iri
+from ..context import TransformationContext
 from .base import TransformationStep
 from rdflib import Literal, OWL, RDF, RDFS, SDO, URIRef
 
 
-class BaseAddSchemaDescriptionProperty(TransformationStep):
-    def transform(self, context):
+class AddSchemaDescriptionProperty(TransformationStep):
+    def transform(self, context:TransformationContext):
         bind_iso_prefixes(context.graph)
         context.graph.add((SCHEMA.description, RDF.type, OWL.AnnotationProperty))
         return context
 
 
-class BaseExtractAssociations(TransformationStep):
-    def transform(self, context):
+class ExtractAssociations(TransformationStep):
+    def transform(self, context:TransformationContext):
         graph = context.graph
         predicate_identifiers = context.extraction_index.identifiers_for("pred")
         for pred in context.tree.findall(".//UML:Association", namespaces=NS):
@@ -35,8 +36,8 @@ class BaseExtractAssociations(TransformationStep):
         return context
 
 
-class BaseExtractAttributes(TransformationStep):
-    def transform(self, context):
+class ExtractAttributes(TransformationStep):
+    def transform(self, context:TransformationContext):
         graph = context.graph
         predicate_identifiers = context.extraction_index.identifiers_for("pred")
         for pred in context.tree.findall(".//UML:Attribute", namespaces=NS):
@@ -64,8 +65,15 @@ class BaseExtractAttributes(TransformationStep):
         return context
 
 
-class BaseExtractEnumerations(TransformationStep):
-    def transform(self, context):
+class ExtractEnumerations(TransformationStep):
+    def _is_self_describing_enumeration(self, values):
+        """Return whether enumeration members are readable words rather than codes."""
+        return bool(values) and all(
+            value.replace(" ", "").replace("-", "").replace("_", "").isalpha()
+            for value in values
+    )
+
+    def transform(self, context:TransformationContext):
         strategy = context.strategies.get("enumeration")
         if strategy is None:
             return context
@@ -82,5 +90,5 @@ class BaseExtractEnumerations(TransformationStep):
                 ids = attr.xpath("UML:ModelElement.taggedValue/UML:TaggedValue[@tag='ea_guid']/@value", namespaces=NS)
                 if ids:
                     attributes.append(make_iri("pred", ids[0].strip("{}")))
-            strategy.apply(context, class_iri=make_iri("cls", cls), values=values, self_describing=is_self_describing_enumeration(values), attributes=attributes)
+            strategy.apply(context, class_iri=make_iri("cls", cls), values=values, self_describing=self._is_self_describing_enumeration(values), attributes=attributes)
         return context

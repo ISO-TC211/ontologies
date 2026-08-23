@@ -65,12 +65,12 @@ def test_default_ruleset_runs_against_repository_xmi():
 
 def test_ruleset_can_select_subset():
     ruleset = DefaultTransformationPipeline()
-    subset = ruleset.select(["BaseExtractPackages", "BaseExtractClasses"])
-    assert [rule.name for rule in subset.rules] == ["BaseExtractPackages", "BaseExtractClasses"]
+    subset = ruleset.select(["ExtractPackages", "ExtractClasses"])
+    assert [rule.name for rule in subset.rules] == ["ExtractPackages", "ExtractClasses"]
 
 
 def test_transform_xmi_can_select_subset():
-    graph = transform_xmi(SAMPLE_XMI, rule_names=["BaseExtractPackages", "BaseExtractClasses"])
+    graph = transform_xmi(SAMPLE_XMI, rule_names=["ExtractPackages", "ExtractClasses"])
     assert any(obj == HO.ModelPackage for _, _, obj in graph.triples((None, RDF.type, None)))
     assert any(obj == OWL.Class for _, _, obj in graph.triples((None, RDF.type, None)))
     assert not any(obj == RDF.Property for _, _, obj in graph.triples((None, RDF.type, None)))
@@ -83,7 +83,7 @@ def test_transform_directory_recursively_combines_xml_files(tmp_path):
     first.write_bytes(SAMPLE_XMI.read_bytes())
     nested.write_bytes(SAMPLE_XMI.read_bytes())
 
-    graph = transform_directory(tmp_path, rule_names=["BaseExtractPackages"])
+    graph = transform_directory(tmp_path, rule_names=["ExtractPackages"])
 
     assert isinstance(graph, Graph)
     assert len(graph) > 0
