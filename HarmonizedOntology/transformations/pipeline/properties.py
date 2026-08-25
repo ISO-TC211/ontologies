@@ -5,6 +5,10 @@ from .base import TransformationStep
 from rdflib import Literal, OWL, RDF, RDFS, SDO, URIRef
 
 
+def class_iri_for_reference(context, reference, package_id=None):
+    return context.extraction_index.class_iri_for_reference(reference, package_id)
+
+
 class AddSchemaDescriptionProperty(TransformationStep):
     def transform(self, context:TransformationContext):
         bind_iso_prefixes(context.graph)
@@ -29,10 +33,12 @@ class ExtractAssociations(TransformationStep):
                 graph.add((predicate_iri, SCHEMA.description, Literal(description)))
             domain = pred.xpath("UML:ModelElement.taggedValue/UML:TaggedValue[@tag='ea_sourceName']/@value", namespaces=NS)
             if domain:
-                graph.add((predicate_iri, RDFS.domain, make_iri("cls", str(domain[0]))))
+                package = pred.xpath("UML:ModelElement.taggedValue/UML:TaggedValue[@tag='package']/@value", namespaces=NS)
+                graph.add((predicate_iri, RDFS.domain, class_iri_for_reference(context, str(domain[0]), package[0] if package else None)))
             range_name = pred.xpath("UML:ModelElement.taggedValue/UML:TaggedValue[@tag='ea_targetName']/@value", namespaces=NS)
             if range_name:
-                graph.add((predicate_iri, RDFS.range, make_iri("cls", str(range_name[0]))))
+                package = pred.xpath("UML:ModelElement.taggedValue/UML:TaggedValue[@tag='package']/@value", namespaces=NS)
+                graph.add((predicate_iri, RDFS.range, class_iri_for_reference(context, str(range_name[0]), package[0] if package else None)))
         return context
 
 
@@ -58,10 +64,12 @@ class ExtractAttributes(TransformationStep):
                 graph.add((predicate_iri, SCHEMA.description, Literal(description)))
             domain = pred.xpath("ancestor::UML:Class[1]/@name", namespaces=NS)
             if domain:
-                graph.add((predicate_iri, RDFS.domain, make_iri("cls", str(domain[0]))))
+                owner = pred.xpath("ancestor::UML:Class[1]/UML:ModelElement.taggedValue/UML:TaggedValue[@tag='package']/@value", namespaces=NS)
+                graph.add((predicate_iri, RDFS.domain, class_iri_for_reference(context, str(domain[0]), owner[0] if owner else None)))
             range_names = pred.xpath("UML:ModelElement.taggedValue/UML:TaggedValue[@tag='type']/@value", namespaces=NS)
             if range_names:
-                graph.add((predicate_iri, RDFS.range, make_iri("cls", str(range_names[0]))))
+                owner = pred.xpath("ancestor::UML:Class[1]/UML:ModelElement.taggedValue/UML:TaggedValue[@tag='package']/@value", namespaces=NS)
+                graph.add((predicate_iri, RDFS.range, class_iri_for_reference(context, str(range_names[0]), owner[0] if owner else None)))
         return context
 
 
@@ -90,5 +98,6 @@ class ExtractEnumerations(TransformationStep):
                 ids = attr.xpath("UML:ModelElement.taggedValue/UML:TaggedValue[@tag='ea_guid']/@value", namespaces=NS)
                 if ids:
                     attributes.append(make_iri("pred", ids[0].strip("{}")))
-            strategy.apply(context, class_iri=make_iri("cls", cls), values=values, self_describing=self._is_self_describing_enumeration(values), attributes=attributes)
+            class_identifiers = context.extraction_index.identifiers_for("cls")
+            strategy.apply(context, class_iri=class_identifiers[cls.get("xmi.id")], values=values, self_describing=self._is_self_describing_enumeration(values), attributes=attributes)
         return context
