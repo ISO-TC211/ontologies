@@ -1,12 +1,12 @@
 from ..context import EXCLUDED_CLASS_STEREOTYPES, HO, NS, SCHEMA, bind_iso_prefixes, extract_description
-from ..identifiers import element_name, make_iri
+from ..identifiers import element_name
 from ..context import TransformationContext
 from .base import TransformationStep
 from rdflib import Literal, OWL, RDF, RDFS, SDO, URIRef
 
 
 def class_iri_for_reference(context, reference, package_id=None):
-    return context.extraction_index.class_iri_for_reference(reference, package_id)
+    return context.iri_registry.class_iri_for_reference(reference, package_id)
 
 
 class AddSchemaDescriptionProperty(TransformationStep):
@@ -19,7 +19,7 @@ class AddSchemaDescriptionProperty(TransformationStep):
 class ExtractAssociations(TransformationStep):
     def transform(self, context:TransformationContext):
         graph = context.graph
-        predicate_identifiers = context.extraction_index.identifiers_for("pred")
+        predicate_identifiers = context.iri_registry.identifiers_for("pred")
         for pred in context.tree.findall(".//UML:Association", namespaces=NS):
             if pred.get("name") is None:
                 continue
@@ -45,7 +45,7 @@ class ExtractAssociations(TransformationStep):
 class ExtractAttributes(TransformationStep):
     def transform(self, context:TransformationContext):
         graph = context.graph
-        predicate_identifiers = context.extraction_index.identifiers_for("pred")
+        predicate_identifiers = context.iri_registry.identifiers_for("pred")
         for pred in context.tree.findall(".//UML:Attribute", namespaces=NS):
             class_stereotypes = pred.xpath("ancestor::UML:Class[1]/UML:ModelElement.stereotype/UML:Stereotype/@name", namespaces=NS)
             if class_stereotypes and class_stereotypes[0] in EXCLUDED_CLASS_STEREOTYPES:
@@ -91,13 +91,14 @@ class ExtractEnumerations(TransformationStep):
                 continue
             values = [attr.get("name") for attr in cls.findall("UML:Attribute", namespaces=NS) if attr.get("name")]
             attributes = []
+            predicate_identifiers = context.iri_registry.identifiers_for("pred")
             for attr in context.tree.findall(".//UML:Attribute", namespaces=NS):
                 range_names = attr.xpath("UML:ModelElement.taggedValue/UML:TaggedValue[@tag='type']/@value", namespaces=NS)
                 if cls.get("xmi.id") not in range_names and cls.get("name") not in range_names:
                     continue
                 ids = attr.xpath("UML:ModelElement.taggedValue/UML:TaggedValue[@tag='ea_guid']/@value", namespaces=NS)
                 if ids:
-                    attributes.append(make_iri("pred", ids[0].strip("{}")))
-            class_identifiers = context.extraction_index.identifiers_for("cls")
+                    attributes.append(predicate_identifiers[ids[0].strip("{}")])
+            class_identifiers = context.iri_registry.identifiers_for("cls")
             strategy.apply(context, class_iri=class_identifiers[cls.get("xmi.id")], values=values, self_describing=self._is_self_describing_enumeration(values), attributes=attributes)
         return context

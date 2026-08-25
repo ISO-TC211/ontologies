@@ -8,7 +8,7 @@ class ExtractPackages(TransformationStep):
     def transform(self, context: TransformationContext):
         graph = context.graph
         bind_iso_prefixes(graph)
-        package_identifiers = context.extraction_index.identifiers_for("mpkg")
+        package_identifiers = context.iri_registry.identifiers_for("mpkg")
 
         for pkg in context.tree.findall(".//UML:Package", namespaces=NS):
             package_iri = package_identifiers[pkg.get("xmi.id")]

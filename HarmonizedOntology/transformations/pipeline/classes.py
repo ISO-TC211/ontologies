@@ -13,8 +13,8 @@ class ExtractClasses(TransformationStep):
     def transform(self, context: TransformationContext):
         graph = context.graph
         bind_iso_prefixes(graph)
-        package_identifiers = context.extraction_index.identifiers_for("mpkg")
-        class_identifiers = context.extraction_index.identifiers_for("cls")
+        package_identifiers = context.iri_registry.identifiers_for("mpkg")
+        class_identifiers = context.iri_registry.identifiers_for("cls")
 
         for cls in context.tree.findall(".//UML:Class", namespaces=NS):
             if self._has_excluded_stereotype(cls):
@@ -47,7 +47,7 @@ class ExtractClasses(TransformationStep):
 
 class ExtractSubclassRelations(TransformationStep):
     def transform(self, context: TransformationContext):
-        class_identifiers = context.extraction_index.identifiers_for("cls")
+        class_identifiers = context.iri_registry.identifiers_for("cls")
         relations = {}
         for gen in context.tree.findall(".//UML:Generalization", namespaces=NS):
             sub, sup = gen.get("subtype"), gen.get("supertype")

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal as TypingLiteral
 from urllib.parse import quote
@@ -16,16 +17,9 @@ def element_name(element: etree._Element | str, element_type: TypingLiteral["mpk
         name = element.get("name", "(unnamed element)")
     else:
         name = element
-
     name = re.sub(r"(?<=[A-Z])(?=[A-Z][a-z])", " ", name)
     name = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", name)
-
-    if element_type == "pred":
-        name = name.lower()
-    else:
-        name = name.title()
-
-    return name
+    return name.lower() if element_type == "pred" else name.title()
 
 
 def package_parent_id(package) -> str | None:
@@ -59,7 +53,7 @@ def package_paths(tree) -> dict[str, list[str]]:
     def path_for(package_id: str) -> list[str]:
         if package_id in paths:
             return paths[package_id]
-        chain = []
+        chain: list[tuple[str, str]] = []
         visiting = set()
         current_id = package_id
         while current_id in packages and current_id not in paths and current_id not in visiting:
@@ -67,7 +61,6 @@ def package_paths(tree) -> dict[str, list[str]]:
             package = packages[current_id]
             chain.append((current_id, package.get("name", "Unnamed package")))
             current_id = package_parent_id(package)
-
         path = list(paths.get(current_id, []))
         for current_id, name in reversed(chain):
             path.append(name)
@@ -79,96 +72,144 @@ def package_paths(tree) -> dict[str, list[str]]:
     return paths
 
 
-def make_iri(
-    prefix: str,
-    elem: etree._Element | Path | str,
-    package_path: list[str] | None = None,
-) -> URIRef:
+def _path_iri(base: str, segments: list[str]) -> URIRef:
+    return URIRef(base + "/".join(quote(segment, safe="") for segment in segments))
+
+
+def make_iri(prefix: str, elem: etree._Element | Path | str) -> URIRef:
+    """Build a standalone IRI for compatibility and source-document IRIs."""
     if isinstance(elem, etree._Element):
         name = elem.get("name")
-        if name is None:
-            return None
-        parts = name.split(" ")
-        name = parts[0] + "".join(part[:1].upper() + part[1:] for part in parts[1:])
-    elif isinstance(elem, Path):
-        name = elem.name.replace(".xml", "")
-        name = name.replace(" Edition 1", "")
-        name = name.replace(" ", "")
-    else:
-        name = elem.replace(" ", "")
+        assert name is not None
 
-    segments = [quote(part, safe="") for part in (package_path or [])]
-    segments.append(quote(name, safe=""))
-    return URIRef(ISO_PREFIXES[prefix] + "/".join(segments))
+    name = elem.name.removesuffix(".xml") if isinstance(elem, Path) else elem
+    return _path_iri(ISO_PREFIXES[prefix], [name])
 
 
-def make_identifiers_map(
-    tree,
-    prefix: TypingLiteral["std", "mpkg", "cls", "pred"],
-    package_path_index: dict[str, list[str]] | None = None,
-):
-    """Generate a stable xmi id -> IRI mapping"""
-    ids = {}
-    xpaths = {"std": "", "mpkg": "Package", "cls": "Class", "pred": "Association"}
-
-    for elem in tree.findall(f".//UML:{xpaths[prefix]}", namespaces=NS):
-        package_path = None
-        if package_path_index is not None and prefix in {"mpkg", "cls"}:
-            package_id = elem.get("xmi.id") if prefix == "mpkg" else element_package_id(elem)
-            package_path = package_path_index.get(package_id)
-            if prefix == "mpkg" and package_path:
-                package_path = package_path[:-1]
-        identifier = elem.get("xmi.id")
-        iri = make_iri(prefix, elem, package_path)
-        if prefix == "cls":
-            assert identifier not in ids, f"Duplicate class XMI ID: {identifier!r}"
-            assert iri not in ids.values(), f"Duplicate class IRI: {iri!s}"
-        ids[identifier] = iri
-
-    if prefix == "pred":
-        for elem in tree.findall(".//UML:Attribute", namespaces=NS):
-            if elem.get("name") is not None:
-                iri = make_iri(prefix, elem)
-                if iri is not None:
-                    ids[elem.xpath(
-                        "UML:ModelElement.taggedValue/UML:TaggedValue[@tag='ea_guid']/@value",
-                        namespaces=NS,
-                    )[0].strip("{}")] = iri
-    return ids
+@dataclass(frozen=True)
+class IRIRecord:
+    iri: URIRef
+    kind: str
+    source_id: str
+    package_id: str | None = None
 
 
-class ExtractionIndex:
+class IRIService:
+    """Central builder and resolver for generated resource IRIs."""
+
     def __init__(self, tree):
+        self.tree = tree
         self.package_paths = package_paths(tree)
-        self.identifiers = {
-            prefix: make_identifiers_map(tree, prefix, self.package_paths)
-            for prefix in ("mpkg", "cls", "pred")
-        }
-        self.class_ids_by_name = {}
-        self.class_package_ids = {}
-        for element in tree.findall(".//UML:Class", namespaces=NS):
-            name = element.get("name")
-            identifier = element.get("xmi.id")
-            if name and identifier in self.identifiers["cls"]:
-                self.class_ids_by_name.setdefault(name, []).append(identifier)
-                self.class_package_ids[identifier] = element_package_id(element)
+        self.package_iris: dict[str, URIRef] = {}
+        self.class_iris: dict[str, URIRef] = {}
+        self.property_iris: dict[str, URIRef] = {}
+        self.class_ids_by_name: dict[str, list[str]] = {}
+        self.class_package_ids: dict[str, str | None] = {}
+        self.reverse: dict[URIRef, IRIRecord] = {}
+        self._build_packages()
+        self._build_classes()
+        self._build_properties()
+
+    def _register(self, record: IRIRecord, target: dict[str, URIRef]) -> None:
+        assert record.source_id not in target, f"Duplicate {record.kind} ID: {record.source_id!r}"
+        assert record.iri not in target.values(), f"Duplicate {record.kind} IRI: {record.iri!s}"
+        assert record.iri not in self.reverse, f"IRI reused by {record.kind}: {record.iri!s}"
+        target[record.source_id] = record.iri
+        self.reverse[record.iri] = record
+
+    def _build_packages(self) -> None:
+        for package in self.tree.findall(".//UML:Package", namespaces=NS):
+            package_id = package.get("xmi.id")
+            if not package_id:continue
+            self._register(
+                IRIRecord(
+                    _path_iri(ISO_PREFIXES["mpkg"], self.package_paths[package_id] + [package_id]),
+                    "package",
+                    package_id,
+                ),
+                self.package_iris,
+            )
+
+    def _build_classes(self) -> None:
+        for cls in self.tree.findall(".//UML:Class", namespaces=NS):
+            class_id = cls.get("xmi.id")
+            if not class_id: continue
+            package_id = element_package_id(cls)
+            class_path = self.package_paths.get(package_id, [])
+            class_iri = _path_iri(
+                ISO_PREFIXES["cls"],
+                class_path + [cls.get("name", "Unnamed class"), class_id],
+            )
+            self._register(IRIRecord(class_iri, "class", class_id, package_id), self.class_iris)
+            self.class_ids_by_name.setdefault(cls.get("name", ""), []).append(class_id)
+            self.class_package_ids[class_id] = package_id
+
+    def _property_iri(self, context_iri: URIRef, name: str, source_id: str) -> URIRef:
+        return URIRef(
+            f"{context_iri}/property/{quote(name, safe='')}/"
+            f"{quote(source_id, safe='')}"
+        )
+
+    def _association_context(self, association) -> URIRef:
+        source = association.xpath(
+            "UML:ModelElement.taggedValue/UML:TaggedValue[@tag='ea_sourceName']/@value",
+            namespaces=NS,
+        )
+        target = association.xpath(
+            "UML:ModelElement.taggedValue/UML:TaggedValue[@tag='ea_targetName']/@value",
+            namespaces=NS,
+        )
+        if source and target:
+            class_base = ISO_PREFIXES["cls"]
+            source_path = str(self.class_iri_for_reference(source[0])).removeprefix(class_base)
+            target_path = str(self.class_iri_for_reference(target[0])).removeprefix(class_base)
+            return URIRef(f"{ISO_PREFIXES['pred']}{source_path}/to/{target_path}")
+        return URIRef(ISO_PREFIXES["pred"].rstrip("/"))
+
+    def _build_properties(self) -> None:
+        for association in self.tree.findall(".//UML:Association", namespaces=NS):
+            property_id = association.get("xmi.id")
+            name = association.get("name")
+            if not property_id or name is None: continue
+            package_id = element_package_id(association)
+            iri = self._property_iri(self._association_context(association), name, property_id)
+            self._register(IRIRecord(iri, "property", property_id, package_id), self.property_iris)
+
+        for attribute in self.tree.findall(".//UML:Attribute", namespaces=NS):
+            property_ids = attribute.xpath(
+                "UML:ModelElement.taggedValue/UML:TaggedValue[@tag='ea_guid']/@value",
+                namespaces=NS,
+            )
+            name = attribute.get("name")
+            owner_ids = attribute.xpath("ancestor::UML:Class[1]/@xmi.id", namespaces=NS)
+            if not property_ids or name is None or not owner_ids:
+                continue
+            property_id = property_ids[0].strip("{}")
+            owner_iri = self.class_iris[owner_ids[0]]
+            iri = self._property_iri(owner_iri, name, property_id)
+            self._register(IRIRecord(iri, "property", property_id, self.class_package_ids.get(owner_ids[0])), self.property_iris)
 
     def class_iri_for_reference(self, reference: str, package_id: str | None = None) -> URIRef:
-        """Resolve a class XMI ID into its correct IRI"""
-        class_identifiers = self.identifiers["cls"]
-        if reference in class_identifiers: # XMI ID
-            return class_identifiers[reference]
-        candidates = self.class_ids_by_name.get(reference, []) 
-        if package_id: # search in provided package
-            candidates = [
-                identifier
-                for identifier in candidates
-                if self.class_package_ids.get(identifier) == package_id
-            ]
+        """XMI or class name -> IRI"""
+        if reference in self.class_iris:
+            return self.class_iris[reference]
+        candidates = self.class_ids_by_name.get(reference, [])
+        if package_id:
+            candidates = [candidate for candidate in candidates if self.class_package_ids.get(candidate) == package_id]
         if candidates:
-            assert len(candidates) == 1, (f"Class reference {reference!r} is ambiguous: {candidates!r}")
-            return class_identifiers[candidates[0]]
+            assert len(candidates) == 1, f"Class reference {reference!r} is ambiguous: {candidates!r}"
+            return self.class_iris[candidates[0]]
         return make_iri("cls", reference)
 
+    def reverse_lookup(self, iri: URIRef) -> IRIRecord:
+        try:
+            return self.reverse[iri]
+        except KeyError as exc:
+            raise KeyError(f"Unknown generated IRI: {iri}") from exc
+
     def identifiers_for(self, prefix: TypingLiteral["std", "mpkg", "cls", "pred"]):
-        return self.identifiers[prefix]
+        return {
+            "mpkg": self.package_iris,
+            "cls": self.class_iris,
+            "pred": self.property_iris,
+        }[prefix]

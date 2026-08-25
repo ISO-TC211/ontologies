@@ -14,7 +14,6 @@ from transformations import (
     transform_directory,
     transform_xmi,
 )
-from transformations.context import is_self_describing_enumeration
 from transformations.pipeline.base import (
     NonInvertibleTransformationError,
     TransformationPipeline,
@@ -182,12 +181,6 @@ def test_inspire_non_self_describing_enumeration_uses_skos_concept_range():
     assert not list(graph.triples((None, OWL.oneOf, None)))
 
 
-def test_enumeration_self_description_is_derived_from_member_names():
-    assert is_self_describing_enumeration(["active", "not-applicable", "unknown_value"])
-    assert not is_self_describing_enumeration(["1", "2"])
-    assert not is_self_describing_enumeration(["code_01", "code_02"])
-
-
 def test_inspire_self_describing_enumeration_uses_datatype_one_of():
     graph = Graph()
     context = type("Context", (), {"graph": graph})()
@@ -197,7 +190,7 @@ def test_inspire_self_describing_enumeration_uses_datatype_one_of():
         class_iri=URIRef("https://example.org/Status"),
         values=["active", "retired"],
         attributes=[attribute],
-        self_describing=is_self_describing_enumeration(["active", "retired"]),
+        self_describing=True,
     )
     assert (attribute, RDF.type, OWL.DatatypeProperty) in graph
     assert list(graph.triples((None, OWL.oneOf, None)))
