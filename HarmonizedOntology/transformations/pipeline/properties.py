@@ -5,7 +5,9 @@ from .base import TransformationStep
 from rdflib import Literal, OWL, RDF, RDFS, SDO, URIRef
 
 
-def class_iri_for_reference(context, reference, package_id=None):
+def class_iri_for_reference(context, reference, package_id=None, xmi_id=None):
+    if xmi_id:
+        return context.iri_registry.iri_for(xmi_id)
     return context.iri_registry.class_iri_for_reference(reference, package_id)
 
 
@@ -31,14 +33,20 @@ class ExtractAssociations(TransformationStep):
             description = extract_description(pred)
             if description:
                 graph.add((predicate_iri, SCHEMA.description, Literal(description)))
+            ends = pred.xpath(
+                "UML:Association.connection/UML:AssociationEnd",
+                namespaces=NS,
+            )
             domain = pred.xpath("UML:ModelElement.taggedValue/UML:TaggedValue[@tag='ea_sourceName']/@value", namespaces=NS)
             if domain:
                 package = pred.xpath("UML:ModelElement.taggedValue/UML:TaggedValue[@tag='package']/@value", namespaces=NS)
-                graph.add((predicate_iri, RDFS.domain, class_iri_for_reference(context, str(domain[0]), package[0] if package else None)))
+                source_id = ends[0].get("type") if ends else None
+                graph.add((predicate_iri, RDFS.domain, class_iri_for_reference(context, str(domain[0]), package[0] if package else None, source_id)))
             range_name = pred.xpath("UML:ModelElement.taggedValue/UML:TaggedValue[@tag='ea_targetName']/@value", namespaces=NS)
             if range_name:
                 package = pred.xpath("UML:ModelElement.taggedValue/UML:TaggedValue[@tag='package']/@value", namespaces=NS)
-                graph.add((predicate_iri, RDFS.range, class_iri_for_reference(context, str(range_name[0]), package[0] if package else None)))
+                target_id = ends[1].get("type") if len(ends) > 1 else None
+                graph.add((predicate_iri, RDFS.range, class_iri_for_reference(context, str(range_name[0]), package[0] if package else None, target_id)))
         return context
 
 
@@ -47,7 +55,19 @@ class ExtractAttributes(TransformationStep):
         graph = context.graph
         predicate_identifiers = context.iri_registry.identifiers_for("pred")
         for pred in context.tree.findall(".//UML:Attribute", namespaces=NS):
-            class_stereotypes = pred.xpath("ancestor::UML:Class[1]/UML:ModelElement.stereotype/UML:Stereotype/@name", namespaces=NS)
+            owner_ids = pred.xpath(
+                "ancestor::*[self::UML:Class or self::UML:Interface][1]/@xmi.id",
+                namespaces=NS,
+            )
+            # XMI also contains attributes on UML:ClassifierRole and other
+            # diagram/runtime elements. They are not ontology properties and
+            # therefore are not registered by IRIService.
+            if not owner_ids:
+                continue
+            class_stereotypes = pred.xpath(
+                "ancestor::*[self::UML:Class or self::UML:Interface][1]/UML:ModelElement.stereotype/UML:Stereotype/@name",
+                namespaces=NS,
+            )
             if class_stereotypes and class_stereotypes[0] in EXCLUDED_CLASS_STEREOTYPES:
                 continue
             ids = pred.xpath("UML:ModelElement.taggedValue/UML:TaggedValue[@tag='ea_guid']/@value", namespaces=NS)
@@ -62,14 +82,37 @@ class ExtractAttributes(TransformationStep):
             description = extract_description(pred)
             if description:
                 graph.add((predicate_iri, SCHEMA.description, Literal(description)))
-            domain = pred.xpath("ancestor::UML:Class[1]/@name", namespaces=NS)
+            domain = pred.xpath(
+                "ancestor::*[self::UML:Class or self::UML:Interface][1]/@name",
+                namespaces=NS,
+            )
             if domain:
-                owner = pred.xpath("ancestor::UML:Class[1]/UML:ModelElement.taggedValue/UML:TaggedValue[@tag='package']/@value", namespaces=NS)
-                graph.add((predicate_iri, RDFS.domain, class_iri_for_reference(context, str(domain[0]), owner[0] if owner else None)))
+                owner = pred.xpath(
+                    "ancestor::*[self::UML:Class or self::UML:Interface][1]/UML:ModelElement.taggedValue/UML:TaggedValue[@tag='package']/@value",
+                    namespaces=NS,
+                )
+                graph.add((predicate_iri, RDFS.domain, class_iri_for_reference(
+                    context,
+                    str(domain[0]),
+                    owner[0] if owner else None,
+                    owner_ids[0] if owner_ids else None,
+                )))
             range_names = pred.xpath("UML:ModelElement.taggedValue/UML:TaggedValue[@tag='type']/@value", namespaces=NS)
             if range_names:
-                owner = pred.xpath("ancestor::UML:Class[1]/UML:ModelElement.taggedValue/UML:TaggedValue[@tag='package']/@value", namespaces=NS)
-                graph.add((predicate_iri, RDFS.range, class_iri_for_reference(context, str(range_names[0]), owner[0] if owner else None)))
+                owner = pred.xpath(
+                    "ancestor::*[self::UML:Class or self::UML:Interface][1]/UML:ModelElement.taggedValue/UML:TaggedValue[@tag='package']/@value",
+                    namespaces=NS,
+                )
+                type_ids = pred.xpath(
+                    "UML:StructuralFeature.type/UML:Classifier/@xmi.idref",
+                    namespaces=NS,
+                )
+                graph.add((predicate_iri, RDFS.range, class_iri_for_reference(
+                    context,
+                    str(range_names[0]),
+                    owner[0] if owner else None,
+                    type_ids[0] if type_ids else None,
+                )))
         return context
 
 

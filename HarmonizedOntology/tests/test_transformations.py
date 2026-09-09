@@ -1,9 +1,10 @@
 import subprocess
 import sys
 from pathlib import Path
+from urllib.parse import quote
 
 import pytest
-from rdflib import Graph, Literal, Namespace, URIRef
+from rdflib import Graph, Literal, Namespace, SDO, URIRef
 from rdflib.namespace import OWL, RDF, RDFS, SKOS
 
 from transformations import (
@@ -19,6 +20,8 @@ from transformations.pipeline.base import (
     TransformationPipeline,
     TransformationStep,
 )
+from transformations.context import NS
+from transformations.identifiers import sanitize_prefix
 from transformations.strategies.enumeration import InspireEnumerationStrategy, IsoEnumerationStrategy
 
 
@@ -60,6 +63,73 @@ def test_default_ruleset_runs_against_repository_xmi():
     assert len(graph) > 0
     assert any(obj == HO.ModelPackage for _, _, obj in graph.triples((None, RDF.type, None)))
     assert any(obj == OWL.Class for _, _, obj in graph.triples((None, RDF.type, None)))
+
+
+def test_attributes_on_classifier_roles_are_ignored():
+    xmi = (
+        PROJECT_ROOT.parent.parent
+        / "HMMG"
+        / "XMI"
+        / "ConceptualModels"
+        / "ISO 19148 Edition 2.xml"
+    )
+    graph = transform_xmi(xmi)
+    assert isinstance(graph, Graph)
+    assert (None, SDO.identifier, Literal("748EE51D-649F-4167-AE8F-4CA6A17D0F8C", datatype=HO.xmiId)) not in graph
+
+
+def test_iri_service_uses_document_name_and_xmi_ids():
+    context = load_xmi(SAMPLE_XMI)
+    model = context.tree.findall(".//UML:Model", namespaces=NS)[0]
+    model_id = model.get("xmi.id")
+    service = context.iri_registry
+    base = f"https://def.isotc211.org/model/{quote(SAMPLE_XMI.stem, safe='')}"
+
+    assert str(service.model_iri) == base
+    for identifiers in (service.package_iris, service.class_iris, service.property_iris):
+        for xmi_id, iri in identifiers.items():
+            assert str(iri) == f"{base}#{xmi_id}"
+
+
+def test_document_prefix_is_sanitized_and_bound_to_fragment_namespace():
+    graph = transform_xmi(SAMPLE_XMI)
+    serialized = str(graph.serialize(format="turtle"))
+    prefix = sanitize_prefix(SAMPLE_XMI.stem)
+    namespace = f"https://def.isotc211.org/model/{quote(SAMPLE_XMI.stem, safe='')}#"
+
+    assert prefix == "ISO19157Edition1"
+    assert (prefix, URIRef(namespace)) in set(graph.namespaces())
+    assert f"@prefix {prefix}: <{namespace}> ." in serialized
+
+
+@pytest.mark.parametrize(
+    ("document_name", "expected"),
+    [
+        ("ISO 19148 Edition 2", "ISO19148Edition2"),
+        ("ISO-19148/Edition 2", "ISO19148Edition2"),
+        ("123 model", "doc123model"),
+        ("...", "doc"),
+    ],
+)
+def test_sanitize_prefix_handles_turtle_prefix_edge_cases(document_name, expected):
+    assert sanitize_prefix(document_name) == expected
+
+
+def test_document_prefix_collisions_are_disambiguated(tmp_path):
+    first = tmp_path / "ISO-19157.xml"
+    second = tmp_path / "ISO19157.xml"
+    first.write_bytes(SAMPLE_XMI.read_bytes())
+    second.write_bytes(SAMPLE_XMI.read_bytes())
+
+    graph = transform_directory(tmp_path, rule_names=["ExtractPackages"])
+    namespaces = dict(graph.namespaces())
+
+    assert namespaces["ISO19157"] == URIRef(
+        "https://def.isotc211.org/model/ISO-19157#"
+    )
+    assert namespaces["ISO19157_2"] == URIRef(
+        "https://def.isotc211.org/model/ISO19157#"
+    )
 
 
 def test_ruleset_can_select_subset():

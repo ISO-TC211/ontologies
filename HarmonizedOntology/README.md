@@ -119,6 +119,14 @@ HarmonizedOntology/
 
 `load_xmi()` returns a context containing the parsed XML tree, the source IRI, an RDFLib graph, and transformation metadata. Rules read and update this context. `transform_xmi()` creates the context, constructs `DefaultTransformationPipeline`, applies it, and returns the resulting `Graph`.
 
+Generated element IRIs use the document model IRI and the source XMI ID as a fragment:
+
+```text
+https://def.isotc211.org/model/<document>#<xmi-id>
+```
+
+When serializing Turtle, each input document receives a readable prefix derived from its filename stem by removing whitespace and non-alphanumeric characters. Prefix collisions are disambiguated with `_2`, `_3`, and so on. Prefixes are serialization aliases only; they do not change the underlying IRIs.
+
 ### Rules
 
 A rule is a class derived from `TransformationStep`. It has a `transform(context)` method and may optionally implement `fit()` or `inverse_transform()`. Rules are stateless by default, and their name is the class name. The default rules, applied in this order, are:

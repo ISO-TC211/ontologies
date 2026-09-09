@@ -8,21 +8,16 @@ from rdflib import Graph, Namespace, URIRef
 NS = {"UML": "omg.org/UML1.3"}
 HO = Namespace("https://def.isotc211.org/def/ho/")
 
-ISO_PREFIXES = {
-    "cls": "https://def.isotc211.org/class/",
-    "ho": "https://def.isotc211.org/def/ho/",
-    "mpkg": "https://def.isotc211.org/package/",
-    "pred": "https://def.isotc211.org/pred/",
-    "std": "https://def.isotc211.org/standard/",
-    "schema": "http://schema.org/",
-}
-SCHEMA = Namespace(ISO_PREFIXES["schema"])
+MODEL_PREFIX = "https://def.isotc211.org/model/"
+SCHEMA = Namespace("http://schema.org/")
 EXCLUDED_CLASS_STEREOTYPES = {"dataType", "codeList", "CodeList"}
 
 
 def bind_iso_prefixes(graph: Graph):
-    for key, value in ISO_PREFIXES.items():
-        graph.bind(key, value)
+    graph.bind("model", MODEL_PREFIX)
+    graph.bind("ho", str(HO))
+    graph.bind("schema", "https://schema.org/")
+    graph.bind("schema_http", "http://schema.org/")
 
 
 def extract_description(uml_element) -> str | None:

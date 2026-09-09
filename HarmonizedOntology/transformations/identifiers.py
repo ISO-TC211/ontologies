@@ -9,7 +9,7 @@ from urllib.parse import quote
 from lxml import etree
 from rdflib import URIRef
 
-from .context import ISO_PREFIXES, NS
+from .context import MODEL_PREFIX, NS
 
 
 def element_name(element: etree._Element | str, element_type: TypingLiteral["mpkg", "cls", "pred", "std"]) -> str:
@@ -76,14 +76,24 @@ def _path_iri(base: str, segments: list[str]) -> URIRef:
     return URIRef(base + "/".join(quote(segment, safe="") for segment in segments))
 
 
-def make_iri(prefix: str, elem: etree._Element | Path | str) -> URIRef:
-    """Build a standalone IRI for compatibility and source-document IRIs."""
+def sanitize_prefix(document_name: str) -> str:
+    """Return a Turtle-safe, readable prefix candidate for a document name."""
+    prefix = re.sub(r"[^A-Za-z0-9_]", "", document_name)
+    if not prefix:
+        return "doc"
+    if not prefix[0].isalpha():
+        prefix = f"doc{prefix}"
+    return prefix
+
+
+def make_iri(elem: etree._Element | Path | str) -> URIRef:
+    """Build a standalone IRI."""
     if isinstance(elem, etree._Element):
         name = elem.get("name")
         assert name is not None
-
-    name = elem.name.removesuffix(".xml") if isinstance(elem, Path) else elem
-    return _path_iri(ISO_PREFIXES[prefix], [name])
+    else:
+        name = elem.name.removesuffix(".xml") if isinstance(elem, Path) else elem
+    return _path_iri(MODEL_PREFIX, [name])
 
 
 @dataclass(frozen=True)
@@ -97,8 +107,17 @@ class IRIRecord:
 class IRIService:
     """Central builder and resolver for generated resource IRIs."""
 
-    def __init__(self, tree):
+    def __init__(self, tree, document_name: str | None = None):
         self.tree = tree
+        model = tree.find(".//UML:Model", namespaces=NS)
+        if model is None or not model.get("xmi.id"):
+            raise ValueError("XMI document must contain a UML:Model with an xmi.id")
+        self.model_id = model.get("xmi.id")
+        self.model_iri = _path_iri(
+            MODEL_PREFIX, [document_name or self.model_id]
+        )
+        self.document_name = document_name or self.model_id
+        self.document_prefix = sanitize_prefix(self.document_name)
         self.package_paths = package_paths(tree)
         self.package_iris: dict[str, URIRef] = {}
         self.class_iris: dict[str, URIRef] = {}
@@ -109,6 +128,31 @@ class IRIService:
         self._build_packages()
         self._build_classes()
         self._build_properties()
+
+    def _element_iri(self, xmi_id: str) -> URIRef:
+        return URIRef(f"{self.model_iri}#{quote(xmi_id, safe='')}")
+
+    def iri_for(self, xmi_id: str) -> URIRef:
+        return self._element_iri(xmi_id)
+
+    def bind_prefixes(self, graph) -> str:
+        """Bind this model's fragment namespace and return its allocated prefix."""
+        namespace = f"{self.model_iri}#"
+        namespaces = {str(uri): prefix for prefix, uri in graph.namespaces()}
+        existing_prefix = namespaces.get(namespace)
+        if existing_prefix is not None:
+            self.document_prefix = str(existing_prefix)
+            return self.document_prefix
+
+        used_prefixes = {str(prefix) for prefix, _ in graph.namespaces()}
+        prefix = self.document_prefix
+        suffix = 2
+        while prefix in used_prefixes:
+            prefix = f"{self.document_prefix}_{suffix}"
+            suffix += 1
+        graph.bind(prefix, namespace)
+        self.document_prefix = prefix
+        return prefix
 
     def _register(self, record: IRIRecord, target: dict[str, URIRef]) -> None:
         assert record.source_id not in target, f"Duplicate {record.kind} ID: {record.source_id!r}"
@@ -123,7 +167,7 @@ class IRIService:
             if not package_id:continue
             self._register(
                 IRIRecord(
-                    _path_iri(ISO_PREFIXES["mpkg"], self.package_paths[package_id] + [package_id]),
+                    self._element_iri(package_id),
                     "package",
                     package_id,
                 ),
@@ -131,40 +175,19 @@ class IRIService:
             )
 
     def _build_classes(self) -> None:
-        for cls in self.tree.findall(".//UML:Class", namespaces=NS):
-            class_id = cls.get("xmi.id")
-            if not class_id: continue
-            package_id = element_package_id(cls)
-            class_path = self.package_paths.get(package_id, [])
-            class_iri = _path_iri(
-                ISO_PREFIXES["cls"],
-                class_path + [cls.get("name", "Unnamed class"), class_id],
-            )
-            self._register(IRIRecord(class_iri, "class", class_id, package_id), self.class_iris)
-            self.class_ids_by_name.setdefault(cls.get("name", ""), []).append(class_id)
-            self.class_package_ids[class_id] = package_id
+        for element_type in ("Class", "Interface"):
+            for cls in self.tree.findall(f".//UML:{element_type}", namespaces=NS):
+                class_id = cls.get("xmi.id")
+                if not class_id:
+                    continue
+                package_id = element_package_id(cls)
+                class_iri = self._element_iri(class_id)
+                self._register(IRIRecord(class_iri, "class", class_id, package_id), self.class_iris)
+                self.class_ids_by_name.setdefault(cls.get("name", ""), []).append(class_id)
+                self.class_package_ids[class_id] = package_id
 
     def _property_iri(self, context_iri: URIRef, name: str, source_id: str) -> URIRef:
-        return URIRef(
-            f"{context_iri}/property/{quote(name, safe='')}/"
-            f"{quote(source_id, safe='')}"
-        )
-
-    def _association_context(self, association) -> URIRef:
-        source = association.xpath(
-            "UML:ModelElement.taggedValue/UML:TaggedValue[@tag='ea_sourceName']/@value",
-            namespaces=NS,
-        )
-        target = association.xpath(
-            "UML:ModelElement.taggedValue/UML:TaggedValue[@tag='ea_targetName']/@value",
-            namespaces=NS,
-        )
-        if source and target:
-            class_base = ISO_PREFIXES["cls"]
-            source_path = str(self.class_iri_for_reference(source[0])).removeprefix(class_base)
-            target_path = str(self.class_iri_for_reference(target[0])).removeprefix(class_base)
-            return URIRef(f"{ISO_PREFIXES['pred']}{source_path}/to/{target_path}")
-        return URIRef(ISO_PREFIXES["pred"].rstrip("/"))
+        return self._element_iri(source_id)
 
     def _build_properties(self) -> None:
         for association in self.tree.findall(".//UML:Association", namespaces=NS):
@@ -172,7 +195,7 @@ class IRIService:
             name = association.get("name")
             if not property_id or name is None: continue
             package_id = element_package_id(association)
-            iri = self._property_iri(self._association_context(association), name, property_id)
+            iri = self._property_iri(self.model_iri, name, property_id)
             self._register(IRIRecord(iri, "property", property_id, package_id), self.property_iris)
 
         for attribute in self.tree.findall(".//UML:Attribute", namespaces=NS):
@@ -181,13 +204,24 @@ class IRIService:
                 namespaces=NS,
             )
             name = attribute.get("name")
-            owner_ids = attribute.xpath("ancestor::UML:Class[1]/@xmi.id", namespaces=NS)
+            owner_ids = attribute.xpath(
+                "ancestor::*[self::UML:Class or self::UML:Interface][1]/@xmi.id",
+                namespaces=NS,
+            )
             if not property_ids or name is None or not owner_ids:
                 continue
             property_id = property_ids[0].strip("{}")
-            owner_iri = self.class_iris[owner_ids[0]]
-            iri = self._property_iri(owner_iri, name, property_id)
-            self._register(IRIRecord(iri, "property", property_id, self.class_package_ids.get(owner_ids[0])), self.property_iris)
+            owner_id = owner_ids[0]
+            owner_iri = self.class_iris.get(owner_id, self._element_iri(owner_id))
+            self._register(
+                IRIRecord(
+                    self._property_iri(owner_iri, name, property_id),
+                    "property",
+                    property_id,
+                    self.class_package_ids.get(owner_id),
+                ),
+                self.property_iris,
+            )
 
     def class_iri_for_reference(self, reference: str, package_id: str | None = None) -> URIRef:
         """XMI or class name -> IRI"""
@@ -199,7 +233,7 @@ class IRIService:
         if candidates:
             assert len(candidates) == 1, f"Class reference {reference!r} is ambiguous: {candidates!r}"
             return self.class_iris[candidates[0]]
-        return make_iri("cls", reference)
+        return make_iri(reference)
 
     def reverse_lookup(self, iri: URIRef) -> IRIRecord:
         try:

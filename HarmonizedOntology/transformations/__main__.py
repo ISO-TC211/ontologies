@@ -10,7 +10,7 @@ from rdflib import Graph, URIRef
 from .identifiers import IRIService, make_iri
 from .pipeline import DefaultTransformationPipeline
 from .config import TransformationConfig
-from .context import TransformationContext
+from .context import TransformationContext, bind_iso_prefixes
 
 
 def load_xmi(xmi_path: str | Path, graph: Graph | None = None) -> TransformationContext:
@@ -18,8 +18,17 @@ def load_xmi(xmi_path: str | Path, graph: Graph | None = None) -> Transformation
     if not xml_path.exists():
         raise FileNotFoundError(f"XMI file not found: {xml_path}")
     tree = etree.parse(str(xml_path))
-    source_iri = URIRef(make_iri("std", xml_path))
-    return TransformationContext(tree, source_iri, graph=graph, iri_registry=IRIService(tree))
+    source_iri = URIRef(make_iri(xml_path))
+    iri_registry = IRIService(tree, document_name=xml_path.stem)
+    context = TransformationContext(
+        tree,
+        source_iri,
+        graph=graph,
+        iri_registry=iri_registry,
+    )
+    bind_iso_prefixes(context.graph)
+    iri_registry.bind_prefixes(context.graph)
+    return context
 
 
 def transform_xmi(xmi_path, rule_names=None, config=None, graph=None) -> Graph:
